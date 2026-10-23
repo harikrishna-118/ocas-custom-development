@@ -1,0 +1,506 @@
+
+/* ========================================
+   OCAS NAVBAR — PREMIUM RESPONSIVE DESIGN
+   Existing alignment preserved
+======================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+.ocas-navbar,
+.ocas-navbar *,
+.ocas-navbar *::before,
+.ocas-navbar *::after {
+  box-sizing: border-box;
+}
+
+/* PREMIUM BACKGROUND */
+.ocas-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0.985),
+    rgba(248, 252, 255, 0.98) 55%,
+    rgba(239, 249, 253, 0.98)
+  );
+  border-top: 1px solid rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(0, 126, 183, 0.13);
+  box-shadow:
+    0 4px 18px rgba(14, 44, 63, 0.045),
+    0 12px 32px rgba(0, 126, 183, 0.035);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+  animation: ocas-navbar-appear 0.5s ease both;
+  transition:
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* MAIN CONTAINER */
+.ocas-navbar-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  width: min(1540px, calc(100% - 80px));
+  min-height: 78px;
+  margin: 0 auto;
+}
+
+/* LOGO */
+.ocas-navbar-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  width: fit-content;
+  text-decoration: none;
+  outline-offset: 5px;
+}
+
+.ocas-navbar-logo img {
+  display: block;
+  width: 160px;
+  height: auto;
+  max-height: 56px;
+  object-fit: contain;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.35s ease;
+}
+
+.ocas-navbar-logo:hover img {
+  transform: scale(1.035);
+  filter: drop-shadow(0 4px 8px rgba(0, 139, 199, 0.18));
+}
+
+/* NAVIGATION LINKS */
+.ocas-navbar-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  height: 100%;
+}
+
+.ocas-navbar-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 78px;
+  padding: 0;
+  color: #25384a;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color 0.28s ease,
+    text-shadow 0.28s ease;
+}
+
+/* ANIMATED UNDERLINE */
+.ocas-navbar-link::after {
+  position: absolute;
+  right: 0;
+  bottom: 19px;
+  left: 0;
+  height: 2px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #087eaf, #12b8df);
+  box-shadow: 0 0 9px rgba(18, 184, 223, 0.22);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ocas-navbar-link:hover {
+  color: #0089bd;
+  text-shadow: 0 0 14px rgba(0, 137, 189, 0.08);
+}
+
+.ocas-navbar-link:hover::after,
+.ocas-navbar-link.ocas-link-active::after {
+  transform: scaleX(1);
+}
+
+.ocas-navbar-link.ocas-link-active {
+  color: #007eaf;
+  font-weight: 650;
+}
+
+/* START A PROJECT BUTTON */
+.ocas-navbar-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  gap: 9px;
+  min-width: 176px;
+  min-height: 49px;
+  padding: 0 26px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 15px;
+  background: linear-gradient(
+    115deg,
+    #076b98 0%,
+    #078fc0 48%,
+    #20b6dc 100%
+  );
+  box-shadow:
+    0 5px 12px rgba(0, 111, 157, 0.18),
+    0 10px 24px rgba(0, 126, 183, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  isolation: isolate;
+  cursor: pointer;
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease,
+    filter 0.3s ease,
+    background 0.3s ease;
+}
+
+/* SHINY BUTTON EFFECT */
+.ocas-navbar-cta::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -130%;
+  z-index: -1;
+  width: 75%;
+  background: linear-gradient(
+    110deg,
+    transparent,
+    rgba(255, 255, 255, 0.12) 30%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.12) 70%,
+    transparent
+  );
+  content: "";
+  transform: skewX(-20deg);
+  transition: left 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ocas-navbar-cta:hover::before {
+  left: 140%;
+}
+
+.ocas-navbar-cta:hover {
+  transform: translateY(-2px);
+  filter: saturate(1.12);
+  box-shadow:
+    0 8px 18px rgba(0, 111, 157, 0.24),
+    0 15px 30px rgba(0, 126, 183, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.ocas-navbar-cta:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.ocas-cta-arrow {
+  display: none;
+}
+
+.ocas-mobile-cta {
+  display: none;
+}
+
+.ocas-desktop-cta {
+  grid-column: 3;
+  justify-self: end;
+}
+
+/* HAMBURGER BUTTON */
+.ocas-navbar-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border: 1px solid rgba(0, 126, 183, 0.17);
+  border-radius: 11px;
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(14, 44, 63, 0.045);
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.ocas-navbar-toggle span {
+  display: block;
+  width: 21px;
+  height: 2px;
+  margin: 5px auto;
+  border-radius: 4px;
+  background: #102d3e;
+  transition:
+    transform 0.25s ease,
+    opacity 0.2s ease,
+    width 0.25s ease;
+}
+
+.ocas-navbar-toggle:hover {
+  background: #f0faff;
+  border-color: rgba(0, 126, 183, 0.35);
+  box-shadow: 0 5px 14px rgba(0, 126, 183, 0.09);
+}
+
+.ocas-navbar-toggle:hover span:nth-child(2) {
+  width: 15px;
+}
+
+.ocas-navbar-toggle.ocas-toggle-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.ocas-navbar-toggle.ocas-toggle-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.ocas-navbar-toggle.ocas-toggle-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* TABLET RESPONSIVE */
+@media (max-width: 1150px) {
+  .ocas-navbar-container {
+    width: calc(100% - 48px);
+    grid-template-columns: 1fr auto 1fr;
+    min-height: 76px;
+  }
+
+  .ocas-navbar-logo img {
+    width: 140px;
+  }
+
+  .ocas-navbar-menu {
+    gap: 23px;
+  }
+
+  .ocas-navbar-link {
+    height: 76px;
+    font-size: 13px;
+  }
+
+  .ocas-navbar-link::after {
+    bottom: 19px;
+  }
+
+  .ocas-navbar-cta {
+    min-width: 155px;
+    min-height: 46px;
+    padding: 0 18px;
+    border-radius: 14px;
+    font-size: 13px;
+  }
+}
+
+/* MOBILE NAVIGATION */
+@media (max-width: 850px) {
+  .ocas-navbar-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    width: calc(100% - 36px);
+    min-height: 72px;
+  }
+
+  .ocas-navbar-logo img {
+    width: 142px;
+    max-height: 50px;
+  }
+
+  .ocas-desktop-cta {
+    display: none;
+  }
+
+  .ocas-navbar-toggle {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .ocas-navbar-menu {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: -18px;
+    left: -18px;
+    display: none;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    height: auto;
+    max-height: calc(100dvh - 74px);
+    padding: 12px 24px 25px;
+    overflow-y: auto;
+    border-bottom: 1px solid rgba(0, 126, 183, 0.15);
+    background: rgba(255, 255, 255, 0.99);
+    box-shadow: 0 18px 34px rgba(10, 40, 60, 0.12);
+  }
+
+  .ocas-navbar-menu.ocas-menu-open {
+    display: flex;
+    flex-direction: column;
+    animation: ocas-menu-appear 0.25s ease both;
+  }
+
+  .ocas-navbar-link {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    height: auto;
+    min-height: 49px;
+    padding: 14px 4px;
+    border-bottom: 1px solid #edf2f5;
+    font-size: 15px;
+    font-weight: 550;
+  }
+
+  .ocas-navbar-link::after {
+    right: auto;
+    bottom: 8px;
+    left: 4px;
+    width: 40px;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .ocas-navbar-link:hover::after,
+  .ocas-navbar-link.ocas-link-active::after {
+    transform: scaleX(1);
+  }
+
+  .ocas-navbar-link.ocas-link-active {
+    background: linear-gradient(
+      90deg,
+      rgba(0, 151, 204, 0.055),
+      transparent 85%
+    );
+  }
+
+  .ocas-mobile-cta {
+    display: inline-flex;
+    align-self: flex-start;
+    justify-self: auto;
+    min-width: 176px;
+    min-height: 48px;
+    width: 100%;
+    margin-top: 20px;
+    padding: 0 22px;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 420px) {
+  .ocas-navbar-container {
+    width: calc(100% - 28px);
+    min-height: 66px;
+  }
+
+  .ocas-navbar-logo img {
+    width: 125px;
+    max-height: 46px;
+  }
+
+  .ocas-navbar-toggle {
+    width: 41px;
+    height: 41px;
+    padding: 8px;
+  }
+
+  .ocas-navbar-menu {
+    right: -14px;
+    left: -14px;
+    max-height: calc(100dvh - 68px);
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
+
+/* OPTIONAL CONTACT BUTTON STYLES */
+.ocas-contact-link {
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.ocas-contact-link:hover {
+  color: #007db5;
+}
+
+@media (max-width: 850px) {
+  .ocas-contact-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 46px;
+    padding: 0 10px;
+    text-align: left;
+  }
+}
+
+/* ENTRANCE ANIMATIONS */
+@keyframes ocas-navbar-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ocas-menu-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ACCESSIBILITY */
+.ocas-navbar a:focus-visible,
+.ocas-navbar-toggle:focus-visible {
+  outline: 3px solid rgba(0, 157, 211, 0.65);
+  outline-offset: 4px;
+}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  .ocas-navbar,
+  .ocas-navbar *,
+  .ocas-navbar *::before,
+  .ocas-navbar *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
