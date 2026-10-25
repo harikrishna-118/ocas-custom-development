@@ -5,7 +5,7 @@ import ocasLogo from "../assets/logo-full.png";
 
 const Footer = () => {
   const services = [
-    { name: "Custom Software", href: "/services" },
+    { name: "Custom Software", href:"/services" },
     { name: "Cloud & DevOps", href: "/services" },
     { name: "AI & Data Engineering", href: "/services" },
     { name: "Mobile Development", href: "/services" },

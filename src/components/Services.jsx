@@ -8,6 +8,21 @@ export default function Services() {
 
       {/* SERVICES HERO */}
       <section className="services-hero">
+        <video
+          className="services-hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex="-1"
+        >
+          <source
+            src="https://videos.pexels.com/video-files/3141208/3141208-hd_1920_1080_25fps.mp4"
+            type="video/mp4"
+          />
+        </video>
         <div className="services-hero-inner">
           <div className="services-eyebrow">
             <span></span>
@@ -27,7 +42,7 @@ export default function Services() {
       <section className="services-details">
 
         {/* 1. CUSTOM SOFTWARE */}
-        <article className="service-detail-card">
+        <article className="service-detail-card" id>
           <h2>Custom Software Development</h2>
 
           <p className="service-detail-subtitle">

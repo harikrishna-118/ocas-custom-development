@@ -1,14 +1,6 @@
-
 import React from "react";
 import "./Industries.css";
 
-import bankingImage from "../assets/Banking.jpg.png";
-import healthcareImage from "../assets/Health.jpg.png";
-import ecommerceImage from "../assets/E-commerce.jpg.png";
-import manufacturingImage from "../assets/Manufacturing.jpg.png";
-import educationImage from "../assets/Education.jpg.png";
-import governmentImage from "../assets/Government.jpg.png";
-import aiImage from "../assets/AI.jpg.png";
 
 const industries = [
   {
@@ -23,7 +15,8 @@ const industries = [
       ["Risk & fraud tooling", "Real-time transaction monitoring and underwriting decision support."],
     ],
     technologies: ["PCI-DSS", "SOC 2", "Plaid", "Core Banking APIs"],
-    image: bankingImage,
+    icon: "◈",
+    theme: "banking",
   },
   {
     number: "02",
@@ -37,7 +30,8 @@ const industries = [
       ["Clinical workflow tools", "Scheduling, charting, and care-coordination software that fits real workflows."],
     ],
     technologies: ["HL7/FHIR", "HIPAA", "Epic", "Twilio"],
-    image: healthcareImage,
+    icon: "✚",
+    theme: "healthcare",
   },
   {
     number: "03",
@@ -51,7 +45,8 @@ const industries = [
       ["Post-purchase experience", "Order tracking, returns, and retention flows that keep customers coming back."],
     ],
     technologies: ["Shopify", "Stripe", "Next.js", "Algolia"],
-    image: ecommerceImage,
+    icon: "↗",
+    theme: "commerce",
   },
   {
     number: "04",
@@ -65,7 +60,8 @@ const industries = [
       ["Predictive maintenance", "Sensor-driven insights that flag equipment issues before they cause downtime."],
     ],
     technologies: ["IIoT", "MES", "SCADA", "Power BI"],
-    image: manufacturingImage,
+    icon: "⌘",
+    theme: "manufacturing",
   },
   {
     number: "05",
@@ -79,7 +75,8 @@ const industries = [
       ["Analytics & outcomes", "Reporting that helps institutions track engagement and performance."],
     ],
     technologies: ["LMS", "SIS", "SCORM/xAPI", "Canvas API"],
-    image: educationImage,
+    icon: "▤",
+    theme: "education",
   },
   {
     number: "06",
@@ -93,7 +90,8 @@ const industries = [
       ["Case management", "Internal workflow systems for permits, benefits, and service requests."],
     ],
     technologies: ["FedRAMP", "WCAG 2.2", "Section 508", "Salesforce"],
-    image: governmentImage,
+    icon: "⌂",
+    theme: "government",
   },
   {
     number: "07",
@@ -107,7 +105,8 @@ const industries = [
       ["Human-in-the-loop design", "Automation with clear override paths, so people stay in control."],
     ],
     technologies: ["OpenAI", "LangChain", "Vector DBs", "Python"],
-    image: aiImage,
+    icon: "✳",
+    theme: "ai",
   },
 ];
 
@@ -115,59 +114,61 @@ export default function Industries() {
   return (
     <main className="industries-page">
       <section className="industries-hero">
+        <div className="industries-hero-orb industries-hero-orb-one" aria-hidden="true" />
+        <div className="industries-hero-orb industries-hero-orb-two" aria-hidden="true" />
+        <div className="industries-hero-grid" aria-hidden="true" />
         <div className="industries-hero-inner">
-          <span className="industries-eyebrow">INDUSTRIES</span>
-          <h1>Domain experience across every sector we serve</h1>
+          <span className="industries-eyebrow">INDUSTRIES WE TRANSFORM</span>
+          <h1>
+            Technology built for <span>your industry.</span>
+          </h1>
           <p>
-            Every industry has its own constraints — compliance, data
-            sensitivity, legacy systems. We build software that respects them.
+            Every industry has its own challenges. We combine thoughtful engineering,
+            secure architecture, and modern technology to build software that moves
+            your business forward.
           </p>
+          
+        </div>
+        <div className="industries-hero-stats" aria-label="Our approach">
+          <div><strong>01</strong><span>Understand</span></div>
+          <div><strong>02</strong><span>Engineer</span></div>
+          <div><strong>03</strong><span>Transform</span></div>
         </div>
       </section>
 
-      <section
-        className="industries-section"
-        aria-label="Industries we serve"
-      >
+      <section className="industries-section" aria-label="Industries we serve">
+        <div className="industries-section-heading">
+          <span className="industries-eyebrow">INDUSTRY EXPERTISE</span>
+          <h2>Solutions shaped around <span>your world.</span></h2>
+          <p>Purpose-built digital products for the challenges that matter most.</p>
+        </div>
         <div className="industries-grid">
           {industries.map((industry) => (
-            <article className="industry-card" key={industry.number}>
-              <div
-                className="industry-card-background"
-                style={{ backgroundImage: `url("${industry.image}")` }}
-                aria-hidden="true"
-              />
-
+            <article className={`industry-card industry-card--${industry.theme}`} key={industry.number}>
               <div className="industry-card-content">
-                <span className="industry-number">{industry.number}</span>
-
+                <div className="industry-card-topline">
+                  <span className="industry-number">{industry.number}</span>
+                  <span className="industry-icon" aria-hidden="true">{industry.icon}</span>
+                </div>
                 <h2>{industry.title}</h2>
                 <p className="industry-subtitle">{industry.subtitle}</p>
-                <p className="industry-description">
-                  {industry.description}
-                </p>
-
+                <p className="industry-description">{industry.description}</p>
                 <div className="industry-features">
                   {industry.features.map(([title, description]) => (
                     <div className="industry-feature" key={title}>
-                      <span className="industry-check" aria-hidden="true">
-                        ✓
-                      </span>
-                      <div>
-                        <h3>{title}</h3>
-                        <p>{description}</p>
-                      </div>
+                      <span className="industry-check" aria-hidden="true">✓</span>
+                      <div><h3>{title}</h3><p>{description}</p></div>
                     </div>
                   ))}
                 </div>
-
                 <div className="industry-technologies">
                   {industry.technologies.map((technology) => (
-                    <span className="industry-tag" key={technology}>
-                      {technology}
-                    </span>
+                    <span className="industry-tag" key={technology}>{technology}</span>
                   ))}
                 </div>
+                <a className="industry-card-link" href="/contact" aria-label={`Discuss ${industry.title} software`}>
+                  Explore solutions <span aria-hidden="true">→</span>
+                </a>
               </div>
             </article>
           ))}
@@ -175,15 +176,17 @@ export default function Industries() {
       </section>
 
       <section className="industries-cta">
+        <div className="industries-cta-decoration industries-cta-decoration-one" aria-hidden="true" />
+        <div className="industries-cta-decoration industries-cta-decoration-two" aria-hidden="true" />
         <div className="industries-cta-inner">
-          <span className="industries-eyebrow">LET'S BUILD</span>
-          <h2>Building for a specific industry?</h2>
+          <span className="industries-eyebrow">HAVE A CHALLENGE?</span>
+          <h2>Let’s build something <span>that moves you forward.</span></h2>
           <p>
-            Tell us about your requirements. We'll help you find the right
-            engineering approach for your business.
+            Tell us where you want to go. We’ll help you find the right engineering
+            approach and turn your next big idea into a practical digital solution.
           </p>
           <a href="/contact" className="industries-cta-button">
-            Start a Project <span aria-hidden="true">→</span>
+            Start a Project <span aria-hidden="true">↗</span>
           </a>
         </div>
       </section>

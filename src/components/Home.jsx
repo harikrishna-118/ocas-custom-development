@@ -1,22 +1,114 @@
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 
-import bankingImage from "../assets/Banking.jpg.png";
-import healthImage from "../assets/Health.jpg.png";
-import ecommerceImage from "../assets/E-commerce.jpg.png";
-import manufacturingImage from "../assets/Manufacturing.jpg.png";
-import educationImage from "../assets/Education.jpg.png";
-import governmentImage from "../assets/Government.jpg.png";
-import aiImage from "../assets/AI.jpg.png";
 
 export default function Home() {
+  const heroVideoRef = useRef(null);
+
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+
+    let retryTimer;
+    const keepVideoPlaying = () => {
+      if (document.visibilityState !== "visible") return;
+      video.muted = true;
+      const playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(() => {
+          // Retry after a short delay if the browser temporarily blocks playback.
+          window.clearTimeout(retryTimer);
+          retryTimer = window.setTimeout(() => {
+            if (document.visibilityState === "visible") keepVideoPlaying();
+          }, 1200);
+        });
+      }
+    };
+
+    const restartVideo = () => {
+      video.currentTime = 0;
+      keepVideoPlaying();
+    };
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") keepVideoPlaying();
+    };
+
+    video.addEventListener("pause", keepVideoPlaying);
+    video.addEventListener("ended", restartVideo);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    keepVideoPlaying();
+
+    return () => {
+      window.clearTimeout(retryTimer);
+      video.removeEventListener("pause", keepVideoPlaying);
+      video.removeEventListener("ended", restartVideo);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const elements = document.querySelectorAll(
+      ".ocas-home .home-intro, .ocas-home .delivery-item, .ocas-home .principle-card, " +
+      ".ocas-home .home-services, .ocas-home .service-card, .ocas-home .industry-card, " +
+      ".ocas-home .home-process, .ocas-home .process-card, .ocas-home .client-card, " +
+      ".ocas-home .home-cta, .ocas-home .home-contact"
+    );
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) {
+      elements.forEach((element) => element.classList.add("is-visible"));
+      return;
+    }
+
+    elements.forEach((element) => element.classList.add("scroll-reveal"));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const isScrollToggleCard =
+            entry.target.classList.contains("industry-card") ||
+            entry.target.classList.contains("process-card");
+
+          if (isScrollToggleCard) {
+            entry.target.classList.toggle("is-visible", entry.isIntersecting);
+          } else if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.16, rootMargin: "0px 0px -12% 0px" }
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <main className="ocas-home">
 
       {/* HERO */}
       <section className="home-hero" id="home">
+        <video
+          ref={heroVideoRef}
+          className="hero-background-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1920&q=85"
+          disablePictureInPicture
+          aria-hidden="true"
+          tabIndex={-1}
+        >
+          <source
+            src="/videos/ocas-team-work.mp4"
+            type="video/mp4"
+          />
+        </video>
         <div className="hero-dots"></div>
 
         <svg className="hero-art" viewBox="0 0 750 260" fill="none" aria-hidden="true">
@@ -77,22 +169,22 @@ export default function Home() {
       <section className="delivery-band">
         <div className="delivery-grid">
           <div className="delivery-item">
-            <span className="delivery-icon">⌘</span>
+            <span className="delivery-icon" aria-hidden="true">✳</span>
             <h3>Agile Delivery</h3>
           </div>
 
           <div className="delivery-item">
-            <span className="delivery-icon">☁</span>
+            <span className="delivery-icon" aria-hidden="true">☁</span>
             <h3>Cloud-Native Architecture</h3>
           </div>
 
           <div className="delivery-item">
-            <span className="delivery-icon">◇</span>
+            <span className="delivery-icon" aria-hidden="true">⌁</span>
             <h3>Security-First Engineering</h3>
           </div>
 
           <div className="delivery-item">
-            <span className="delivery-icon">♧</span>
+            <span className="delivery-icon" aria-hidden="true">↗</span>
             <h3>Dedicated Support</h3>
           </div>
         </div>
@@ -105,7 +197,7 @@ export default function Home() {
 
         <div className="services-grid">
           <div className="service-card">
-            <div className="service-card-image"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&q=85" alt="Developer writing custom software" loading="lazy" /></div>
+            <div className="service-card-image"><img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1200&q=82" alt="Developer writing custom software" loading="lazy" /></div>
             <div className="service-card-content">
             <h3>Custom Software Development</h3>
             <p>Tailored web and enterprise applications built around how your business actually runs.</p>
@@ -116,7 +208,7 @@ export default function Home() {
           </div>
 
           <div className="service-card">
-            <div className="service-card-image"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1000&q=85" alt="Cloud infrastructure server racks" loading="lazy" /></div>
+            <div className="service-card-image"><img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1400&q=85" alt="Cloud infrastructure server racks" loading="lazy" /></div>
             <div className="service-card-content">
             <h3>Cloud &amp; DevOps Engineering</h3>
             <p>Resilient cloud infrastructure and automated delivery pipelines.</p>
@@ -127,7 +219,7 @@ export default function Home() {
           </div>
 
           <div className="service-card">
-            <div className="service-card-image"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1000&q=85" alt="Artificial intelligence and data technology" loading="lazy" /></div>
+            <div className="service-card-image"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1400&q=85" alt="Artificial intelligence and data technology" loading="lazy" /></div>
             <div className="service-card-content">
             <h3>AI &amp; Data Engineering</h3>
             <p>Data pipelines and applied AI that turn information into decisions.</p>
@@ -138,7 +230,7 @@ export default function Home() {
           </div>
 
           <div className="service-card">
-            <div className="service-card-image"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1000&q=85" alt="Smartphone for mobile app development" loading="lazy" /></div>
+            <div className="service-card-image"><img src="https://images.unsplash.com/photo-1567789884554-0b844b597180?auto=format&fit=crop&w=1400&q=85" alt="Smartphone for mobile app development" loading="lazy" /></div>
             <div className="service-card-content">
             <h3>Mobile App Development</h3>
             <p>Native-feeling apps for iOS and Android from a single codebase.</p>
@@ -149,7 +241,7 @@ export default function Home() {
           </div>
 
           <div className="service-card">
-            <div className="service-card-image"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1000&q=85" alt="Connected digital systems and cybersecurity" loading="lazy" /></div>
+            <div className="service-card-image"><img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1400&q=85" alt="Connected digital systems and cybersecurity" loading="lazy" /></div>
             <div className="service-card-content">
             <h3>Enterprise Systems Integration</h3>
             <p>Connect and modernize the systems your business already depends on.</p>
@@ -165,12 +257,18 @@ export default function Home() {
 
       {/* INDUSTRIES — 7 STICKY SCROLL CARDS */}
       <section className="home-industries" id="industries">
+        <header className="industries-heading">
+          <div className="home-eyebrow"><span></span> INDUSTRIES</div>
+          <h2>Where we build</h2>
+          <p>Purpose-built digital experiences for complex, real-world industries.</p>
+        </header>
 
         {/* 1. BANKING */}
         <article className="industry-card" id="industry-1">
-          <div className="industry-image">
-            <img src={bankingImage} alt="Banking and financial services" />
-            <span className="industry-image-icon">▤</span>
+          <div className="industry-image industry-icon-panel industry-icon-panel--bank" aria-hidden="true">
+            <div className="industry-icon-glow"></div>
+            <svg viewBox="0 0 120 120" role="img" aria-label="Banking icon"><path d="M16 43 60 18l44 25H16Z"/><path d="M23 49h74M28 49v39m21-39v39m22-39v39m21-39v39M19 94h82M13 103h94"/></svg>
+            <span className="industry-icon-label">Bank</span>
           </div>
 
           <div className="industry-content">
@@ -208,9 +306,10 @@ export default function Home() {
 
         {/* 2. HEALTHCARE */}
         <article className="industry-card" id="industry-2">
-          <div className="industry-image">
-            <img src={healthImage} alt="Healthcare technology" loading="lazy" />
-            <span className="industry-image-icon">♡</span>
+          <div className="industry-image industry-icon-panel industry-icon-panel--healthcare" aria-hidden="true">
+            <div className="industry-icon-glow"></div>
+            <svg viewBox="0 0 120 120" role="img" aria-label="Healthcare icon"><path d="M60 101S17 75 17 43c0-23 29-32 43-10 14-22 43-13 43 10 0 32-43 58-43 58Z"/><path d="M60 43v34M43 60h34"/></svg>
+            <span className="industry-icon-label">Healthcare</span>
           </div>
 
           <div className="industry-content">
@@ -247,9 +346,10 @@ export default function Home() {
 
         {/* 3. E-COMMERCE */}
         <article className="industry-card" id="industry-3">
-          <div className="industry-image">
-            <img src={ecommerceImage} alt="E-commerce and online retail" loading="lazy" />
-            <span className="industry-image-icon">♧</span>
+          <div className="industry-image industry-icon-panel industry-icon-panel--commerce" aria-hidden="true">
+            <div className="industry-icon-glow"></div>
+            <svg viewBox="0 0 120 120" role="img" aria-label="E-commerce icon"><path d="M18 26h12l10 51h48l13-36H35"/><circle cx="49" cy="94" r="6"/><circle cx="82" cy="94" r="6"/><path d="M47 48h34m-17-17v34"/></svg>
+            <span className="industry-icon-label">E-Commerce</span>
           </div>
 
           <div className="industry-content">
@@ -287,9 +387,10 @@ export default function Home() {
 
         {/* 4. MANUFACTURING */}
         <article className="industry-card" id="industry-4">
-          <div className="industry-image">
-            <img src={manufacturingImage} alt="Manufacturing technology" loading="lazy" />
-            <span className="industry-image-icon">⚙</span>
+          <div className="industry-image industry-icon-panel industry-icon-panel--manufacturing" aria-hidden="true">
+            <div className="industry-icon-glow"></div>
+            <svg viewBox="0 0 120 120" role="img" aria-label="Manufacturing icon"><path d="M18 102V55l25 15V53l25 17V38l16 10V25h18v77H18Z"/><path d="M31 84h9m12 0h9m12 0h9m12 0h6M87 25V14h8v11"/></svg>
+            <span className="industry-icon-label">Manufacturing</span>
           </div>
 
           <div className="industry-content">
@@ -326,9 +427,10 @@ export default function Home() {
 
         {/* 5. EDUCATION */}
         <article className="industry-card" id="industry-5">
-          <div className="industry-image">
-            <img src={educationImage} alt="Education and learning technology" loading="lazy" />
-            <span className="industry-image-icon">⌂</span>
+          <div className="industry-image industry-icon-panel industry-icon-panel--education" aria-hidden="true">
+            <div className="industry-icon-glow"></div>
+            <svg viewBox="0 0 120 120" role="img" aria-label="Education icon"><path d="m12 43 48-25 48 25-48 25-48-25Z"/><path d="M30 54v25c17 15 43 15 60 0V54M108 43v32"/><circle cx="108" cy="81" r="5"/></svg>
+            <span className="industry-icon-label">Education</span>
           </div>
 
           <div className="industry-content">
@@ -365,9 +467,10 @@ export default function Home() {
 
         {/* 6. GOVERNMENT */}
         <article className="industry-card" id="industry-6">
-          <div className="industry-image">
-            <img src={governmentImage} alt="Government and public sector technology" loading="lazy" />
-            <span className="industry-image-icon">▥</span>
+          <div className="industry-image industry-icon-panel industry-icon-panel--government" aria-hidden="true">
+            <div className="industry-icon-glow"></div>
+            <svg viewBox="0 0 120 120" role="img" aria-label="Government icon"><path d="M15 43 60 18l45 25H15ZM21 50h78M27 50v39m22-39v39m22-39v39m22-39v39M18 96h84M12 105h96"/></svg>
+            <span className="industry-icon-label">Government</span>
           </div>
 
           <div className="industry-content">
@@ -404,9 +507,10 @@ export default function Home() {
 
         {/* 7. AI AUTOMATION */}
         <article className="industry-card" id="industry-7">
-          <div className="industry-image">
-            <img src={aiImage} alt="AI automation and intelligent workflows" loading="lazy" />
-            <span className="industry-image-icon">✳</span>
+          <div className="industry-image industry-icon-panel industry-icon-panel--ai" aria-hidden="true">
+            <div className="industry-icon-glow"></div>
+            <svg viewBox="0 0 120 120" role="img" aria-label="AI automation icon"><rect x="27" y="28" width="66" height="64" rx="14"/><path d="M60 13v15m-17 16h34M45 60h.1M75 60h.1M45 75c8 8 22 8 30 0M14 47h13m66 0h13M14 75h13m66 0h13M43 92v14m34-14v14"/></svg>
+            <span className="industry-icon-label">AI Automation</span>
           </div>
 
           <div className="industry-content">
@@ -481,19 +585,19 @@ export default function Home() {
         <h2>Software we've shipped for real businesses.</h2>
 
         <div className="clients-grid">
-          <Link to="/contact" className="client-card">
+          <a href="https://infynixtek.com/" className="client-card">
             <span className="client-card-arrow">↗</span>
             <h3>Infynixtek</h3>
             <span className="client-category">Talent placement &amp; staffing solutions</span>
             <p>Website design and a candidate portal for talent placement.</p>
-          </Link>
+          </a>
 
-          <Link to="/contact" className="client-card">
+          <a href="https://codebridgetec.com/" className="client-card">
             <span className="client-card-arrow">↗</span>
             <h3>CodeBridge Technologies</h3>
             <span className="client-category">Talent placement &amp; staffing solutions</span>
             <p>Website design and internal staffing management tools.</p>
-          </Link>
+          </a>
         </div>
       </section>
 
