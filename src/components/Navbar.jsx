@@ -5,10 +5,10 @@ import "./Navbar.css";
 import ocasLogo from "../assets/logo-full.png";
 
 const navLinks = [
-  { name: "Services", path: "/services" },
-  { name: "Industries", path: "/industries" },
-  { name: "Process", path: "/process" },
   { name: "About", path: "/about" },
+  { name: "Process", path: "/process" },
+  { name: "Industries", path: "/industries" },
+  { name: "Services", path: "/services" },
   { name: "Careers", path: "/careers" },
   { name: "Contact", path: "/contact" },
 ];
