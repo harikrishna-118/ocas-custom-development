@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Services.css";
 
 const services = [
@@ -13,8 +13,8 @@ const services = [
       ["Scalable foundations", "Systems built to handle growth without a rewrite six months in."]
     ],
     tags: ["TypeScript", "React", "Node.js", "PostgreSQL", "GraphQL"],
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=85",
-    alt: "Developer workspace with computer and code editor",
+    image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=85",
+    alt: "Developer working at a desk on a keyboard in a bright office",
     theme: "violet"
   },
   {
@@ -28,8 +28,8 @@ const services = [
       ["Observability built in", "Logging, metrics, and alerting from day one, not bolted on later."]
     ],
     tags: ["AWS", "Docker", "Kubernetes", "Terraform", "GitHub Actions"],
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=85",
-    alt: "Real photograph of server racks in a data centre",
+    image: "https://images.unsplash.com/photo-1584169417032-d34e8d805e8b?auto=format&fit=crop&w=1200&q=85",
+    alt: "Aisle of server racks inside a data centre",
     theme: "teal"
   },
   {
@@ -43,8 +43,8 @@ const services = [
       ["Analytics you can trust", "Clean semantic layers so every team reports from the same numbers."]
     ],
     tags: ["Python", "PostgreSQL", "Airflow", "dbt", "PyTorch"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=85",
-    alt: "Analytics charts displayed on a computer screen",
+    image: "https://images.unsplash.com/photo-1763038311036-6d18805537e5?auto=format&fit=crop&w=1200&q=85",
+    alt: "Person reviewing charts and graphs on a laptop",
     theme: "blue"
   },
   {
@@ -58,8 +58,8 @@ const services = [
       ["App store readiness", "Submission, review, and release handled end to end."]
     ],
     tags: ["React Native", "Swift", "Kotlin", "Firebase"],
-    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=85",
-    alt: "Smartphone showing a mobile application in use",
+    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=85",
+    alt: "Smartphone showing an app interface next to a laptop keyboard",
     theme: "gold"
   },
   {
@@ -73,8 +73,8 @@ const services = [
       ["Workflow automation", "Removing manual handoffs between systems that should talk to each other."]
     ],
     tags: ["REST/SOAP APIs", "Salesforce", "SAP", "MuleSoft"],
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=85",
-    alt: "Photograph of global network connectivity and digital infrastructure",
+    image: "https://images.unsplash.com/photo-1758873268998-2f77c2d38862?auto=format&fit=crop&w=1200&q=85",
+    alt: "Team collaborating around a whiteboard during a planning meeting",
     theme: "pink"
   },
   {
@@ -88,78 +88,216 @@ const services = [
       ["Design systems", "Reusable components and accessibility-minded patterns for consistent experiences."]
     ],
     tags: ["Figma", "Design Systems", "Prototyping", "Accessibility"],
-    image: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1200&q=85",
-    alt: "Designer working on digital interface layouts and prototypes",
+    image: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1200&q=85",
+    alt: "Monitor showing a design system interface on a desk with plants",
     theme: "lime"
   }
 ];
 
+/* Image with a graceful blue fallback if a photo ever fails to load */
+function Photo({ src, alt, className = "", eager = false }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return <div className={`photo-fallback ${className}`} role="img" aria-label={alt} />;
+  }
+  return (
+    <img
+      className={className}
+      src={src}
+      alt={alt}
+      loading={eager ? "eager" : "lazy"}
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
+/* Adds .is-visible when element enters viewport */
+function useReveal() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (!("IntersectionObserver" in window)) {
+      el.classList.add("is-visible");
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("is-visible");
+          io.disconnect();
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -50px 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return ref;
+}
+
+function Reveal({ delay = 0, className = "", children }) {
+  const ref = useReveal();
+  return (
+    <div ref={ref} className={`reveal ${className}`} style={{ "--d": `${delay}ms` }}>
+      {children}
+    </div>
+  );
+}
+
+function ServiceCard({ service }) {
+  const ref = useReveal();
+  const onMove = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+  };
+  return (
+    <article
+      ref={ref}
+      id={`service-${service.number}`}
+      onMouseMove={onMove}
+      className={`reveal service-detail-card service-theme-${service.theme}`}
+    >
+      <span className="service-spotlight" aria-hidden="true" />
+      <div className="service-card-image-wrap">
+        <Photo src={service.image} alt={service.alt} />
+        <span className="service-image-shade" aria-hidden="true" />
+        <span className="service-card-number">{service.number}</span>
+        <span className="service-card-image-label">OCAS DIGITAL SERVICES</span>
+      </div>
+      <div className="service-card-content">
+        <h3>{service.title}</h3>
+        <p className="service-detail-subtitle">{service.subtitle}</p>
+        <p className="service-detail-description">{service.description}</p>
+        <div className="service-features">
+          {service.features.map(([title, description]) => (
+            <div className="service-feature" key={title}>
+              <span className="feature-check">↗</span>
+              <div>
+                <h4>{title}</h4>
+                <p>{description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="service-tech-tags">
+          {service.tags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+        </div>
+        <a className="service-card-link" href="/#contact">
+          <span>Discuss this service</span>
+          <b>↗</b>
+        </a>
+      </div>
+    </article>
+  );
+}
+
 export default function Services() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      setProgress(max > 0 ? (h.scrollTop / max) * 100 : 0);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <main className="ocas-services-page">
-      <section className="services-hero">
-        <div className="services-hero-image" aria-hidden="true" />
-        <div className="services-hero-shade" aria-hidden="true" />
+      <div className="services-progress" style={{ width: `${progress}%` }} aria-hidden="true" />
+
+      {/* HERO — professional software engineering photography */}
+      <section className="services-hero" aria-labelledby="services-hero-title">
+        <div className="services-hero-background" aria-hidden="true" />
+
         <div className="services-hero-inner">
-          <div className="services-eyebrow"><span /> SERVICES</div>
-          <h1>Engineering services for <em>real product work</em></h1>
-          <p>From first architecture sketch to production support, we cover the engineering disciplines that turn an idea into working software.</p>
-          <a className="services-hero-button" href="/#contact">Discuss your project <span>↗</span></a>
-          <div className="services-hero-note"><i /> Strategy, design, engineering and delivery</div>
+          <div className="hero-copy">
+            <div className="services-eyebrow hero-in" style={{ "--d": "0ms" }}>
+              <span /> SERVICES
+            </div>
+
+            <h1 id="services-hero-title" className="hero-in" style={{ "--d": "120ms" }}>
+              Engineering services for <em>real product work</em>
+            </h1>
+
+            <p className="hero-in" style={{ "--d": "240ms" }}>
+              From first architecture sketch to production support, we cover
+              the engineering disciplines that turn an idea into working
+              software. Scalable, secure, and built for real-world impact.
+            </p>
+
+            <div className="hero-actions hero-in" style={{ "--d": "360ms" }}>
+              <a className="services-hero-button" href="/#contact">
+                Discuss your project <span aria-hidden="true">↗</span>
+              </a>
+              <a className="services-hero-secondary" href="#services-list">
+                Explore services
+              </a>
+            </div>
+</div>
         </div>
-        <div className="services-hero-index"><span>OCAS / SERVICES</span><span>01 — 06</span></div>
       </section>
 
+      {/* INTRO */}
       <section className="services-intro">
         <div className="services-shell services-intro-grid">
-          <div><span className="services-kicker">WHAT WE DO</span><h2>Technology that moves<br /><em>your business forward.</em></h2></div>
-          <p>From the first idea to the systems that keep you moving, our teams build dependable digital products around your real-world needs. Explore our capabilities and find the right fit for your next project.</p>
+          <Reveal>
+            <span className="services-kicker">WHAT WE DO</span>
+            <h2>Technology that moves<br /><em>your business forward.</em></h2>
+          </Reveal>
+          <Reveal delay={150}>
+            <p>
+              From the first idea to the systems that keep you moving, our teams build dependable digital products around your real-world needs. Explore our capabilities and find the right fit for your next project.
+            </p>
+          </Reveal>
         </div>
       </section>
 
+      {/* SERVICES */}
       <section className="services-details" id="services-list">
         <div className="services-shell">
-          <div className="services-section-heading">
-            <div><span className="services-kicker">OUR CAPABILITIES</span><h2>Six ways to make progress.</h2></div>
+          <Reveal className="services-section-heading">
+            <div>
+              <span className="services-kicker">OUR CAPABILITIES</span>
+              <h2>Six ways to make progress.</h2>
+            </div>
             <span className="services-heading-count">01 / 06 <i /></span>
-          </div>
+          </Reveal>
+
+          <nav className="services-quicknav" aria-label="Jump to a service">
+            {services.map((s) => (
+              <a href={`#service-${s.number}`} key={s.number}>
+                <b>{s.number}</b> {s.title}
+              </a>
+            ))}
+          </nav>
+
           <div className="services-card-grid">
             {services.map((service) => (
-              <article className={`service-detail-card service-theme-${service.theme}`} key={service.number}>
-                <div className="service-card-image-wrap">
-                  <img src={service.image} alt={service.alt} loading="lazy" />
-                  <span className="service-card-number">{service.number}</span>
-                  <span className="service-card-image-label">OCAS DIGITAL SERVICES</span>
-                </div>
-                <div className="service-card-content">
-                  <h3>{service.title}</h3>
-                  <p className="service-detail-subtitle">{service.subtitle}</p>
-                  <p className="service-detail-description">{service.description}</p>
-                  <div className="service-features">
-                    {service.features.map(([title, description]) => (
-                      <div className="service-feature" key={title}>
-                        <span className="feature-check">↗</span>
-                        <div><h4>{title}</h4><p>{description}</p></div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="service-tech-tags">{service.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
-                  <a className="service-card-link" href="/#contact">Discuss this service <span>↗</span></a>
-                </div>
-              </article>
+              <ServiceCard service={service} key={service.number} />
             ))}
           </div>
         </div>
       </section>
 
+      {/* CTA */}
       <section className="services-cta">
         <div className="services-cta-pattern" aria-hidden="true" />
-        <div className="services-cta-inner">
+        <span className="cta-ring ring-a" aria-hidden="true" />
+        <span className="cta-ring ring-b" aria-hidden="true" />
+        <Reveal className="services-cta-inner">
           <span className="services-kicker">HAVE A PROJECT IN MIND?</span>
           <h2>Ready to build<br /><em>something great?</em></h2>
           <p>Tell us about your project and we'll walk you through how OCAS can help you build it.</p>
           <a href="/#contact" className="services-cta-button">Start a Project <span>↗</span></a>
-        </div>
+        </Reveal>
       </section>
     </main>
   );

@@ -178,7 +178,6 @@ const approach = [
   },
 ];
 
-const rotatingWords = ["Banking", "Healthcare", "Logistics", "Education", "Commerce", "Government", "AI"];
 
 /* ---------- hooks ---------- */
 
@@ -345,29 +344,10 @@ function IndustryCard({ industry, hidden, index }) {
 export default function Industries() {
   const pageRef = useRef(null);
   const barRef = useRef(null);
-  const heroRef = useRef(null);
   const [active, setActive] = useState("all");
-  const [wordIndex, setWordIndex] = useState(0);
 
   useReveal(pageRef);
   useScrollProgress(barRef);
-
-  useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return undefined;
-    const id = setInterval(() => setWordIndex((i) => (i + 1) % rotatingWords.length), 2300);
-    return () => clearInterval(id);
-  }, []);
-
-  const onHeroMove = (e) => {
-    const el = heroRef.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty("--px", ((e.clientX - r.left) / r.width - 0.5).toFixed(3));
-    el.style.setProperty("--py", ((e.clientY - r.top) / r.height - 0.5).toFixed(3));
-  };
-
-  const marquee = [...industries, ...industries];
 
   return (
     <main className="ind-page" ref={pageRef}>
@@ -375,30 +355,20 @@ export default function Industries() {
         <span ref={barRef} />
       </div>
 
-      {/* HERO */}
-      <section className="ind-hero" ref={heroRef} onMouseMove={onHeroMove}>
-        <div className="ind-hero-bg" aria-hidden="true">
-          <span className="ind-aurora ind-aurora-a" />
-          <span className="ind-aurora ind-aurora-b" />
-          <span className="ind-grid-lines" />
-        </div>
-
+      {/* HERO — centered text only */}
+      <section className="ind-hero" aria-labelledby="industries-hero-title">
         <div className="ind-hero-inner">
           <div className="ind-hero-copy">
             <div className="ind-pill" data-reveal>
-              <span className="ind-pill-dot" /> Industries we serve
+              <span className="ind-pill-dot" aria-hidden="true" /> Industries we serve
             </div>
-            <h1 data-reveal>
-              Technology built for
-              <span className="ind-rotator" aria-live="polite">
-                <span key={wordIndex} className="ind-rotator-word">
-                  {rotatingWords[wordIndex]}
-                </span>
-              </span>
+            <h1 id="industries-hero-title" data-reveal>
+              Technology built for <span className="ind-hero-highlight">every industry.</span>
             </h1>
             <p data-reveal>
-              Every industry has its own challenges. We combine thoughtful engineering, practical
-              strategy, and modern technology to solve the problems that matter to your business.
+              Every industry has its own challenges. We combine thoughtful engineering,
+              practical strategy, and modern technology to solve the problems that matter
+              to your business.
             </p>
             <div className="ind-actions" data-reveal>
               <a href="/contact" className="ind-btn ind-btn-primary">
@@ -408,37 +378,6 @@ export default function Industries() {
                 Explore expertise <span aria-hidden="true">↓</span>
               </a>
             </div>
-          </div>
-
-          <div className="ind-hero-visual" data-reveal aria-hidden="true">
-            <div className="ind-orbit">
-              <span className="ind-orbit-ring ind-orbit-ring-1" />
-              <span className="ind-orbit-ring ind-orbit-ring-2" />
-              <div className="ind-orbit-core">
-                <strong>09</strong>
-                <span>Industries</span>
-              </div>
-              <div className="ind-orbit-spin">
-                {industries.map((item, i) => (
-                  <div className="ind-orbit-node" key={item.number} style={{ "--a": `${i * 40}deg` }}>
-                    <span className={`ind-orbit-icon ind-card--${item.theme}`} title={item.title}>
-                      <Icon name={item.theme} size={22} />
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="ind-marquee" aria-hidden="true">
-          <div className="ind-marquee-track">
-            {marquee.map((item, i) => (
-              <span key={`${item.number}-${i}`}>
-                {item.title}
-                <i />
-              </span>
-            ))}
           </div>
         </div>
       </section>

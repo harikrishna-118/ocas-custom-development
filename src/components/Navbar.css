@@ -1,1749 +1,872 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
-
-
 /* ==========================================
-
    OCAS NAVBAR — COMPLETE RESPONSIVE STYLES
-
    Unified background + animated neon borders
-
-\========================================== */
-
-
+========================================== */
 
 .ocas-navbar,
-
 .ocas-navbar *,
-
 .ocas-navbar *::before,
-
 .ocas-navbar *::after {
-
   box-sizing: border-box;
-
 }
-
-
 
 .ocas-navbar {
-
   --ocas-bg: #0b1020;
-
   --ocas-pill: #080d18;
-
   --ocas-text: #f7f1e5;
-
   --ocas-muted: #b7b3aa;
-
   --ocas-active: #171d2e;
-
-  --ocas-blue: #c9a96e;
-
-  --ocas-cyan: #f0d7a0;
-
-
+  --ocas-blue: #210ab3;
+  --ocas-cyan: #290797;
 
   position: sticky;
-
   top: 0;
-
   z-index: 1000;
-
   isolation: isolate;
-
   width: 100%;
-
   color: var(--ocas-text);
-
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-
-
-  /* One continuous background behind logo, menu, and CTA */
-
+  /* One continuous dark background behind logo, menu, and CTA */
   background:
-
     radial-gradient(
-
       ellipse at 5% 50%,
-
-      rgba(255, 255, 255, 0.11),
-
+      rgba(255, 255, 255, 0.08),
       transparent 34%
-
     ),
-
     linear-gradient(
-
       105deg,
-
-      #202941 0%,
-
-      #171d2e 25%,
-
-      #11182a 58%,
-
-      #0b1020 100%
-
+      #141a29 0%,
+      #0e1322 25%,
+      #090d18 58%,
+      #050810 100%
     );
-
-
 
   border: 1px solid rgba(255, 255, 255, 0.075);
-
   border-radius: 5px;
-
   box-shadow:
-
-    0 8px 26px rgba(0, 0, 0, 0.3),
-
+    0 8px 26px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.025);
 
-
-
   -webkit-backdrop-filter: blur(18px);
-
   backdrop-filter: blur(18px);
 
-
-
   animation: ocasNavbarEnter 0.6s ease both;
-
 }
-
-
 
 .ocas-navbar::before {
-
   content: "";
-
   position: absolute;
-
   inset: 0;
-
   z-index: -1;
-
   border-radius: inherit;
-
   background:
-
     radial-gradient(
-
       ellipse at 15% 120%,
-
-      rgba(255, 255, 255, 0.035),
-
+      rgba(33, 10, 179, 0.08),
       transparent 42%
-
     );
-
   pointer-events: none;
-
 }
 
-
-
 /* ==========================================
-
    LAYOUT
-
-\========================================== */
-
-
+========================================== */
 
 .ocas-navbar-container {
-
   position: relative;
-
   display: grid;
-
   grid-template-columns: minmax(150px, 1fr) auto minmax(170px, 1fr);
-
   align-items: center;
-
   gap: 24px;
-
   width: min(1600px, calc(100% - 80px));
-
   min-height: 94px;
-
   margin: 0 auto;
-
 }
 
-
-
 /* ==========================================
-
-   LOGO — NO SEPARATE BACKGROUND
-
-\========================================== */
-
-
+   LOGO
+========================================== */
 
 .ocas-navbar-logo {
-
   position: relative;
-
   display: inline-flex;
-
   align-items: center;
-
   justify-self: start;
-
   width: fit-content;
-
   max-width: 100%;
-
   padding: 0;
-
   background: transparent;
-
   border: 0;
-
   border-radius: 0;
-
   box-shadow: none;
-
   text-decoration: none;
-
   outline-offset: 5px;
-
   transition: opacity 0.3s ease;
-
 }
-
-
 
 .ocas-navbar-logo::before,
-
 .ocas-navbar-logo::after {
-
   content: none;
-
   display: none;
-
 }
-
-
 
 .ocas-navbar-logo img {
-
   display: block;
-
   width: 175px;
-
   max-width: 100%;
-
   max-height: 58px;
-
   height: auto;
-
   object-fit: contain;
-
   object-position: left center;
-
   filter: none;
-
   transition:
-
     transform 0.3s ease,
-
     filter 0.3s ease;
-
 }
-
-
 
 .ocas-navbar-logo:hover img {
-
   transform: scale(1.035);
-
-  filter: drop-shadow(0 0 8px rgba(201, 169, 110, 0.18));
-
+  filter: drop-shadow(0 0 10px rgba(33, 10, 179, 0.45));
 }
 
-
-
 /* ==========================================
-
-   NAVIGATION PILL
-
-\========================================== */
-
-
+   NAVIGATION PILL — BLUE / BLACK THEME
+========================================== */
 
 .ocas-navbar-menu {
-
   position: relative;
-
   isolation: isolate;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   gap: 2px;
-
   width: max-content;
-
   max-width: 100%;
-
   min-height: 53px;
-
   padding: 4px;
 
-
-
   background: var(--ocas-pill);
-
-  border: 1px solid rgba(201, 169, 110, 0.58);
-
+  border: 1px solid rgba(33, 10, 179, 0.55);
   border-radius: 100px;
 
-
-
   box-shadow:
-
-    0 0 7px rgba(201, 169, 110, 0.18),
-
-    0 0 18px rgba(201, 169, 110, 0.09),
-
-    inset 0 0 8px rgba(201, 169, 110, 0.025);
-
-
+    0 0 10px rgba(33, 10, 179, 0.35),
+    0 0 20px rgba(13, 2, 70, 0.5),
+    inset 0 0 10px rgba(33, 10, 179, 0.1);
 
   animation: ocasNeonPulse 3s ease-in-out infinite;
-
 }
-
-
 
 /* Moving blue/cyan outline */
-
 @property --ocas-glow-angle {
-
   syntax: "<angle>";
-
   initial-value: 0deg;
-
   inherits: false;
-
 }
-
-
 
 .ocas-navbar-menu::before {
-
   content: "";
-
   position: absolute;
-
   inset: -2px;
-
   z-index: 0;
-
   padding: 2px;
-
   border-radius: inherit;
 
-
-
   background: conic-gradient(
-
     from var(--ocas-glow-angle),
-
     transparent 0deg,
-
     transparent 65deg,
-
-    #b58b4b 100deg,
-
-    #f0d7a0 135deg,
-
-    #d6b878 165deg,
-
+    #2507bb 100deg,
+    #0638cc 135deg,
+    #260ec5 165deg,
     transparent 205deg,
-
     transparent 360deg
-
   );
 
-
-
   -webkit-mask:
-
     linear-gradient(#fffaf0 0 0) content-box,
-
     linear-gradient(#fffaf0 0 0);
-
   -webkit-mask-composite: xor;
-
   mask:
-
     linear-gradient(#fffaf0 0 0) content-box,
-
     linear-gradient(#fffaf0 0 0);
-
   mask-composite: exclude;
 
-
-
   pointer-events: none;
-
   animation: ocasNeonRotate 4s linear infinite;
-
 }
 
-
-
 /* ==========================================
-
    NAVIGATION LINKS
-
-\========================================== */
-
-
+========================================== */
 
 .ocas-navbar-link {
-
   position: relative;
-
   z-index: 1;
-
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
-
   min-height: 43px;
-
   padding: 0 19px;
 
-
-
   color: var(--ocas-muted);
-
   background: transparent;
-
   border: 1px solid transparent;
-
   border-radius: 100px;
 
-
-
   font-family: inherit;
-
   font-size: 13px;
-
   font-weight: 500;
-
   letter-spacing: -0.025em;
-
   line-height: 1;
-
   text-decoration: none;
-
   white-space: nowrap;
 
-
-
   transition:
-
     color 0.25s ease,
-
-    *background* 0.25s ease,
-
+    background 0.25s ease,
     border-color 0.25s ease,
-
     transform 0.25s ease;
-
 }
-
-
 
 .ocas-navbar-link:hover {
-
-  color: #fffaf0;
-
-  background: rgba(255, 255, 255, 0.075);
-
+  color: #3b82f6;
+  background: rgba(255, 255, 255, 0.05);
 }
-
-
 
 .ocas-navbar-link.ocas-link-active {
-
-  color: #fffaf0;
-
+  color: #ffffff;
   background: var(--ocas-active);
-
-  border-color: rgba(255, 255, 255, 0.025);
-
+  border-color: rgba(255, 255, 255, 0.05);
   font-weight: 600;
-
   box-shadow:
-
-    inset 0 1px 0 rgba(255, 255, 255, 0.045),
-
-    0 2px 8px rgba(0, 0, 0, 0.22);
-
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.4);
 }
-
-
 
 .ocas-navbar-link.ocas-link-active:hover {
-
   background: #202840;
-
 }
-
-
 
 .ocas-navbar-link:focus-visible {
-
-  outline: 2px solid rgba(226, 194, 125, 0.95);
-
+  outline: 2px solid rgba(40, 6, 150, 0.95);
   outline-offset: 3px;
-
 }
 
-
-
 /* ==========================================
-
-   START A PROJECT CTA
-
-\========================================== */
-
-
+   START A PROJECT CTA — BLACK/BLUE GLOW
+========================================== */
 
 .ocas-navbar-cta {
-
   position: relative;
-
   isolation: isolate;
-
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
-
   justify-self: end;
-
   gap: 9px;
 
-
-
   min-width: 160px;
-
   min-height: 49px;
-
   padding: 0 23px;
 
-
-
   color: #f7f1e5;
-
-  background: rgba(15, 15, 15, 0.4);
-
-  border: 1px solid rgba(201, 169, 110, 0.58);
-
+  background: rgba(5, 8, 16, 0.85);
+  border: 1px solid rgba(33, 10, 179, 0.5);
   border-radius: 100px;
 
-
-
   box-shadow:
-
-    0 0 0 3px rgba(0, 0, 0, 0.35),
-
-    0 0 7px rgba(201, 169, 110, 0.18),
-
-    0 0 18px rgba(201, 169, 110, 0.09),
-
-    inset 0 0 8px rgba(201, 169, 110, 0.025);
-
-
+    0 0 0 3px rgba(0, 0, 0, 0.4),
+    0 0 10px rgba(33, 10, 179, 0.3),
+    0 0 20px rgba(6, 11, 28, 0.6),
+    inset 0 0 8px rgba(33, 10, 179, 0.08);
 
   font-family: inherit;
-
   font-size: 13px;
-
   font-weight: 600;
-
   letter-spacing: -0.01em;
-
   line-height: 1.2;
-
   text-align: center;
-
   text-decoration: none;
-
   white-space: nowrap;
 
-
-
   animation: ocasNeonPulse 3s ease-in-out infinite;
-
   transition:
-
     color 0.3s ease,
-
-    *background* 0.3s ease,
-
+    background 0.3s ease,
     border-color 0.3s ease,
-
     box-shadow 0.3s ease,
-
     transform 0.3s ease;
-
 }
-
-
 
 /* Rotating outline around CTA */
-
 .ocas-navbar-cta::after {
-
   content: "";
-
   position: absolute;
-
   inset: -2px;
-
   z-index: -1;
-
   padding: 2px;
-
   border: 0;
-
   border-radius: inherit;
-
-
 
   background: conic-gradient(
-
     from var(--ocas-glow-angle),
-
     transparent 0deg,
-
     transparent 65deg,
-
-    #b58b4b 100deg,
-
-    #f0d7a0 135deg,
-
-    #d6b878 165deg,
-
+    #2c02c3 100deg,
+    #170cb7 135deg,
+    #0401ae 165deg,
     transparent 205deg,
-
     transparent 360deg
-
   );
-
-
 
   -webkit-mask:
-
     linear-gradient(#fffaf0 0 0) content-box,
-
     linear-gradient(#fffaf0 0 0);
-
   -webkit-mask-composite: xor;
-
   mask:
-
     linear-gradient(#fffaf0 0 0) content-box,
-
     linear-gradient(#fffaf0 0 0);
-
   mask-composite: exclude;
 
-
-
   pointer-events: none;
-
   animation: ocasNeonRotate 4s linear infinite;
-
 }
 
-
-
-/* Moving highlight over the CTA */
-
+/* Moving shimmer highlight */
 .ocas-navbar-cta::before {
-
   content: "";
-
   position: absolute;
-
   top: 0;
-
   bottom: 0;
-
   left: -120%;
-
   z-index: 0;
-
   width: 65%;
 
-
-
   background: linear-gradient(
-
     105deg,
-
     transparent,
-
-    rgba(255, 255, 255, 0.13),
-
+    rgba(255, 255, 255, 0.15),
     transparent
-
   );
 
-
-
   border-radius: inherit;
-
   transform: skewX(-20deg);
-
   pointer-events: none;
-
   transition: left 0.65s ease;
-
 }
-
-
 
 .ocas-navbar-cta:hover::before {
-
   left: 150%;
-
 }
-
-
 
 .ocas-navbar-cta > span {
-
   position: relative;
-
   z-index: 1;
-
 }
-
-
 
 .ocas-navbar-cta:hover {
-
-  color: #fffaf0;
-
-  background: rgba(0, 25, 45, 0.65);
-
-  border-color: rgba(240, 215, 160, 0.9);
-
+  color: #ffffff;
+  background: rgba(12, 18, 38, 0.95);
+  border-color: rgba(41, 7, 151, 0.9);
   box-shadow:
-
-    0 0 0 3px rgba(0, 0, 0, 0.35),
-
-    0 0 10px rgba(201, 169, 110, 0.28),
-
-    0 0 25px rgba(201, 169, 110, 0.16),
-
-    inset 0 0 12px rgba(0, 145, 255, 0.06);
-
+    0 0 0 3px rgba(0, 0, 0, 0.4),
+    0 0 14px rgba(33, 10, 179, 0.5),
+    0 0 28px rgba(6, 11, 28, 0.8),
+    inset 0 0 12px rgba(33, 10, 179, 0.15);
   transform: translateY(-2px);
-
 }
-
-
 
 .ocas-navbar-cta:active {
-
   transform: scale(0.98);
-
 }
-
-
 
 .ocas-cta-arrow {
-
   display: inline-block;
-
   font-size: 17px;
-
   line-height: 1;
-
   transition: transform 0.25s ease;
-
 }
-
-
 
 .ocas-navbar-cta:hover .ocas-cta-arrow {
-
   transform: translate(2px, -2px);
-
 }
-
-
 
 .ocas-desktop-cta {
-
   grid-column: 3;
-
   justify-self: end;
-
 }
-
-
 
 .ocas-mobile-cta {
-
   display: none;
-
 }
 
-
-
 /* ==========================================
-
    HAMBURGER BUTTON
-
-\========================================== */
-
-
+========================================== */
 
 .ocas-navbar-toggle {
-
   display: none;
-
   position: relative;
-
   flex-shrink: 0;
-
   width: 44px;
-
   height: 44px;
-
   padding: 10px;
 
-
-
   background: #090e1a;
-
   border: 1px solid rgba(255, 255, 255, 0.17);
-
   border-radius: 50%;
 
-
-
   box-shadow:
-
     inset 0 1px 0 rgba(255, 255, 255, 0.07),
-
     0 3px 12px rgba(0, 0, 0, 0.2);
 
-
-
   cursor: pointer;
-
   transition:
-
-    *background* 0.25s ease,
-
+    background 0.25s ease,
     border-color 0.25s ease,
-
     transform 0.25s ease;
-
 }
-
-
 
 .ocas-navbar-toggle span {
-
   display: block;
-
   width: 19px;
-
   height: 2px;
-
   margin: 4px auto;
-
   border-radius: 10px;
-
-  background: #fffaf0;
-
+  background: #2a0ca3;
   transition:
-
     transform 0.25s ease,
-
     opacity 0.2s ease,
-
     width 0.25s ease;
-
 }
-
-
 
 .ocas-navbar-toggle:hover {
-
   background: #1b2438;
-
-  border-color: rgba(226, 194, 125, 0.72);
-
+  border-color: rgba(24, 8, 175, 0.72);
 }
-
-
 
 .ocas-navbar-toggle:hover span:nth-child(2) {
-
   width: 13px;
-
 }
-
-
 
 .ocas-navbar-toggle.ocas-toggle-open span:nth-child(1) {
-
   transform: translateY(6px) rotate(45deg);
-
 }
-
-
 
 .ocas-navbar-toggle.ocas-toggle-open span:nth-child(2) {
-
   opacity: 0;
-
 }
-
-
 
 .ocas-navbar-toggle.ocas-toggle-open span:nth-child(3) {
-
   transform: translateY(-6px) rotate(-45deg);
-
 }
-
-
 
 .ocas-navbar-toggle:focus-visible {
-
-  outline: 2px solid rgba(226, 194, 125, 0.95);
-
+  outline: 2px solid rgba(8, 10, 134, 0.95);
   outline-offset: 4px;
-
 }
 
-
-
 /* ==========================================
-
    ANIMATIONS
-
-\========================================== */
-
-
+========================================== */
 
 @keyframes ocasNeonRotate {
-
   from {
-
     --ocas-glow-angle: 0deg;
-
   }
-
-
 
   to {
-
     --ocas-glow-angle: 360deg;
-
   }
-
 }
-
-
 
 @keyframes ocasNeonPulse {
-
   0%,
-
   100% {
-
-    border-color: rgba(201, 169, 110, 0.42);
-
+    border-color: rgba(33, 10, 179, 0.45);
   }
-
-
 
   50% {
-
-    border-color: rgba(240, 215, 160, 0.82);
-
+    border-color: rgba(41, 7, 151, 0.85);
   }
-
 }
-
-
 
 @keyframes ocasNavbarEnter {
-
   from {
-
     opacity: 0;
-
     transform: translateY(-8px);
-
   }
-
-
 
   to {
-
     opacity: 1;
-
     transform: translateY(0);
-
   }
-
 }
-
-
 
 @keyframes ocasDropdownEnter {
-
   from {
-
     opacity: 0;
-
     transform: translateY(-7px) scale(0.985);
-
   }
-
-
 
   to {
-
     opacity: 1;
-
     transform: translateY(0) scale(1);
-
   }
-
 }
 
-
-
 /* ==========================================
-
    TABLET / SMALL DESKTOP
-
-\========================================== */
-
-
+========================================== */
 
 @media (max-width: 1200px) {
-
   .ocas-navbar-container {
-
     grid-template-columns: minmax(120px, 1fr) auto minmax(145px, 1fr);
-
     gap: 16px;
-
     width: calc(100% - 48px);
-
     min-height: 82px;
-
   }
-
-
 
   .ocas-navbar-logo img {
-
     width: 145px;
-
     max-height: 52px;
-
   }
-
-
 
   .ocas-navbar-menu {
-
     gap: 1px;
-
     min-height: 49px;
-
   }
-
-
 
   .ocas-navbar-link {
-
     min-height: 41px;
-
     padding: 0 12px;
-
     font-size: 12px;
-
   }
-
-
 
   .ocas-navbar-cta {
-
     min-width: 140px;
-
     min-height: 45px;
-
     padding: 0 17px;
-
     font-size: 12px;
-
   }
-
 }
 
-
-
 /* ==========================================
-
    MOBILE NAVIGATION
-
-\========================================== */
-
-
+========================================== */
 
 @media (max-width: 900px) {
-
   .ocas-navbar-container {
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     gap: 16px;
-
     width: calc(100% - 36px);
-
     min-height: 76px;
-
   }
-
-
 
   .ocas-navbar-logo img {
-
     width: 135px;
-
     max-height: 48px;
-
   }
-
-
 
   .ocas-desktop-cta {
-
     display: none;
-
   }
-
-
 
   .ocas-navbar-toggle {
-
     display: block;
-
   }
 
-
-
-  /* Closed menu is hidden; React toggles ocas-menu-open */
-
   .ocas-navbar-menu {
-
     position: absolute;
-
     top: calc(100% + 10px);
-
     right: 0;
-
     left: 0;
 
-
-
     display: none;
-
     flex-direction: column;
-
     align-items: stretch;
-
     justify-content: flex-start;
-
     gap: 5px;
 
-
-
     width: 100%;
-
     max-width: none;
-
     height: auto;
-
     max-height: calc(100dvh - 100px);
-
     padding: 14px;
-
-
 
     overflow-y: auto;
 
-
-
-    background: rgba(8, 8, 8, 0.985);
-
-    border: 1px solid rgba(201, 169, 110, 0.42);
-
+    background: rgba(5, 8, 16, 0.985);
+    border: 1px solid rgba(33, 10, 179, 0.45);
     border-radius: 18px;
 
-
-
     box-shadow:
-
-      0 0 12px rgba(201, 169, 110, 0.09),
-
-      0 18px 40px rgba(0, 0, 0, 0.4);
-
-
+      0 0 15px rgba(33, 10, 179, 0.2),
+      0 18px 40px rgba(0, 0, 0, 0.6);
 
     -webkit-backdrop-filter: blur(22px);
-
     backdrop-filter: blur(22px);
-
   }
-
-
 
   .ocas-navbar-menu.ocas-menu-open {
-
     display: flex;
-
     animation: ocasDropdownEnter 0.28s ease both;
-
   }
-
-
 
   .ocas-navbar-menu::before {
-
     border-radius: inherit;
-
   }
 
-
-
   .ocas-navbar-link {
-
     display: flex;
-
     justify-content: flex-start;
-
     width: 100%;
-
     min-height: 48px;
-
     padding: 0 15px;
-
-
 
     color: rgba(255, 255, 255, 0.72);
-
     background: transparent;
-
     border: 1px solid transparent;
-
     border-radius: 11px;
 
-
-
     font-size: 14px;
-
   }
-
-
 
   .ocas-navbar-link:hover {
-
-    color: #fffaf0;
-
-    background: rgba(255, 255, 255, 0.06);
-
+    color: #ffffff;
+    background: rgba(33, 10, 179, 0.15);
   }
-
-
 
   .ocas-navbar-link.ocas-link-active {
-
-    color: #fffaf0;
-
+    color: #ffffff;
     background: #171d2e;
-
     border-color: rgba(255, 255, 255, 0.04);
-
     box-shadow: none;
-
   }
 
-
-
   .ocas-mobile-cta {
-
     display: inline-flex;
-
     align-self: stretch;
-
     justify-self: auto;
-
     width: 100%;
-
     min-width: 0;
-
     min-height: 49px;
-
     margin-top: 10px;
-
     padding: 0 18px;
 
-
-
-    background: rgba(15, 15, 15, 0.8);
-
+    background: rgba(5, 8, 16, 0.9);
     font-size: 13px;
-
   }
-
 }
 
-
-
 /* ==========================================
-
    SMALL MOBILE
-
-\========================================== */
-
-
+========================================== */
 
 @media (max-width: 480px) {
-
   .ocas-navbar {
-
     border-radius: 0;
-
   }
-
-
 
   .ocas-navbar-container {
-
     width: calc(100% - 28px);
-
     min-height: 68px;
-
     gap: 12px;
-
   }
-
-
 
   .ocas-navbar-logo img {
-
     width: 118px;
-
     max-height: 42px;
-
   }
-
-
 
   .ocas-navbar-toggle {
-
     width: 41px;
-
     height: 41px;
-
     padding: 8px;
-
   }
-
-
 
   .ocas-navbar-menu {
-
     top: calc(100% + 8px);
-
     padding: 12px;
-
     max-height: calc(100dvh - 85px);
-
     border-radius: 16px;
-
   }
-
-
 
   .ocas-navbar-link {
-
     min-height: 46px;
-
     padding: 0 13px;
-
     font-size: 13px;
-
   }
-
-
 
   .ocas-mobile-cta {
-
     min-height: 47px;
-
   }
-
 }
 
-
-
 /* ==========================================
-
    ACCESSIBILITY / REDUCED MOTION
-
-\========================================== */
-
-
+========================================== */
 
 @media (hover: none) {
-
   .ocas-navbar-logo:hover img {
-
     transform: none;
-
   }
-
-
 
   .ocas-navbar-cta:hover {
-
     transform: none;
-
   }
-
 }
-
-
 
 @media (prefers-reduced-motion: reduce) {
-
   .ocas-navbar,
-
   .ocas-navbar *,
-
   .ocas-navbar *::before,
-
   .ocas-navbar *::after {
-
     animation: none !important;
-
     transition: none !important;
-
     scroll-behavior: auto !important;
-
   }
-
 }
-
-
-
-
 
 /* ==========================================
-
-   FINAL LINK STYLE UPDATE
-
-   White text, larger type, blue hover + underline
-
-\========================================== */
-
-
+   FINAL LINK STYLE UPDATE — BLUE ACCENTS
+========================================== */
 
 /* Desktop and general navigation link styling */
-
 .ocas-navbar-menu .ocas-navbar-link {
-
   position: relative;
-
-  color: #fffaf0af0;
-
+  color: white;
   font-size: 15px;
-
   font-weight: 500;
-
   text-decoration: none;
-
   transition:
-
     color 0.25s ease,
-
-    *background* 0.25s ease,
-
+    background 0.25s ease,
     transform 0.25s ease;
-
 }
 
-
-
-/* Animated underline */
-
+/* Animated underline - Royal Blue to Electric Cyan */
 .ocas-navbar-menu .ocas-navbar-link::after {
-
   content: "";
-
   position: absolute;
-
   left: 18px;
-
   right: 18px;
-
   bottom: 7px;
-
   height: 2px;
-
   border-radius: 999px;
-
-  background: linear-gradient(90deg, #c9a96e, #f0d7a0);
-
-  box-shadow: 0 0 8px rgba(201, 169, 110, 0.42);
-
+  background: linear-gradient(90deg, #2507bb, #38bdf8);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
   transform: scaleX(0);
-
   transform-origin: center;
-
   transition: transform 0.28s ease;
-
   pointer-events: none;
-
 }
 
-
-
-/* White by default, blue on hover */
-
+/* White by default, vibrant blue on hover */
 .ocas-navbar-menu .ocas-navbar-link:hover {
-
-  color: #e2c27d;
-
-  background: rgba(201, 169, 110, 0.08);
-
+  color: #38bdf8;
+  background: rgba(33, 10, 179, 0.12);
 }
-
-
 
 /* Reveal underline on hover */
-
 .ocas-navbar-menu .ocas-navbar-link:hover::after {
-
   transform: scaleX(1);
-
 }
 
-
-
-/* Active route remains white with grey pill and underline */
-
+/* Active route remains white with dark blue/grey pill */
 .ocas-navbar-menu .ocas-navbar-link.ocas-link-active {
-
-  color: #fffaf0af0;
-
+  color: white;
   font-size: 15px;
-
   background: #171d2e;
-
 }
-
-
 
 /* Active underline stays visible */
-
 .ocas-navbar-menu .ocas-navbar-link.ocas-link-active::after {
-
   transform: scaleX(1);
-
 }
 
-
-
-/* Active route turns blue when hovered too */
-
+/* Active route hover effect */
 .ocas-navbar-menu .ocas-navbar-link.ocas-link-active:hover {
-
-  color: #e2c27d;
-
+  color: #38bdf8;
   background: #202840;
-
 }
 
-
-
-/* Tablet: retain readable larger text */
-
+/* Tablet styles */
 @media (max-width: 1200px) and (min-width: 901px) {
-
   .ocas-navbar-menu .ocas-navbar-link {
-
     padding-left: 11px;
-
     padding-right: 11px;
-
     font-size: 14px;
-
   }
-
-
 
   .ocas-navbar-menu .ocas-navbar-link.ocas-link-active {
-
     font-size: 14px;
-
   }
-
-
 
   .ocas-navbar-menu .ocas-navbar-link::after {
-
     left: 11px;
-
     right: 11px;
-
     bottom: 6px;
-
   }
-
 }
 
-
-
-/* Mobile dropdown: larger white links, blue hover and underline */
-
+/* Mobile dropdown */
 @media (max-width: 900px) {
-
   .ocas-navbar-menu .ocas-navbar-link {
-
     min-height: 50px;
-
     padding: 0 15px;
-
-    color: #fffaf0af0;
-
+    color: white;
     font-size: 16px;
-
     font-weight: 500;
-
     background: transparent;
-
   }
-
-
 
   .ocas-navbar-menu .ocas-navbar-link::after {
-
     left: 15px;
-
     right: auto;
-
     bottom: 5px;
-
     width: 46px;
-
     height: 2px;
-
     transform: scaleX(0);
-
     transform-origin: left center;
-
   }
-
-
 
   .ocas-navbar-menu .ocas-navbar-link:hover {
-
-    color: #e2c27d;
-
-    background: rgba(201, 169, 110, 0.08);
-
+    color: #38bdf8;
+    background: rgba(33, 10, 179, 0.15);
   }
-
-
 
   .ocas-navbar-menu .ocas-navbar-link:hover::after,
-
   .ocas-navbar-menu .ocas-navbar-link.ocas-link-active::after {
-
     transform: scaleX(1);
-
   }
-
-
 
   .ocas-navbar-menu .ocas-navbar-link.ocas-link-active {
-
-    color: #fffaf0af0;
-
+    color: white;
     font-size: 16px;
-
     background: #171d2e;
-
   }
-
-
 
   .ocas-navbar-menu .ocas-navbar-link.ocas-link-active:hover {
-
-    color: #e2c27d;
-
+    color: #38bdf8;
     background: #202840;
-
   }
-
 }
 
-
-
-/* Very small phones */
-
+/* Small phones */
 @media (max-width: 480px) {
-
   .ocas-navbar-menu .ocas-navbar-link {
-
     min-height: 48px;
-
     font-size: 15px;
-
   }
-
-
 
   .ocas-navbar-menu .ocas-navbar-link.ocas-link-active {
-
     font-size: 15px;
-
   }
-
 }

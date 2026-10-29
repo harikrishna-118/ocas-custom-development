@@ -3,7 +3,7 @@ import "./Process.css";
 
 const processSteps = [
   {
-    number: "01",
+    number: "1",
     phase: "ALIGN",
     title: "Discovery & Strategy",
     description:
@@ -18,7 +18,7 @@ const processSteps = [
     accent: "blue",
   },
   {
-    number: "02",
+    number: "2",
     phase: "DESIGN",
     title: "Design & Architecture",
     description:
@@ -33,7 +33,7 @@ const processSteps = [
     accent: "violet",
   },
   {
-    number: "03",
+    number: "3",
     phase: "BUILD",
     title: "Agile Development & QA",
     description:
@@ -48,7 +48,7 @@ const processSteps = [
     accent: "mint",
   },
   {
-    number: "04",
+    number: "4",
     phase: "DELIVER",
     title: "Launch & Ongoing Support",
     description:
@@ -160,42 +160,6 @@ export default function Process() {
               <i aria-hidden="true" />
               <span>Collaborative delivery</span>
             </div>
-          </div>
-
-          <div className="process-hero-visual process-reveal-right">
-            <div className="process-visual-topline">
-              <span className="process-live-dot" />
-              DELIVERY FRAMEWORK
-              <span className="process-visual-version">01 — 04</span>
-            </div>
-
-            <div className="process-visual-flow">
-              {processSteps.map((step, index) => (
-                <div
-                  className={`process-flow-item process-accent-${step.accent}`}
-                  key={step.number}
-                  style={{ "--flow-delay": `${index * 100}ms` }}
-                >
-                  <span className="process-flow-number">{step.number}</span>
-                  <span className="process-flow-copy">
-                    <strong>{step.title}</strong>
-                    <small>{step.phase}</small>
-                  </span>
-                  <span className="process-flow-check" aria-hidden="true">
-                    {index === 3 ? "↗" : "✓"}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <div className="process-visual-footer">
-              <span className="process-footer-icon" aria-hidden="true">✳</span>
-              <span>
-                <strong>One connected journey</strong>
-                <small>Plan clearly. Build thoughtfully. Improve continuously.</small>
-              </span>
-            </div>
-            <div className="process-visual-glow" aria-hidden="true" />
           </div>
         </div>
 

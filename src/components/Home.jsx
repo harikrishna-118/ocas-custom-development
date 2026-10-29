@@ -1,733 +1,1544 @@
 import React, { useEffect, useRef, useState } from "react";
+
 import { Link } from "react-router-dom";
+
 import "./Home.css";
 
-/* Real photographic images are loaded from Unsplash URLs in SERVICES and INDUSTRIES. */
+const P = (file, id, w = 1400) => [
+
+  `/images/${file}`,
+
+  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`,
+
+];
+
+// Topic-matched photographs. If a remote image fails, Photo tries the project's
+
+// existing local JPG and then the bundled lightweight SVG fallback.
+
+const U = (file, photoId, w = 1400) => [
+
+  `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${w}&q=84`,
+
+  `/images/${file}`,
+
+  `/images/${file.replace(/\.[^/.]+$/, ".svg")}`,
+
+];
+
+const IMG = {
+
+  hero: U("hero-professional.jpg", "photo-1522071820081-009f0129c71c", 1800),
+
+  about1: P("about-1.jpg", "3183150", 1000),
+
+  about2: P("about-2.jpg", "1181244", 800),
+
+  cta: P("cta.jpg", "3184436", 2200),
+
+};
 
 /* =========================================================
+
    DATA
+
    ========================================================= */
 
-const ROTATING_WORDS = ["software", "platforms", "AI systems"];
+
 
 const STACK = [
-  "TypeScript", "React", "Node.js", "Python", "AWS", "Azure", "Docker", "Kubernetes",
-  "PostgreSQL", "Terraform", "Next.js", "React Native", "Salesforce", "SAP", "LangChain", "Airflow",
+
+  // Frontend
+
+  { name: "HTML5", slug: "html5", color: "E34F26" },
+
+  { name: "CSS3", slug: "css3", color: "1572B6" },
+
+  { name: "JavaScript", slug: "javascript", color: "F7DF1E" },
+
+  { name: "TypeScript", slug: "typescript", color: "3178C6" },
+
+  { name: "React", slug: "react", color: "61DAFB" },
+
+  { name: "Next.js", slug: "nextdotjs", color: "111111" },
+
+  { name: "Angular", slug: "angular", color: "DD0031" },
+
+  { name: "Vue.js", slug: "vuedotjs", color: "4FC08D" },
+
+  { name: "Vite", slug: "vite", color: "646CFF" },
+
+  { name: "Tailwind CSS", slug: "tailwindcss", color: "06B6D4" },
+
+  { name: "Bootstrap", slug: "bootstrap", color: "7952B3" },
+
+  { name: "Figma", slug: "figma", color: "F24E1E" },
+
+  // Backend and languages
+
+  { name: "Node.js", slug: "nodedotjs", color: "5FA04E" },
+
+  { name: "Express", slug: "express", color: "111111" },
+
+  { name: "Python", slug: "python", color: "3776AB" },
+
+  { name: "Django", slug: "django", color: "092E20" },
+
+  { name: "FastAPI", slug: "fastapi", color: "009688" },
+
+  { name: "Java", slug: "openjdk", color: "437291" },
+
+  { name: "Spring Boot", slug: "springboot", color: "6DB33F" },
+
+  { name: "C#", slug: "csharp", color: "512BD4" },
+
+  { name: ".NET", slug: "dotnet", color: "512BD4" },
+
+  { name: "PHP", slug: "php", color: "777BB4" },
+
+  { name: "REST APIs", slug: "swagger", color: "85EA2D" },
+
+  // Mobile
+
+  { name: "React Native", slug: "react", color: "61DAFB" },
+
+  { name: "Flutter", slug: "flutter", color: "02569B" },
+
+  // Data, AI and analytics
+
+  { name: "Pandas", slug: "pandas", color: "150458" },
+
+  { name: "NumPy", slug: "numpy", color: "013243" },
+
+  { name: "scikit-learn", slug: "scikitlearn", color: "F7931E" },
+
+  { name: "TensorFlow", slug: "tensorflow", color: "FF6F00" },
+
+  { name: "PyTorch", slug: "pytorch", color: "EE4C2C" },
+
+  { name: "OpenAI", slug: "openai", color: "412991" },
+
+  // Databases and search
+
+  { name: "PostgreSQL", slug: "postgresql", color: "4169E1" },
+
+  { name: "MySQL", slug: "mysql", color: "4479A1" },
+
+  { name: "MongoDB", slug: "mongodb", color: "47A248" },
+
+  // Cloud, DevOps and observability
+
+  { name: "AWS", slug: "amazonaws", color: "232F3E" },
+
+  { name: "Microsoft Azure", slug: "microsoftazure", color: "0078D4" },
+
+  { name: "Google Cloud", slug: "googlecloud", color: "4285F4" },
+
+  { name: "Docker", slug: "docker", color: "2496ED" },
+
+  { name: "Git", slug: "git", color: "F05032" },
+
+  { name: "GitHub", slug: "github", color: "181717" },
+
+  { name: "GitLab", slug: "gitlab", color: "FC6D26" },
+
+  { name: "Linux", slug: "linux", color: "FCC624" },
+
 ];
 
-const STATEMENT =
-  "We engineer custom software, cloud platforms and applied AI that plug into how your business already runs — built with modern practices and supported long after launch.";
+// Reliable logo sources. Simple Icons uses the official brand symbol and brand colour.
+
+// A few technologies are concepts or have alternate slugs, so they use a sensible
+
+// branded fallback rather than leaving an empty space in the marquee.
+
+const TECH_LOGO_ALIASES = {
+
+  "REST APIs": ["swagger", "postman"],
+
+  "React Native": ["reactnative", "react"],
+
+  "Java": ["openjdk", "java"],
+
+  "Microsoft Azure": ["microsoftazure", "azure"]
+
+};
+
+const getTechLogoSources = (tech) => {
+
+  const slugs = [...new Set([...(TECH_LOGO_ALIASES[tech.name] || []), tech.slug])];
+
+  return slugs.flatMap((slug) => [
+
+    `https://cdn.simpleicons.org/${slug}?viewbox=auto`,
+
+    `https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/${slug}.svg`
+
+  ]);
+
+};
 
 const PRINCIPLES = [
-  { n: "01", title: "Custom-Built", text: "Software modeled around how your team actually works, not a template." },
-  { n: "02", title: "Cloud-Native", text: "Infrastructure and pipelines built to scale without duct tape." },
-  { n: "03", title: "Secure by Design", text: "Security and compliance considered from architecture, not bolted on later." },
-];
 
-const PILLARS = [
-  { icon: "✳", label: "Agile Delivery" },
-  { icon: "☁", label: "Cloud-Native Architecture" },
-  { icon: "⌁", label: "Security-First Engineering" },
-  { icon: "↗", label: "Dedicated Support" },
+  { title: "Custom-Built", text: "Software modeled around how your team actually works, not a template." },
+
+  { title: "Cloud-Native", text: "Infrastructure and pipelines built to scale without duct tape." },
+
+  { title: "Secure by Design", text: "Security and compliance considered from architecture, not bolted on later." },
+
 ];
 
 const SERVICES = [
+
   {
+
     title: "Custom Software Development",
+
     text: "Tailored web and enterprise applications built around how your business actually runs.",
+
     tags: ["TypeScript", "React", "Node.js"],
-    img: "/images/services/custom-software.jpg",
-    fallback: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=85",
-    alt: "Software team collaborating at a shared workstation",
+
+    img: U("service-software.jpg", "photo-1498050108023-c5249f4df085", 1400),
+
+    alt: "Software development workspace with computer screens and code",
+
   },
+
   {
+
     title: "Cloud & DevOps Engineering",
-    text: "Resilient cloud infrastructure and automated delivery pipelines.",
+
+    text: "Resilient cloud infrastructure and automated delivery pipelines that scale with you.",
+
     tags: ["AWS", "Docker", "Kubernetes"],
-    img: "/images/services/cloud-devops.jpg",
-    fallback: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1400&q=85",
-    alt: "Data center server racks with network cabling",
+
+    img: U("service-cloud-devops.jpg", "photo-1558494949-ef010cbdcc31", 1400),
+
+    alt: "Professional server infrastructure and cloud computing equipment",
+
   },
+
   {
+
     title: "AI & Data Engineering",
-    text: "Data pipelines and applied AI that turn information into decisions.",
+
+    text: "Data pipelines and applied AI that turn information into better decisions.",
+
     tags: ["Python", "PostgreSQL", "Airflow"],
-    img: "/images/services/ai-data.jpg",
-    fallback: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1400&q=85",
-    alt: "Abstract visualization of artificial intelligence",
+
+    img: U("service-ai-data.jpg", "photo-1551288049-bebda4e38f71", 1400),
+
+    alt: "Data analytics and technology dashboards on computer displays",
+
   },
+
   {
+
     title: "Mobile App Development",
+
     text: "Native-feeling apps for iOS and Android from a single codebase.",
+
     tags: ["React Native", "Swift", "Kotlin"],
-    img: "/images/services/mobile-app.jpg",
-    fallback: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1400&q=85",
-    alt: "Person holding a smartphone running a mobile app",
+
+    img: U("service-mobile.jpg", "photo-1512941937669-90a1b58e7e9c", 1400),
+
+    alt: "Smartphone displaying a mobile application",
+
   },
+
   {
+
     title: "Enterprise Systems Integration",
+
     text: "Connect and modernize the systems your business already depends on.",
+
     tags: ["REST/SOAP APIs", "Salesforce", "SAP"],
-    img: "/images/services/enterprise-integration.jpg",
-    fallback: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=85",
-    alt: "Close-up of a circuit board representing connected systems",
+
+    img: U("service-integration.jpg", "photo-1451187580459-43490279c0fa", 1400),
+
+    alt: "Digital network connections and global technology infrastructure",
+
   },
+
   {
+
     title: "UI/UX & Product Design",
-    text: "Research-led interface design that makes complex products simple to use and easy to adopt.",
+
+    text: "Research-led interface design that makes complex products simple to use and adopt.",
+
     tags: ["Figma", "Design Systems", "Prototyping"],
-    img: "/images/services/ui-ux-design.jpg",
-    fallback: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=1400&q=85",
-    alt: "Designer working on interface wireframes",
+
+    img: U("service-ui-ux.jpg", "photo-1586717791821-3f44a563fa4c", 1400),
+
+    alt: "Professional interface design and creative digital product workspace",
+
   },
+
 ];
 
 const INDUSTRIES = [
+
   {
-    key: "bank", label: "Banking", accent: "#3b82f6", title: "Banking & Financial Services",
-    img: "/images/industries/banking.jpg",
-    fallback: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=85",
-    alt: "Modern financial district buildings",
-    subtitle: "Secure, compliant software for financial institutions.",
+
+    label: "Banking",
+
+    title: "Banking & Financial Services",
+
     desc: "Digital banking platforms, risk tooling, and compliance-aware systems for banks, lenders, and fintech companies operating under strict regulation.",
-    features: [
-      ["Core system modernization", "Migrating legacy financial systems to secure, API-driven architectures."],
-      ["Compliance-first design", "Built with data security and audit requirements from day one."],
-      ["Risk & fraud tooling", "Real-time transaction monitoring and underwriting decision support."],
+
+    points: [
+
+      "Core system modernization",
+
+      "Compliance-first design",
+
+      "Risk & fraud tooling",
+
     ],
+
     tags: ["PCI-DSS", "SOC 2", "Plaid", "Core Banking APIs"],
-    icon: <><path d="M16 43 60 18l44 25H16Z" /><path d="M23 49h74M28 49v39m21-39v39m22-39v39m21-39v39M19 94h82M13 103h94" /></>,
+
+    img: U("industry-banking.jpg", "photo-1563013544-824ae1b704d3", 1400),
+
+    alt: "Modern financial services and digital banking",
+
   },
+
   {
-    key: "insurance", label: "Insurance", accent: "#8b5cf6", title: "Insurance & InsurTech",
-    img: "/images/industries/insurance.jpg",
-    fallback: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1400&q=85",
-    alt: "Professionals reviewing and signing policy documents",
-    subtitle: "Modern platforms for underwriting, policy, and claims.",
+
+    label: "Insurance",
+
+    title: "Insurance & InsurTech",
+
     desc: "We help insurers and brokers digitize the policy lifecycle with automated underwriting, self-service portals, and faster claims workflows.",
-    features: [
-      ["Policy administration", "Quote, bind, and renew policies on a configurable, auditable platform."],
-      ["Claims automation", "Intake, triage, and settlement workflows with document intelligence."],
-      ["Customer & broker portals", "Self-service experiences that reduce support load."],
+
+    points: [
+
+      "Policy administration",
+
+      "Claims automation",
+
+      "Customer & broker portals",
+
     ],
+
     tags: ["Guidewire", "Duck Creek", "OCR / IDP", "Power BI"],
-    icon: <><path d="M60 14 98 28v30c0 24-16 40-38 48C38 98 22 82 22 58V28Z" /><path d="m43 60 12 12 22-24" /></>,
+
+    img: U("industry-insurance.jpg", "photo-1450101499163-c8848c66ca85", 1400),
+
+    alt: "Insurance professional reviewing documents and business information",
+
   },
+
   {
-    key: "healthcare", label: "Healthcare", accent: "#14b8a6", title: "Healthcare",
-    img: "/images/industries/healthcare.jpg",
-    fallback: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1400&q=85",
-    alt: "Healthcare professional reviewing patient information",
-    subtitle: "Reliable software for providers, payers, and health tech companies.",
+
+    label: "Healthcare",
+
+    title: "Healthcare",
+
     desc: "Patient-facing and clinical software designed with the data privacy and interoperability standards healthcare organizations require.",
-    features: [
-      ["Interoperability", "Integrations with clinical systems and health data standards."],
-      ["Patient-facing platforms", "Portals and applications built for accessibility and trust."],
-      ["Clinical workflow tools", "Scheduling, charting, and care-coordination that fits real workflows."],
+
+    points: [
+
+      "Interoperability",
+
+      "Patient-facing platforms",
+
+      "Clinical workflow tools",
+
     ],
+
     tags: ["HL7/FHIR", "HIPAA", "Epic", "Twilio"],
-    icon: <><path d="M60 101S17 75 17 43c0-23 29-32 43-10 14-22 43-13 43 10 0 32-43 58-43 58Z" /><path d="M60 43v34M43 60h34" /></>,
+
+    img: U("industry-healthcare.jpg", "photo-1576091160399-112ba8d25d1d", 1400),
+
+    alt: "Healthcare technology and digital medical equipment",
+
   },
+
   {
-    key: "commerce", label: "E-Commerce", accent: "#f59e0b", title: "E-Commerce",
-    img: "/images/industries/ecommerce.jpg",
-    fallback: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1400&q=85",
-    alt: "Customer paying with a card at a checkout terminal",
-    subtitle: "Digital-first storefronts and checkout experiences built to convert.",
+
+    label: "E-Commerce",
+
+    title: "E-Commerce",
+
     desc: "Headless storefronts, checkout flows, and post-purchase experiences for D2C brands and marketplaces that need to move fast without sacrificing reliability.",
-    features: [
-      ["Headless storefronts", "Composable commerce that integrates with the tools you already use."],
-      ["Checkout & payments", "Fast, reliable checkout with fraud protection and multiple payment methods."],
-      ["Post-purchase experience", "Order tracking, returns, and retention flows that bring customers back."],
+
+    points: [
+
+      "Headless storefronts",
+
+      "Checkout & payments",
+
+      "Post-purchase experience",
+
     ],
+
     tags: ["Shopify", "Stripe", "Next.js", "Algolia"],
-    icon: <><path d="M18 26h12l10 51h48l13-36H35" /><circle cx="49" cy="94" r="6" /><circle cx="82" cy="94" r="6" /><path d="M47 48h34m-17-17v34" /></>,
+
+    img: U("industry-ecommerce.jpg", "photo-1556742049-0cfed4f6a45d", 1400),
+
+    alt: "Customer using a payment card for a digital retail purchase",
+
   },
+
   {
-    key: "logistics", label: "Logistics", accent: "#0ea5e9", title: "Logistics & Transportation",
-    img: "/images/industries/logistics.jpg",
-    fallback: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=85",
-    alt: "Warehouse with stacked shipping pallets and shelving",
-    subtitle: "Visibility and automation across fleets, warehouses, and shipments.",
+
+    label: "Logistics",
+
+    title: "Logistics & Transportation",
+
     desc: "Tracking, routing, and warehouse tools for carriers, 3PLs, and shippers who need real-time visibility across every mile of the supply chain.",
-    features: [
-      ["Fleet & shipment tracking", "Live location, ETA, and exception alerts on a single dashboard."],
-      ["Route & load optimization", "Planning engines that lower cost per delivery and idle time."],
-      ["Warehouse management", "Inventory, picking, and dock-scheduling software that fits your floor."],
+
+    points: [
+
+      "Fleet & shipment tracking",
+
+      "Route & load optimization",
+
+      "Warehouse management",
+
     ],
+
     tags: ["GPS / Telematics", "WMS", "EDI", "Mapbox"],
-    icon: <><path d="M10 34h58v42H10z" /><path d="M68 48h20l14 16v12H68z" /><circle cx="32" cy="82" r="8" /><circle cx="88" cy="82" r="8" /></>,
+
+    img: U("industry-logistics.jpg", "photo-1494412651409-8963a9c86f9a", 1400),
+
+    alt: "Cargo shipping containers and international logistics operations",
+
   },
+
   {
-    key: "manufacturing", label: "Manufacturing", accent: "#f97316", title: "Manufacturing",
-    img: "/images/industries/manufacturing.jpg",
-    fallback: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1400&q=85",
-    alt: "Industrial robotic arms on a manufacturing line",
-    subtitle: "Software that connects the floor to the front office.",
-    desc: "We help manufacturers digitize operations — from production tracking to supply chain visibility — with software that fits how plants actually operate.",
-    features: [
-      ["Operations visibility", "Dashboards that surface what's happening across facilities in real time."],
-      ["Supply chain tooling", "Systems that keep planning, procurement, and logistics in sync."],
-      ["Predictive maintenance", "Sensor-driven insights that flag equipment issues before downtime."],
+
+    label: "Manufacturing",
+
+    title: "Manufacturing",
+
+    desc: "We help manufacturers digitize operations, from production tracking to supply chain visibility, with software that fits how plants actually operate.",
+
+    points: [
+
+      "Operations visibility",
+
+      "Supply chain tooling",
+
+      "Predictive maintenance",
+
     ],
+
     tags: ["IIoT", "MES", "SCADA", "Power BI"],
-    icon: <><path d="M18 102V55l25 15V53l25 17V38l16 10V25h18v77H18Z" /><path d="M31 84h9m12 0h9m12 0h9m12 0h6M87 25V14h8v11" /></>,
+
+    img: U("industry-manufacturing.jpg", "photo-1581091226825-a6a2a5aee158", 1400),
+
+    alt: "Industrial manufacturing equipment and production technology",
+
   },
+
   {
-    key: "education", label: "Education", accent: "#a855f7", title: "Education",
-    img: "/images/industries/education.jpg",
-    fallback: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1400&q=85",
-    alt: "Teacher and students in a bright classroom",
-    subtitle: "Platforms for institutions, learners, and administrators.",
+
+    label: "Education",
+
+    title: "Education",
+
     desc: "Learning platforms and administrative systems for schools, universities, and edtech companies focused on outcomes, not just features.",
-    features: [
-      ["Learning platforms", "Engaging, accessible experiences for students and instructors."],
-      ["Administrative systems", "Tools that reduce manual work for staff and faculty."],
-      ["Analytics & outcomes", "Reporting that helps institutions track engagement and performance."],
+
+    points: [
+
+      "Learning platforms",
+
+      "Administrative systems",
+
+      "Analytics & outcomes",
+
     ],
+
     tags: ["LMS", "SIS", "SCORM/xAPI", "Canvas API"],
-    icon: <><path d="m12 43 48-25 48 25-48 25-48-25Z" /><path d="M30 54v25c17 15 43 15 60 0V54M108 43v32" /><circle cx="108" cy="81" r="5" /></>,
+
+    img: U("industry-education.jpg", "photo-1523050854058-8df90110c9f1", 1400),
+
+    alt: "University campus and modern education environment",
+
   },
+
   {
-    key: "government", label: "Public Sector", accent: "#10b981", title: "Government & Public Sector",
-    img: "/images/industries/government.jpg",
-    fallback: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=85",
-    alt: "Modern civic office building with glass facade",
-    subtitle: "Accessible, secure digital services for public agencies.",
-    desc: "Citizen-facing portals and internal case management systems designed for accessibility, security, and long-term maintainability.",
-    features: [
-      ["Accessible public portals", "Interfaces built to WCAG accessibility standards."],
-      ["Secure infrastructure", "Architected around public-sector security requirements."],
-      ["Case management", "Internal workflow systems for permits, benefits, and service requests."],
+
+    label: "AI Automation",
+
+    title: "Custom AI Automation",
+
+    desc: "Applied AI, from internal copilots to workflow agents, that plugs directly into how your team already operates, not a generic chatbot bolted on top.",
+
+    points: [
+
+      "Workflow automation",
+
+      "Applied LLM integration",
+
+      "Human-in-the-loop design",
+
     ],
-    tags: ["FedRAMP", "WCAG 2.2", "Section 508", "Salesforce Gov Cloud"],
-    icon: <><path d="M15 43 60 18l45 25H15ZM21 50h78M27 50v39m22-39v39m22-39v39m22-39v39M18 96h84M12 105h96" /></>,
-  },
-  {
-    key: "ai", label: "AI Automation", accent: "#ec4899", title: "Custom AI Automation",
-    img: "/images/industries/ai-automation.jpg",
-    fallback: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1400&q=85",
-    alt: "Robot head representing applied artificial intelligence",
-    subtitle: "Practical AI that removes manual work from your business processes.",
-    desc: "Applied AI — from internal copilots to workflow agents — that plugs directly into how your team already operates, not a generic chatbot bolted on top.",
-    features: [
-      ["Workflow automation", "AI agents that handle repetitive multi-step processes end to end."],
-      ["Applied LLM integration", "Retrieval-augmented assistants and copilots grounded in your own data."],
-      ["Human-in-the-loop design", "Automation with clear override paths, so people stay in control."],
-    ],
+
     tags: ["OpenAI", "LangChain", "Vector DBs", "Python"],
-    icon: <><rect x="27" y="28" width="66" height="64" rx="14" /><path d="M60 13v15m-17 16h34M45 60h.1M75 60h.1M45 75c8 8 22 8 30 0M14 47h13m66 0h13M14 75h13m66 0h13M43 92v14m34-14v14" /></>,
+
+    img: U("industry-ai.jpg", "photo-1677442136019-21780ecad995", 1400),
+
+    alt: "Artificial intelligence technology and neural network visualization",
+
   },
+
+  {
+
+    label: "Government & Public Sector",
+
+    title: "Government & Public Sector",
+
+    desc: "Secure, accessible digital services that help public institutions modernize citizen experiences, improve service delivery, and manage information responsibly.",
+
+    points: [
+
+      "Citizen service portals",
+
+      "Case and document management",
+
+      "Data dashboards & reporting",
+
+    ],
+
+    tags: [
+
+      "Digital Services",
+
+      "Accessibility",
+
+      "Cloud Security",
+
+      "Data Analytics",
+
+    ],
+
+    img: U("industry-government.jpg", "photo-1486406146926-c627a92ad1ab", 1400),
+
+    alt: "Modern city infrastructure representing public-sector digital transformation",
+
+  },
+
 ];
 
 const PROCESS = [
+
   { title: "Discovery & Strategy", text: "We start by understanding your goals, constraints, and existing systems before writing a single line of code." },
+
   { title: "Design & Architecture", text: "Technical architecture and interface design happen together, so the product is both usable and built to last." },
+
   { title: "Agile Development & QA", text: "Iterative sprints with continuous testing keep the project visible and on track from the first milestone." },
+
   { title: "Launch & Ongoing Support", text: "We handle deployment and stay on for monitoring, iteration, and support after launch." },
+
 ];
 
 const CLIENTS = [
-  { name: "Infynixtek", url: "https://infynixtek.com/", category: "Talent placement & staffing solutions", text: "Website design and a candidate portal for talent placement." },
-  { name: "CodeBridge Technologies", url: "https://codebridgetec.com/", category: "Talent placement & staffing solutions", text: "Website design and internal staffing management tools." },
+
+  { name: "Infynixtek", url: "https://infynixtek.com/", video: "/videos/infynixtek.mp4", category: "Talent placement & staffing solutions", text: "Website design and a candidate portal for talent placement." },
+
+  { name: "CodeBridge Technologies", url: "https://codebridgetec.com/", video: "/videos/CodeBridge%20Technologies.mp4", category: "Talent placement & staffing solutions", text: "Website design and internal staffing management tools." },
+
 ];
 
 const NEXT_STEPS = [
-  { title: "We review your details", text: "Usually within a few hours of you reaching out." },
-  { title: "A short discovery call", text: "15–20 minutes to understand scope and timeline." },
-  { title: "A scoped proposal", text: "Clear plan, estimate, and next steps — no obligation." },
+
+  "We review your details, usually within a few hours.",
+
+  "A short 15–20 minute discovery call.",
+
+  "A scoped proposal with a clear plan and estimate.",
+
 ];
 
 /* =========================================================
-   SMALL HELPERS
+
+   HELPERS
+
    ========================================================= */
 
-/* One masked word — animates up when its parent is revealed */
-const Word = ({ i, children }) => (
-  <span className="w"><span style={{ "--i": i }}>{children}</span></span>
-);
+/* Tries each source in order; renders nothing if all fail so the
 
-/* Splits a string into masked words for the text-reveal effect */
-const Split = ({ text, start = 0 }) =>
-  text.split(" ").map((word, i) => (
-    <React.Fragment key={i}>
-      <Word i={start + i}>{word}</Word>{" "}
-    </React.Fragment>
-  ));
+   gradient behind it stays visible. */
 
-/* Real photograph: tries your own file first (/public/images/...), then a topic-matched
-   fallback photo. If both fail the card keeps its gradient background. */
-const Photo = ({ src, fallback, alt, className }) => {
+const Photo = ({ src, alt, className, eager = false }) => {
+
+  const list = (Array.isArray(src) ? src : [src]).filter(Boolean);
+
+  const sig = list.join("|");
+
   const [stage, setStage] = useState(0);
-  const list = [...new Set([src, fallback].filter(Boolean))];
-  useEffect(() => setStage(0), [src, fallback]);
+
+  useEffect(() => setStage(0), [sig]);
+
   if (stage >= list.length) return null;
+
   return (
+
     <img
-      key={stage}
+
+      key={`${sig}-${stage}`}
+
       className={className}
+
       src={list[stage]}
+
       alt={alt}
-      loading="lazy"
+
+      loading={eager ? "eager" : "lazy"}
+
       decoding="async"
+
       onError={() => setStage((s) => s + 1)}
+
     />
+
   );
+
 };
 
-const clamp = (n, min = 0, max = 1) => Math.min(max, Math.max(min, n));
+const Arrow = () => <span className="oc-arrow" aria-hidden="true">→</span>;
 
 /* =========================================================
+
    COMPONENT
+
    ========================================================= */
 
 export default function Home() {
+
   const rootRef = useRef(null);
-  const heroVideoRef = useRef(null);
-  const [rot, setRot] = useState({ i: 0, p: -1 });
-  const [svc, setSvc] = useState(0);
 
-  /* Rotating hero keyword */
+
+
+  const [ind, setInd] = useState(0);
+
+  const industryPanelRefs = useRef([]);
+
+  // Keep the left-side industry navigation in sync with the panel
+
+  // currently passing through the centre of the viewport.
+
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = window.setInterval(
-      () => setRot((s) => ({ i: (s.i + 1) % ROTATING_WORDS.length, p: s.i })),
-      2800
-    );
-    return () => window.clearInterval(id);
-  }, []);
 
-  /* Keep hero video playing */
-  useEffect(() => {
-    const video = heroVideoRef.current;
-    if (!video) return;
+    const panels = industryPanelRefs.current.filter(Boolean);
 
-    let retryTimer;
-    const keepVideoPlaying = () => {
-      if (document.visibilityState !== "visible") return;
-      video.muted = true;
-      const playPromise = video.play();
-      if (playPromise && typeof playPromise.catch === "function") {
-        playPromise.catch(() => {
-          window.clearTimeout(retryTimer);
-          retryTimer = window.setTimeout(() => {
-            if (document.visibilityState === "visible") keepVideoPlaying();
-          }, 1200);
-        });
+    if (!panels.length) return undefined;
+
+    const observer = new IntersectionObserver(
+
+      (entries) => {
+
+        const visible = entries
+
+          .filter((entry) => entry.isIntersecting)
+
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible) {
+
+          const index = Number(visible.target.dataset.industryIndex);
+
+          if (Number.isFinite(index)) setInd(index);
+
+        }
+
+      },
+
+      {
+
+        root: null,
+
+        rootMargin: "-32% 0px -48% 0px",
+
+        threshold: [0, 0.15, 0.35, 0.55, 0.75],
+
       }
-    };
-    const restartVideo = () => { video.currentTime = 0; keepVideoPlaying(); };
-    const onVisibility = () => { if (document.visibilityState === "visible") keepVideoPlaying(); };
 
-    video.addEventListener("pause", keepVideoPlaying);
-    video.addEventListener("ended", restartVideo);
-    document.addEventListener("visibilitychange", onVisibility);
-    keepVideoPlaying();
+    );
 
-    return () => {
-      window.clearTimeout(retryTimer);
-      video.removeEventListener("pause", keepVideoPlaying);
-      video.removeEventListener("ended", restartVideo);
-      document.removeEventListener("visibilitychange", onVisibility);
-    };
+    panels.forEach((panel) => observer.observe(panel));
+
+    return () => observer.disconnect();
+
   }, []);
 
-  /* Scroll reveals, scroll-linked effects, pointer effects */
+  const goToIndustry = (index) => {
+
+    setInd(index);
+
+    industryPanelRefs.current[index]?.scrollIntoView({
+
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+
+      block: "center",
+
+    });
+
+  };
+
   useEffect(() => {
+
     const root = rootRef.current;
-    if (!root) return;
+
+    if (!root) return undefined;
+
+    const nodes = root.querySelectorAll("[data-reveal]:not(.oc-process .oc-step)");
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-    /* ---- 1. reveal on scroll (IntersectionObserver) ---- */
-    const targets = root.querySelectorAll("[data-reveal]");
-    let io;
     if (reduced || !("IntersectionObserver" in window)) {
-      targets.forEach((el) => el.classList.add("is-visible"));
-    } else {
-      targets.forEach((el) => {
-        const type = el.dataset.reveal;
-        el.classList.add(type === "split" ? "split-reveal" : type === "stack" ? "stack-reveal" : "scroll-reveal");
-      });
-      io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              io.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.14, rootMargin: "0px 0px -8% 0px" }
-      );
-      targets.forEach((el) => io.observe(el));
+
+      nodes.forEach((n) => n.classList.add("is-in"));
+
+      return undefined;
+
     }
 
-    /* ---- 2. scroll-linked effects ---- */
-    const bar = root.querySelector(".scroll-progress");
-    const hero = root.querySelector(".home-hero");
-    const statement = root.querySelector(".statement");
-    const words = statement ? statement.querySelectorAll(".sw") : [];
-    const processGrid = root.querySelector(".process-grid");
-    const cards = Array.from(root.querySelectorAll(".industry-card"));
+    const io = new IntersectionObserver(
 
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      const y = window.scrollY;
-      const vh = window.innerHeight;
+      (entries) => {
 
-      if (bar) {
-        const h = document.documentElement.scrollHeight - vh;
-        bar.style.transform = `scaleX(${h > 0 ? clamp(y / h) : 0})`;
-      }
+        entries.forEach((e) => {
 
-      if (hero && !reduced && y < vh * 1.3) {
-        hero.style.setProperty("--py", `${y * 0.28}px`);
-        hero.style.setProperty("--fade", String(clamp(1 - y / (vh * 0.85))));
-      }
+          if (e.isIntersecting) {
 
-      if (statement && words.length) {
-        const r = statement.getBoundingClientRect();
-        const p = reduced ? 1 : clamp((vh * 0.85 - r.top) / (vh * 0.5 + r.height * 0.4));
-        const lit = Math.round(p * words.length * 1.05);
-        words.forEach((w, i) => w.classList.toggle("lit", i < lit));
-      }
+            e.target.classList.add("is-in");
 
-      if (processGrid) {
-        const r = processGrid.getBoundingClientRect();
-        const p = reduced ? 1 : clamp((vh * 0.78 - r.top) / (r.height * 0.85 + vh * 0.12));
-        processGrid.style.setProperty("--p", p.toFixed(3));
-      }
+            io.unobserve(e.target);
 
-      /* stacking industry cards: shrink & dim cards being covered */
-      if (window.innerWidth > 760 && !reduced) {
-        cards.forEach((card, i) => {
-          const next = cards[i + 1];
-          if (!next) return;
-          const a = card.getBoundingClientRect();
-          const b = next.getBoundingClientRect();
-          const gap0 = a.height + 36;
-          const d = clamp((gap0 - (b.top - a.top)) / gap0);
-          card.style.setProperty("--scale", (1 - d * 0.05).toFixed(3));
-          card.style.setProperty("--dim", (d * 0.55).toFixed(3));
+          }
+
         });
-      } else {
-        cards.forEach((c) => { c.style.removeProperty("--scale"); c.style.removeProperty("--dim"); });
-      }
-    };
-    const onScroll = () => {
-      if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    update();
 
-    /* ---- 3. pointer effects: spotlight, tilt, magnetic, cursor glow ---- */
-    let lastTilt = null;
-    let lastMag = null;
-    const glow = root.querySelector(".cursor-glow");
+      },
 
-    const resetTilt = (el) => { el.style.setProperty("--rx", "0deg"); el.style.setProperty("--ry", "0deg"); };
-    const resetMag = (el) => { el.style.setProperty("--tx", "0px"); el.style.setProperty("--ty", "0px"); };
+      { threshold: 0.1, rootMargin: "0px 0px -5% 0px" }
 
-    const onMove = (e) => {
-      if (glow) {
-        glow.style.opacity = "1";
-        glow.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-      }
-      const t = e.target;
-      if (!(t instanceof Element)) return;
+    );
 
-      const spot = t.closest("[data-spotlight]");
-      if (spot) {
-        const r = spot.getBoundingClientRect();
-        spot.style.setProperty("--mx", `${e.clientX - r.left}px`);
-        spot.style.setProperty("--my", `${e.clientY - r.top}px`);
-      }
+    nodes.forEach((n) => io.observe(n));
 
-      const tilt = t.closest("[data-tilt]");
-      if (lastTilt && lastTilt !== tilt) resetTilt(lastTilt);
-      if (tilt) {
-        const r = tilt.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        tilt.style.setProperty("--rx", `${(-y * 7).toFixed(2)}deg`);
-        tilt.style.setProperty("--ry", `${(x * 9).toFixed(2)}deg`);
-        lastTilt = tilt;
-      } else lastTilt = null;
+    return () => io.disconnect();
 
-      const mag = t.closest("[data-magnetic]");
-      if (lastMag && lastMag !== mag) resetMag(lastMag);
-      if (mag) {
-        const r = mag.getBoundingClientRect();
-        mag.style.setProperty("--tx", `${((e.clientX - (r.left + r.width / 2)) * 0.25).toFixed(1)}px`);
-        mag.style.setProperty("--ty", `${((e.clientY - (r.top + r.height / 2)) * 0.35).toFixed(1)}px`);
-        lastMag = mag;
-      } else lastMag = null;
-    };
-    const onLeave = () => {
-      if (glow) glow.style.opacity = "0";
-      if (lastTilt) resetTilt(lastTilt);
-      if (lastMag) resetMag(lastMag);
-    };
-    if (finePointer && !reduced) {
-      root.addEventListener("pointermove", onMove);
-      root.addEventListener("pointerleave", onLeave);
-    }
-
-    return () => {
-      if (io) io.disconnect();
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      root.removeEventListener("pointermove", onMove);
-      root.removeEventListener("pointerleave", onLeave);
-    };
   }, []);
 
-  const statementWords = STATEMENT.split(" ");
+  // Reveal one How We Work card per downward scroll gesture.
 
   useEffect(() => {
-    const nodes = document.querySelectorAll(".ocas-home .nx-reveal, .ocas-home .nx-service-card, .ocas-home .nx-industry-card");
-    if (!("IntersectionObserver" in window)) {
-      nodes.forEach((node) => node.classList.add("nx-visible"));
+
+    const section = rootRef.current?.querySelector(".oc-process");
+
+    const cards = section ? Array.from(section.querySelectorAll(".oc-step")) : [];
+
+    if (!section || !cards.length) return undefined;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduced) {
+
+      cards.forEach((card) => card.classList.add("is-in"));
+
       return undefined;
+
     }
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("nx-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: "0px 0px -35px 0px" });
-    nodes.forEach((node) => observer.observe(node));
-    return () => observer.disconnect();
+
+    let shown = 0;
+
+    let locked = false;
+
+    let touchStartY = null;
+
+    const lockMs = 720;
+
+    // Do not intercept page scrolling while the visitor is approaching the section.
+
+    // Activate only when the next card is fully inside the viewport; this keeps
+
+    // the page moving naturally until the visitor can actually see the card.
+
+    const sectionIsActive = () => {
+
+      if (shown >= cards.length) return false;
+
+      const cardRect = cards[shown].getBoundingClientRect();
+
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+      const fullyVisible = cardRect.top >= 0 && cardRect.bottom <= viewportHeight;
+
+      const reasonablySized = cardRect.height <= viewportHeight;
+
+      return fullyVisible && reasonablySized;
+
+    };
+
+    const revealNext = () => {
+
+      if (locked || shown >= cards.length) return false;
+
+      cards[shown].classList.add("is-in");
+
+      shown += 1;
+
+      locked = true;
+
+      window.setTimeout(() => { locked = false; }, lockMs);
+
+      return true;
+
+    };
+
+    const onWheel = (event) => {
+
+      if (event.deltaY <= 0 || !sectionIsActive() || shown >= cards.length) return;
+
+      event.preventDefault();
+
+      revealNext();
+
+    };
+
+    const onTouchStart = (event) => {
+
+      touchStartY = event.touches?.[0]?.clientY ?? null;
+
+    };
+
+    const onTouchMove = (event) => {
+
+      if (touchStartY === null || !sectionIsActive() || shown >= cards.length) return;
+
+      const currentY = event.touches?.[0]?.clientY;
+
+      if (typeof currentY === "number" && touchStartY - currentY > 10) event.preventDefault();
+
+    };
+
+    const onTouchEnd = (event) => {
+
+      const endY = event.changedTouches?.[0]?.clientY;
+
+      if (touchStartY !== null && typeof endY === "number" && touchStartY - endY > 30 && sectionIsActive() && shown < cards.length) {
+
+        revealNext();
+
+      }
+
+      touchStartY = null;
+
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+
+    return () => {
+
+      window.removeEventListener("wheel", onWheel);
+
+      window.removeEventListener("touchstart", onTouchStart);
+
+      window.removeEventListener("touchmove", onTouchMove);
+
+      window.removeEventListener("touchend", onTouchEnd);
+
+    };
+
   }, []);
 
+  const active = INDUSTRIES[ind];
+
   return (
-    <main className="ocas-home ocas-home-v5 ocas-home-v6 ocas-home-v7" ref={rootRef}>
-      <div className="scroll-progress" aria-hidden="true"></div>
-      <div className="cursor-glow" aria-hidden="true"></div>
-      {/* FIRST SECTION PRESERVED */}
-      <section className="home-hero" id="home">
-        <video
-          ref={heroVideoRef}
-          className="hero-background-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1920&q=80"
-          disablePictureInPicture
-          aria-hidden="true"
-          tabIndex={-1}
-        >
-          <source src="/videos/ocas-team-work.mp4" type="video/mp4" />
-        </video>
-        <div className="hero-overlay" aria-hidden="true"></div>
-        <div className="hero-grid" aria-hidden="true"></div>
-        <span className="hero-orb hero-orb-a" aria-hidden="true"></span>
-        <span className="hero-orb hero-orb-b" aria-hidden="true"></span>
 
-        <svg className="hero-art" viewBox="0 0 750 260" fill="none" aria-hidden="true">
-          <path d="M5 245C65 218 70 177 111 144S146 60 174 34 195 78 225 48 251 23 258 75 276 140 301 95 329 49 356 64" />
-          <path d="M90 254C173 218 240 208 311 198S421 184 443 149 476 125 500 155 525 209 549 174 586 120 613 146 653 185 692 165" />
-          <path d="M200 180C226 132 251 117 258 89S266 39 286 54 293 108 310 132 328 89 345 77" />
-        </svg>
+    <main className="oc-home" ref={rootRef}>
 
-        <div className="hero-float hero-float-a" aria-hidden="true"><i></i> Cloud-native</div>
-        <div className="hero-float hero-float-b" aria-hidden="true"><i></i> Secure by design</div>
-        <div className="hero-float hero-float-c" aria-hidden="true"><i></i> Applied AI</div>
+      {/* ================= HERO ================= */}
 
-        <div className="hero-content">
-          <span className="hero-badge"><i></i> Software · Cloud · Applied AI</span>
-          <h1 className="hero-title">
-            <Word i={0}>Build</Word>{" "}
-            <Word i={1}>
-              <span className="rotator">
-                {ROTATING_WORDS.map((w, i) => (
-                  <span key={w} className={i === rot.i ? "on" : i === rot.p ? "off" : ""}>{w}</span>
-                ))}
+          <section className="oc-hero-video" id="home" aria-labelledby="oc-hero-title">
+      <video className="oc-hero-video-bg" autoPlay muted loop playsInline preload="metadata" poster="/images/hero-professional.jpg" aria-hidden="true">
+        <source src="/videos/hero-background.mp4" type="video/mp4" />
+      </video>
+      <div className="oc-hero-video-shade" aria-hidden="true" />
+      <div className="oc-hero-video-glow" aria-hidden="true" />
+      <div className="oc-hero-video-content oc-wrap">
+        <div className="oc-hero-video-eyebrow"><span className="oc-hero-video-signal" /> SOFTWARE ENGINEERING · CLOUD · AI</div>
+        <h1 id="oc-hero-title">Building <span>smarter</span> digital solutions.</h1>
+        <p>We design and build custom software, scalable cloud platforms, and intelligent AI solutions that move your business forward.</p>
+        <div className="oc-hero-video-actions">
+          <Link to="/contact" className="oc-hero-video-btn oc-hero-video-primary">Start a Project <span aria-hidden="true">↗</span></Link>
+          <a href="#services" className="oc-hero-video-btn oc-hero-video-secondary">Explore Our Services <span aria-hidden="true">→</span></a>
+        </div>
+        <div className="oc-hero-video-footer"><span>01 / INNOVATE</span><span className="oc-hero-video-line" /><span>BUILD WITH CONFIDENCE</span></div>
+      </div>
+      <a className="oc-hero-video-scroll" href="#services" aria-label="Scroll to services"><span>SCROLL TO EXPLORE</span><span aria-hidden="true">↓</span></a>
+    </section>
+
+      {/* ================= TECH STRIP ================= */}
+
+      <section className="oc-strip" aria-label="Technology expertise">
+
+        <p>Technologies we work with</p>
+
+        <div className="oc-marquee">
+
+          <div className="oc-marquee-track">
+
+            {[...STACK, ...STACK].map((tech, i) => (
+
+              <span
+
+                className="oc-chip oc-tech-logo"
+
+                style={{ "--tech-color": `#${tech.color}` }}
+
+                key={`${tech.name}-${i}`}
+
+                aria-hidden={i >= STACK.length}
+
+                title={tech.name}
+
+              >
+
+                <img
+
+                  className="oc-tech-logo-img"
+
+                  src={getTechLogoSources(tech)[0]}
+
+                  data-logo-sources={JSON.stringify(getTechLogoSources(tech))}
+
+                  data-logo-index="0"
+
+                  alt={i >= STACK.length ? "" : `${tech.name} brand logo`}
+
+                  loading={i < 12 ? "eager" : "lazy"}
+
+                  decoding="async"
+
+                  onError={(event) => {
+
+                    const img = event.currentTarget;
+
+                    const sources = JSON.parse(img.dataset.logoSources || "[]");
+
+                    const nextIndex = Number(img.dataset.logoIndex || 0) + 1;
+
+                    if (nextIndex < sources.length) {
+
+                      img.dataset.logoIndex = String(nextIndex);
+
+                      img.src = sources[nextIndex];
+
+                    } else {
+
+                      // Keep the technology label visible if a provider has no icon for it.
+
+                      img.style.display = "none";
+
+                    }
+
+                  }}
+
+                />
+
+                <span>{tech.name}</span>
+
               </span>
-            </Word>{" "}
-            <Word i={2}>that</Word>{" "}
-            <Word i={3}>lasts.</Word>
-          </h1>
-          <p className="hero-lead">
-            Custom software, cloud infrastructure, and applied AI — engineered
-            for teams that need it built right, from first sketch to production.
-          </p>
-          <div className="hero-actions">
-            <Link to="/contact" className="home-primary-button" data-magnetic>
-              Start a Project <span>→</span>
-            </Link>
-            <a href="#services" className="home-ghost-button" data-magnetic>Explore services</a>
-          </div>
-        </div>
 
-        <a href="#about" className="hero-scroll" aria-label="Scroll to content"><span></span></a>
-      </section>
-      {/* NEW LAYOUT: editorial overview */}
-      <section className="nx-intro" id="about">
-        <div className="nx-wrap nx-intro-grid">
-          <div className="nx-intro-copy nx-reveal">
-            <span className="nx-kicker"><i /> INDEPENDENT DIGITAL ENGINEERING</span>
-            <h2>Good technology should make business feel <em>simpler.</em></h2>
-          </div>
-          <div className="nx-intro-side nx-reveal">
-            <p>OCAS partners with ambitious teams to turn complex challenges into dependable digital products — from the first product decision to launch and beyond.</p>
-            <a className="nx-arrow-link" href="#services">Explore what we do <span>↗</span></a>
-          </div>
-        </div>
-        <div className="nx-wrap nx-proof-row">
-          <div><b>01</b><span>Thoughtful strategy</span></div><div><b>02</b><span>Engineering with purpose</span></div><div><b>03</b><span>Partnership beyond launch</span></div>
-        </div>
-      </section>
-
-      {/* Services: image-led editorial cards */}
-      <section className="nx-services" id="services">
-        <div className="nx-wrap">
-          <div className="nx-section-top nx-reveal"><div><span className="nx-kicker"><i /> WHAT WE DO</span><h2>From complex idea<br/>to <em>working product.</em></h2></div><p>One connected team across product design, software engineering, cloud, and applied AI.</p></div>
-          <div className="nx-service-grid nx-service-grid-v5">
-            {SERVICES.map((s, i) => (
-              <article className="nx-service-card nx-reveal" key={s.title} style={{"--delay": `${(i % 3) * 75}ms`}}>
-                <div className="nx-service-image">
-                  <img
-                    src={s.fallback}
-                    alt={s.alt}
-                    loading="lazy"
-                    decoding="async"
-                    onError={(event) => { event.currentTarget.style.opacity = "0"; }}
-                  />
-                  <span className="nx-service-index">{String(i+1).padStart(2,"0")}</span>
-                </div>
-                <div className="nx-service-info">
-                  <div className="nx-service-meta">{s.tags.slice(0,2).join('  /  ')}</div>
-                  <h3>{s.title}</h3><p>{s.text}</p>
-                  <a href="/services" className="nx-arrow-link">Explore service <span>↗</span></a>
-                </div>
-              </article>
             ))}
+
           </div>
+
         </div>
+
       </section>
 
-      {/* Engineering principles + technology ecosystem */}
-      <section className="nx-engineering" id="engineering">
-        <div className="nx-wrap">
-          <div className="nx-engineering-heading nx-reveal">
-            <div>
-              <span className="nx-kicker"><i /> THE OCAS DIFFERENCE</span>
-              <h2>Thoughtful engineering.<br /><em>Real-world outcomes.</em></h2>
-            </div>
-            <p>Good delivery is about more than writing code. We connect business priorities, thoughtful design, and dependable engineering to create technology people can rely on.</p>
+      {/* ================= ABOUT ================= */}
+
+      <section className="oc-section oc-about" id="about">
+
+        <div className="oc-wrap oc-about-redesign">
+
+          <div className="oc-about-topline" data-reveal>
+
+            <span className="oc-about-eyebrow"><i /> WHO WE ARE</span>
+
+            <span className="oc-about-index">ABOUT OCAS <b>— 01</b></span>
+
           </div>
 
-          <div className="nx-principle-grid">
-            {PRINCIPLES.map((principle, i) => (
-              <article className="nx-principle-card nx-reveal" key={principle.n} style={{"--delay": `${i * 100}ms`}}>
-                <div className="nx-principle-top">
-                  <span className="nx-principle-number">{principle.n}</span>
-                  <span className="nx-principle-icon" aria-hidden="true">{["↗", "◈", "✳"][i]}</span>
-                </div>
-                <h3>{principle.title}</h3>
-                <p>{principle.text}</p>
-                <span className="nx-principle-line" aria-hidden="true" />
-              </article>
-            ))}
+          <div className="oc-about-intro">
+
+            <div className="oc-about-heading" data-reveal>
+
+              <h2>We turn complex technology into <em>clear business value.</em></h2>
+
+            </div>
+
+            <div className="oc-about-summary" data-reveal>
+
+              <p>OCAS partners with ambitious teams to turn complex challenges into dependable digital products, from the first product decision to launch and beyond.</p>
+
+              <a className="oc-about-discover" href="#services">Explore our capabilities <span aria-hidden="true">↗</span></a>
+
+            </div>
+
           </div>
 
-          <div className="nx-tech-panel nx-reveal">
-            <div className="nx-tech-panel-copy">
-              <span className="nx-kicker nx-kicker-light"><i /> BUILT WITH THE RIGHT TOOLS</span>
-              <h3>Modern technology.<br /><em>Chosen for the job.</em></h3>
-              <p>We select the stack around your product, your team, and your long-term goals — not the latest trend.</p>
-            </div>
-            <div className="nx-tech-marquee" aria-label="Technology expertise">
-              <div className="nx-tech-marquee-track">
-                <div className="nx-tech-cloud">
-                  {STACK.map((tech, i) => (
-                    <span className="nx-tech-chip" key={tech} style={{"--delay": `${(i % 8) * 55}ms`}}>{tech}</span>
-                  ))}
-                </div>
-                <div className="nx-tech-cloud" aria-hidden="true">
-                  {STACK.map((tech) => (
-                    <span className="nx-tech-chip" key={`duplicate-${tech}`}>{tech}</span>
-                  ))}
-                </div>
+          <div className="oc-about-showcase">
+
+            <div className="oc-about-visual" data-reveal>
+
+              <div className="oc-about-visual-main">
+
+                <Photo src={IMG.about1} alt="OCAS team collaborating on a digital product" />
+
+                <div className="oc-about-visual-overlay" />
+
+                <div className="oc-about-visual-caption"><span>IDEAS INTO IMPACT</span><b>Built around your business.</b></div>
+
               </div>
+
+              <div className="oc-about-visual-inset"><Photo src={IMG.about2} alt="Software engineering and development work" /></div>
+
+              <div className="oc-about-orbit" aria-hidden="true"><span>O</span></div>
+
+              <div className="oc-about-proof"><span className="oc-about-proof-icon">✳</span><div><b>People-first engineering</b><span>Thoughtful by design. Reliable by default.</span></div></div>
+
             </div>
-            <span className="nx-tech-glow nx-tech-glow-one" aria-hidden="true" />
-            <span className="nx-tech-glow nx-tech-glow-two" aria-hidden="true" />
+
+            <div className="oc-about-details" data-reveal>
+
+              <span className="oc-about-small-label">THE OCAS APPROACH</span>
+
+              <h3>Good work starts with understanding <em>what matters.</em></h3>
+
+              <p className="oc-about-details-copy">We bring product thinking, engineering discipline, and a collaborative mindset to every stage of the journey.</p>
+
+              <div className="oc-about-principles">
+
+                {PRINCIPLES.map((p, i) => (
+
+                  <article className="oc-about-principle" key={p.title}>
+
+                    <span className="oc-about-principle-no">0{i + 1}</span>
+
+                    <div><h4>{p.title}</h4><p>{p.text}</p></div>
+
+                    <span className="oc-about-principle-arrow" aria-hidden="true">↗</span>
+
+                  </article>
+
+                ))}
+
+              </div>
+
+              <a className="oc-about-bottom-link" href="#services">See how we can help <span aria-hidden="true">→</span></a>
+
+            </div>
+
           </div>
+
         </div>
+
       </section>
 
-      {/* Industries: asymmetrical image mosaic */}
-      <section className="nx-industries" id="industries">
-        <div className="nx-wrap">
-          <div className="nx-industry-heading nx-reveal"><div><span className="nx-kicker nx-kicker-light"><i /> INDUSTRIES WE SUPPORT</span><h2>Built for the world<br/>your business <em>works in.</em></h2></div><p>Deeply practical digital solutions shaped around the realities of your sector.</p></div>
-          <div className="nx-industry-grid nx-industry-grid-v5">
-            {INDUSTRIES.map((ind,i)=>(
-              <article className="nx-industry-card nx-reveal" key={ind.key} style={{"--delay": `${(i % 3) * 80}ms`}}>
-                <div className="nx-industry-photo">
-                  <img
-                    src={ind.fallback}
-                    alt={ind.alt}
-                    loading="lazy"
-                    decoding="async"
-                    onError={(event) => { event.currentTarget.style.opacity = "0"; }}
-                  />
-                  <span className="nx-industry-num">{String(i+1).padStart(2,'0')}</span>
-                  <span className="nx-industry-photo-arrow" aria-hidden="true">↗</span>
+      {/* ================= SERVICES ================= */}
+
+      <section className="oc-section oc-alt oc-services-premium" id="services">
+
+        <div className="oc-wrap">
+
+          <div className="oc-services-topline" data-reveal>
+
+            <span><i /> WHAT WE DO</span>
+
+            <span className="oc-services-edition">OCAS / CAPABILITIES <b>01—06</b></span>
+
+          </div>
+
+          <header className="oc-services-heading" data-reveal>
+
+            <div className="oc-services-title">
+
+              <h2>Technology that moves<br /><em>your business forward.</em></h2>
+
+            </div>
+
+            <div className="oc-services-intro">
+
+              <p>From the first product decision to long-term scale, we bring strategy, design and engineering together to solve the right problems.</p>
+
+              <Link to="/services" className="oc-services-all">Explore all capabilities <span aria-hidden="true">↗</span></Link>
+
+            </div>
+
+          </header>
+
+          <div className="oc-service-grid oc-services-grid-premium oc-services-list-layout">
+
+            {SERVICES.map((s, i) => (
+
+              <article className={`oc-service oc-service-premium oc-service-row ${i % 2 ? "oc-service-row-reverse" : ""}`} key={s.title} data-reveal style={{ "--d": `${i * 70}ms` }}>
+
+                <div className="oc-service-img oc-service-img-premium">
+
+                  <Photo src={s.img} alt={s.alt} />
+
+                  <span className="oc-index">{String(i + 1).padStart(2, "0")}</span>
+
+                  <span className="oc-service-image-mark" aria-hidden="true">↗</span>
+
                 </div>
-                <div className="nx-industry-copy"><span>{ind.label}</span><h3>{ind.title}</h3><p>{ind.subtitle}</p></div>
+
+                <div className="oc-service-body oc-service-body-premium">
+
+                  <div className="oc-service-meta"><span>CAPABILITY {String(i + 1).padStart(2, "0")}</span><span className="oc-service-meta-dot" /></div>
+
+                  <h3>{s.title}</h3>
+
+                  <p>{s.text}</p>
+
+                  <div className="oc-tags">
+
+                    {s.tags.map((t) => <span key={t}>{t}</span>)}
+
+                  </div>
+
+                  <Link to="/services" className="oc-service-cta">Discover service <span aria-hidden="true">→</span></Link>
+
+                </div>
+
               </article>
+
             ))}
+
           </div>
-          <div className="nx-industry-footer nx-reveal"><p>Working in a different industry?</p><Link to="/contact" className="nx-light-button">Tell us about your challenge <span>↗</span></Link></div>
-        </div>
-      </section>
 
-      {/* New approach section */}
-      <section className="nx-approach" id="process">
-        <div className="nx-wrap nx-approach-grid">
-          <div className="nx-approach-sticky nx-reveal"><span className="nx-kicker"><i /> HOW WE WORK</span><h2>Clarity first.<br/><em>Momentum always.</em></h2><p>Great delivery is not magic. It is a transparent process, honest conversations, and the right decisions made at the right time.</p><Link to="/contact" className="nx-dark-button">Start a conversation <span>↗</span></Link></div>
-          <div className="nx-steps">
-            {PROCESS.map((p,i)=>(<article className="nx-step nx-reveal" key={p.title}><span className="nx-step-no">0{i+1}</span><div><h3>{p.title}</h3><p>{p.text}</p></div><span className="nx-step-symbol">↗</span></article>))}
+          <div className="oc-services-foot" data-reveal>
+
+            <span>One team. Connected expertise. Practical outcomes.</span>
+
+            <Link to="/contact">Have a project in mind? <b>Let’s talk <span aria-hidden="true">↗</span></b></Link>
+
           </div>
+
         </div>
+
       </section>
 
-      {/* Visual statement band */}
-      <section className="nx-image-band" aria-label="Technology built around people">
-        <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2200&q=90" alt="A team working together around a table" loading="lazy" />
-        <div className="nx-image-band-overlay" />
-        <div className="nx-wrap nx-image-band-content nx-reveal"><span className="nx-kicker nx-kicker-light"><i /> PEOPLE, PRODUCT, PROGRESS</span><h2>Technology is only powerful when it works for <em>people.</em></h2><p>We keep the work collaborative, the communication clear, and the outcomes tied to what matters.</p></div>
-      </section>
+      {/* ================= INDUSTRIES (tabs) ================= */}
 
-      {/* Client proof */}
-      <section className="nx-clients" id="clients">
-        <div className="nx-wrap"><div className="nx-section-top nx-reveal"><div><span className="nx-kicker"><i /> SELECTED PARTNERSHIPS</span><h2>Built together.<br/><em>Made to matter.</em></h2></div><p>We value long-term relationships and practical outcomes over unnecessary complexity.</p></div>
-          <div className="nx-client-grid">{CLIENTS.map((c,i)=>(<a className="nx-client-card nx-reveal" href={c.url} target="_blank" rel="noopener noreferrer" key={c.name}><span className="nx-client-count">0{i+1} / PARTNERSHIP</span><h3>{c.name}</h3><p>{c.text}</p><span className="nx-client-bottom">{c.category}<b>↗</b></span></a>))}</div>
+      <section className="oc-section" id="industries">
+
+        <div className="oc-wrap">
+
+          <header className="oc-head" data-reveal>
+
+            <div>
+
+              <span className="oc-kicker">Industries we support</span>
+
+              <h2>Built for the world your business <em>works in.</em></h2>
+
+            </div>
+
+            <p>Deeply practical digital solutions shaped around the realities of your sector.</p>
+
+          </header>
+
+          <div className="oc-ind oc-ind-scroll-layout">
+
+            <nav className="oc-ind-tabs oc-ind-sticky-nav" role="tablist" aria-label="Industries">
+
+              {INDUSTRIES.map((x, i) => (
+
+                <button
+
+                  key={x.label}
+
+                  type="button"
+
+                  role="tab"
+
+                  aria-selected={i === ind}
+
+                  aria-controls={`oc-ind-panel-${i}`}
+
+                  className={i === ind ? "on" : ""}
+
+                  onClick={() => goToIndustry(i)}
+
+                >
+
+                  <span className="oc-ind-no">{String(i + 1).padStart(2, "0")}</span>
+
+                  <span className="oc-ind-tab-label">{x.label}</span>
+
+                  <span className="oc-ind-tab-arrow" aria-hidden="true">↗</span>
+
+                </button>
+
+              ))}
+
+            </nav>
+
+            <div className="oc-ind-panels">
+
+              {INDUSTRIES.map((industry, i) => (
+
+                <article
+
+                  className={`oc-ind-panel oc-ind-scroll-panel${i === ind ? " is-active" : ""}`}
+
+                  id={`oc-ind-panel-${i}`}
+
+                  role="tabpanel"
+
+                  aria-label={industry.title}
+
+                  aria-current={i === ind ? "true" : undefined}
+
+                  data-industry-index={i}
+
+                  ref={(node) => { industryPanelRefs.current[i] = node; }}
+
+                  key={industry.label}
+
+                >
+
+                  <div className="oc-ind-photo">
+
+                    <Photo src={industry.img} alt={industry.alt} eager={i === 0} />
+
+                    <span className="oc-ind-photo-count">{String(i + 1).padStart(2, "0")} <i>/</i> 09</span>
+
+                  </div>
+
+                  <div className="oc-ind-info">
+
+                    <span className="oc-kicker">{industry.label}</span>
+
+                    <h3>{industry.title}</h3>
+
+                    <p>{industry.desc}</p>
+
+                    <ul>
+
+                      {industry.points.map((point) => <li key={point}>{point}</li>)}
+
+                    </ul>
+
+                    <div className="oc-tags">
+
+                      {industry.tags.map((tag) => <span key={tag}>{tag}</span>)}
+
+                    </div>
+
+                    <Link to="/contact" className="oc-link">Discuss your project <Arrow /></Link>
+
+                  </div>
+
+                </article>
+
+              ))}
+
+            </div>
+
+          </div>
+
+          <div className="oc-ind-foot" data-reveal>
+
+            <p>Working in a different industry?</p>
+
+            <Link to="/contact" className="oc-btn oc-btn-ghost">Tell us about your challenge <Arrow /></Link>
+
+          </div>
+
         </div>
+
       </section>
 
-      {/* New CTA layout */}
-      <section className="nx-cta">
-        <div className="nx-cta-orbit nx-cta-orbit-one"/><div className="nx-cta-orbit nx-cta-orbit-two"/>
-        <div className="nx-wrap nx-cta-inner nx-reveal"><span className="nx-kicker nx-kicker-light"><i /> HAVE A CHALLENGE?</span><h2>Let's make your<br/><em>next move count.</em></h2><p>Tell us what you are trying to build, fix, or improve. We will help you find a clear way forward.</p><Link to="/contact" className="nx-cta-button">Talk to our team <span>↗</span></Link></div>
-      </section>
+      {/* ================= PROCESS ================= */}
 
-      {/* Contact panel */}
-      <section className="nx-contact" id="contact">
-        <div className="nx-wrap nx-contact-grid"><div className="nx-contact-copy nx-reveal"><span className="nx-kicker"><i /> GET IN TOUCH</span><h2>Tell us what<br/><em>you have in mind.</em></h2><p>Share a little about your project and we will get back to you to discuss the next steps.</p><a href="mailto:hello@ocassoftware.com" className="nx-contact-email">hello@ocassoftware.com <span>↗</span></a></div>
-          <form className="nx-contact-form nx-reveal" action="mailto:hello@ocassoftware.com" method="post" encType="text/plain"><div className="nx-form-row"><label>Your name<input name="Name" placeholder="Full name" required /></label><label>Work email<input type="email" name="Email" placeholder="you@company.com" required /></label></div><div className="nx-form-row"><label>Company<input name="Company" placeholder="Company name" /></label><label>What do you need?<select name="Interested in" defaultValue=""><option value="" disabled>Select a service</option>{SERVICES.map(s=><option key={s.title}>{s.title}</option>)}<option>Other</option></select></label></div><label>Project overview<textarea name="Message" rows="4" placeholder="A few details about your goals..." required /></label><button type="submit" className="nx-submit">Send enquiry <span>↗</span></button><small>By submitting this form, you agree to be contacted about your enquiry.</small></form>
+      <section className="oc-section oc-process" id="process">
+
+        <div className="oc-wrap">
+
+          <header className="oc-head oc-head-light" data-reveal>
+
+            <div>
+
+              <span className="oc-kicker oc-kicker-light">How we work</span>
+
+              <h2>Clarity first. <em>Momentum always.</em></h2>
+
+            </div>
+
+            <p>Great delivery is not magic. It is a transparent process, honest conversations, and the right decisions made at the right time.</p>
+
+          </header>
+
+          <ol className="oc-steps">
+
+            {PROCESS.map((p, i) => (
+
+              <li className="oc-step" key={p.title} data-reveal style={{ "--d": `${i * 90}ms` }}>
+
+                <span className="oc-step-no">0{i + 1}</span>
+
+                <h3>{p.title}</h3>
+
+                <p>{p.text}</p>
+
+              </li>
+
+            ))}
+
+          </ol>
+
         </div>
+
       </section>
+
+      {/* ================= SELECTED PARTNERSHIPS ================= */}
+
+      <section className="oc-section oc-alt oc-partnerships" id="clients">
+
+        <div className="oc-wrap">
+
+          <div className="oc-partners-topline" data-reveal>
+
+            <span><i /> SELECTED PARTNERSHIPS</span>
+
+            <span className="oc-partners-edition">COLLABORATION <b>01—02</b></span>
+
+          </div>
+
+          <header className="oc-partners-heading" data-reveal>
+
+            <div>
+
+              <span className="oc-kicker">Good work is built together</span>
+
+              <h2>Partnerships with <em>purpose.</em></h2>
+
+            </div>
+
+            <p>We work alongside teams to create useful digital experiences and practical tools that support the way they operate.</p>
+
+          </header>
+
+          <div className="oc-partners-list">
+
+            {CLIENTS.map((c, i) => (
+
+              <div className={`oc-partner-row ${i % 2 === 1 ? "oc-partner-row-reverse" : ""}`} key={c.name}>
+
+                <a className="oc-client oc-partner-card oc-partner-copy" href={c.url} target="_blank" rel="noopener noreferrer" data-reveal data-reveal-side={i % 2 === 0 ? "left" : "right"} style={{ "--d": `${i * 100}ms` }}>
+
+                  <div className="oc-partner-card-top">
+
+                    <span className="oc-partner-number">0{i + 1}<i> / 02</i></span>
+
+                    <span className="oc-partner-mark" aria-hidden="true">{c.name.charAt(0)}</span>
+
+                  </div>
+
+                  <div className="oc-partner-card-content">
+
+                    <span className="oc-partner-type">{c.category}</span>
+
+                    <h3>{c.name}</h3>
+
+                    <p>{c.text}</p>
+
+                  </div>
+
+                  <span className="oc-partner-card-foot"><span>Visit company website</span><b aria-hidden="true">↗</b></span>
+
+                </a>
+
+                <a className="oc-partner-preview" href={c.url} target="_blank" rel="noopener noreferrer" aria-label={`View ${c.name} website`} data-reveal data-reveal-side={i % 2 === 0 ? "right" : "left"} style={{ "--d": `${i * 100 + 120}ms` }}>
+
+                  <div className="oc-partner-browser-bar" aria-hidden="true"><span /><span /><span /><small>{c.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}</small><b>↗</b></div>
+
+                  <div className="oc-partner-screen">
+
+                    <video
+
+                      className="oc-partner-video"
+
+                      src={c.video}
+
+                      autoPlay
+
+                      muted
+
+                      loop
+
+                      playsInline
+
+                      preload="metadata"
+
+                      aria-label={`${c.name} website homepage video preview`}
+
+                    />
+
+                    <span className="oc-partner-preview-caption">WEBSITE PREVIEW</span>
+
+                  </div>
+
+                </a>
+
+              </div>
+
+            ))}
+
+          </div>
+
+          <div className="oc-partners-bottom" data-reveal>
+
+            <span>Have a shared goal in mind?</span>
+
+            <Link to="/contact">Let’s build something useful <span aria-hidden="true">→</span></Link>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      {/* ================= CTA (image) ================= */}
+
+      <section className="oc-cta">
+
+        <Photo src={IMG.cta} alt="A team working together around a table" className="oc-cta-img" />
+
+        <div className="oc-cta-shade" aria-hidden="true" />
+
+        <div className="oc-wrap oc-cta-inner" data-reveal>
+
+          <span className="oc-kicker oc-kicker-light">Have a challenge?</span>
+
+          <h2>Let&apos;s make your <em>next move count.</em></h2>
+
+          <p>Tell us what you are trying to build, fix, or improve. We will help you find a clear way forward.</p>
+
+          <Link to="/contact" className="oc-btn oc-btn-light">Talk to our team <Arrow /></Link>
+
+        </div>
+
+      </section>
+
+      {/* ================= CONTACT ================= */}
+
+      <section className="oc-section" id="contact">
+
+        <div className="oc-wrap oc-contact">
+
+          <div className="oc-contact-side" data-reveal>
+
+            <span className="oc-kicker oc-kicker-light">Get in touch</span>
+
+            <h2>Tell us what <em>you have in mind.</em></h2>
+
+            <p>Share a little about your project and we will get back to you to discuss the next steps.</p>
+
+            <a href="mailto:hello@ocassoftware.com" className="oc-email">hello@ocassoftware.com <Arrow /></a>
+
+            <ol className="oc-next">
+
+              {NEXT_STEPS.map((s, i) => (
+
+                <li key={s}><span>{i + 1}</span>{s}</li>
+
+              ))}
+
+            </ol>
+
+          </div>
+
+          <form
+
+            className="oc-form"
+
+            data-reveal
+
+            action="mailto:hello@ocassoftware.com"
+
+            method="post"
+
+            encType="text/plain"
+
+          >
+
+            <div className="oc-row">
+
+              <label>Your name
+
+                <input name="Name" placeholder="Full name" required />
+
+              </label>
+
+              <label>Work email
+
+                <input type="email" name="Email" placeholder="you@company.com" required />
+
+              </label>
+
+            </div>
+
+            <div className="oc-row">
+
+              <label>Company
+
+                <input name="Company" placeholder="Company name" />
+
+              </label>
+
+              <label>What do you need?
+
+                <select name="Interested in" defaultValue="">
+
+                  <option value="" disabled>Select a service</option>
+
+                  {SERVICES.map((s) => <option key={s.title}>{s.title}</option>)}
+
+                  <option>Other</option>
+
+                </select>
+
+              </label>
+
+            </div>
+
+            <label>Project overview
+
+              <textarea name="Message" rows="4" placeholder="A few details about your goals..." required />
+
+            </label>
+
+            <button type="submit" className="oc-btn oc-btn-primary">Send enquiry <Arrow /></button>
+
+            <small>By submitting this form, you agree to be contacted about your enquiry.</small>
+
+          </form>
+
+        </div>
+
+      </section>
+
     </main>
+
   );
+
 }
