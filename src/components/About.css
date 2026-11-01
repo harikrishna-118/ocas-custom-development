@@ -1706,3 +1706,53 @@
     transition: none;
   }
 }
+
+/* ABOUT PAGE: CLEAN HERO AND PROFESSIONAL RESPONSIVE BUTTONS */
+.ocas-about-page .about-hero-grid { align-items: center; }
+.ocas-about-page .about-hero-visual { padding: 0; }
+.ocas-about-page .about-photo { border-radius: 14px; }
+.ocas-about-page .about-photo-label,
+.ocas-about-page .about-photo-corner { display: none !important; }
+.ocas-about-page .about-actions,
+.ocas-about-page .about-cta-actions { gap: 12px; }
+.ocas-about-page .about-btn,
+.ocas-about-page .about-cta-link,
+.ocas-about-page .about-service-bottom a {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: fit-content; max-width: 100%; min-height: 44px;
+  padding: 11px 20px; border-radius: 9px;
+  font-family: inherit; font-size: 14px; font-weight: 700;
+  line-height: 1.35; text-align: center; text-decoration: none;
+  transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.ocas-about-page .about-btn-primary,
+.ocas-about-page .about-service-bottom a {
+  color: #fff !important; background: #155eef !important; border: 1px solid #155eef !important;
+}
+.ocas-about-page .about-btn-primary:hover,
+.ocas-about-page .about-service-bottom a:hover {
+  color: #fff !important; background: #1049bd !important; border-color: #1049bd !important;
+  box-shadow: 0 6px 16px rgba(21,94,239,.2); transform: translateY(-2px);
+}
+.ocas-about-page .about-btn-outline,
+.ocas-about-page .about-cta-link {
+  color: #0b1730 !important; background: #fff !important; border: 1px solid #cbd7e8 !important;
+}
+.ocas-about-page .about-btn-outline:hover,
+.ocas-about-page .about-cta-link:hover {
+  border-color: #155eef !important; color: #155eef !important; background: #f5f8ff !important;
+}
+.ocas-about-page .about-service > a { font-size: 11px; font-weight: 700; text-decoration: none; transform: none; }
+.ocas-about-page .about-service > a:hover { transform: none; }
+@media (max-width: 760px) {
+  .ocas-about-page .about-hero-grid { grid-template-columns: minmax(0,1fr); gap: 28px; }
+  .ocas-about-page .about-hero-visual { margin: 0; padding: 0; }
+  .ocas-about-page .about-actions { flex-direction: row; flex-wrap: wrap; align-items: center; }
+  .ocas-about-page .about-btn,
+  .ocas-about-page .about-cta-link,
+  .ocas-about-page .about-service-bottom a { width: fit-content; min-height: 42px; padding: 10px 15px; font-size: 13px; }
+}
+@media (max-width: 380px) {
+  .ocas-about-page .about-actions { gap: 9px; }
+  .ocas-about-page .about-btn { padding: 10px 12px; font-size: 12px; }
+}

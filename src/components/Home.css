@@ -5610,3 +5610,148 @@
 .oc-home .oc-btn {
   padding: 5px !important;
 }
+
+/* OCAS: unified professional responsive button styling */
+.oc-home :is(.oc-btn,.oc-hero-video-btn,.oc-services-all,.oc-service-cta,.oc-about-discover,.oc-about-bottom-link,.oc-link,.oc-ind-foot a,.oc-email) {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: fit-content; max-width: 100%; min-width: 0;
+  padding: 12px 20px !important; min-height: 44px;
+  border-radius: 10px !important; font-size: 14px; font-weight: 600;
+  line-height: 1.35; text-align: center; text-decoration: none;
+  transition: background-color .22s ease, border-color .22s ease, box-shadow .22s ease, transform .22s ease;
+}
+.oc-home :is(.oc-btn,.oc-hero-video-btn,.oc-services-all,.oc-service-cta,.oc-about-discover,.oc-about-bottom-link,.oc-link):hover {
+  transform: translateY(-2px); box-shadow: 0 8px 22px rgba(10,26,58,.12);
+}
+.oc-home :is(.oc-btn,.oc-hero-video-btn,.oc-services-all,.oc-service-cta,.oc-about-discover,.oc-about-bottom-link,.oc-link):focus-visible {
+  outline: 3px solid #83a8ff; outline-offset: 3px;
+}
+.oc-home :is(.oc-hero-video-actions,.oc-actions) { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 640px) {
+  .oc-home :is(.oc-btn,.oc-hero-video-btn,.oc-services-all,.oc-service-cta,.oc-about-discover,.oc-about-bottom-link,.oc-link) {
+    width: fit-content !important; max-width: 100%; padding: 11px 15px !important;
+    min-height: 42px; font-size: 13px; border-radius: 9px !important;
+  }
+  .oc-home .oc-hero-video-actions { justify-content: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .oc-home :is(.oc-btn,.oc-hero-video-btn,.oc-services-all,.oc-service-cta,.oc-about-discover,.oc-about-bottom-link,.oc-link) { transition: none; }
+}
+
+
+
+
+/* Large Devices */
+@media (min-width: 1025px) {
+  .oc-home .oc-hero-video h1 {
+    font-size: clamp(60px, 6.5vw, 90px);
+    line-height: 1.0;
+  }
+}
+
+/* Tablet */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .oc-home .oc-hero-video h1 {
+    font-size: clamp(46px, 6vw, 68px);
+  }
+}
+
+/* Small Devices */
+@media (max-width: 640px) {
+  .oc-home .oc-hero-video-content {
+    transform: translateY(-30px);
+  }
+}
+
+
+
+/* INDUSTRIES - EQUAL HEIGHT CARDS */
+
+@media (min-width: 901px) {
+  .oc-home .oc-ind {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    align-items: stretch;
+    gap: 28px;
+  }
+
+  .oc-home .oc-ind-tabs {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .oc-home .oc-ind-tabs button {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+  }
+
+  .oc-home .oc-ind-panel {
+    height: 100%;
+    min-height: 100%;
+  }
+}
+
+/* TABLET & MOBILE */
+@media (max-width: 900px) {
+  .oc-home .oc-ind {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .oc-home .oc-ind-tabs {
+    height: auto;
+  }
+
+  .oc-home .oc-ind-tabs button {
+    flex: 0 0 auto;
+  }
+
+  .oc-home .oc-ind-panel {
+    height: auto;
+    min-height: 0;
+  }
+}
+
+
+
+/* SERVICES - BLUE BUTTONS */
+
+.oc-home .oc-service-cta,
+.oc-home .oc-services-all {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 12px 20px;
+  background: #2457e6 !important;
+  color: #ffffff !important;
+  border: 1px solid #2457e6 !important;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.oc-home .oc-service-cta:hover,
+.oc-home .oc-services-all:hover {
+  background: #1745c7 !important;
+  color: #ffffff !important;
+  border-color: #1745c7 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(36, 87, 230, 0.25);
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .oc-home .oc-service-cta,
+  .oc-home .oc-services-all {
+    width: fit-content;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+}

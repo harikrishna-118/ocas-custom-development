@@ -186,10 +186,6 @@ function ServiceCard({ service }) {
             <span key={tag}>{tag}</span>
           ))}
         </div>
-        <a className="service-card-link" href="/#contact">
-          <span>Discuss this service</span>
-          <b>↗</b>
-        </a>
       </div>
     </article>
   );
@@ -235,7 +231,7 @@ export default function Services() {
 
             <div className="hero-actions hero-in" style={{ "--d": "360ms" }}>
               <a className="services-hero-button" href="/#contact">
-                Discuss your project <span aria-hidden="true">↗</span>
+                Discuss your project
               </a>
               <a className="services-hero-secondary" href="#services-list">
                 Explore services
@@ -296,7 +292,7 @@ export default function Services() {
           <span className="services-kicker">HAVE A PROJECT IN MIND?</span>
           <h2>Ready to build<br /><em>something great?</em></h2>
           <p>Tell us about your project and we'll walk you through how OCAS can help you build it.</p>
-          <a href="/#contact" className="services-cta-button">Start a Project <span>↗</span></a>
+          <a href="/#contact" className="services-cta-button">Start a Project</a>
         </Reveal>
       </section>
     </main>

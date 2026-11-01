@@ -99,16 +99,9 @@ export default function About() {
       {/* HERO */}
       <section className="about-hero" id="about-top">
         <div className="about-container">
-          <div className="about-eyebrow">
-            <i />
-            ABOUT OCAS
-            <span />
-            TECHNOLOGY WITH A PURPOSE
-          </div>
-
           <div className="about-hero-grid">
             <div className="about-hero-copy about-reveal about-reveal-left">
-              <p className="about-kicker">WHO WE ARE</p>
+              <p className="about-kicker">ABOUT OCAS</p>
 
               <h1>
                 Technology should move{" "}
@@ -126,22 +119,16 @@ export default function About() {
                   to="/contact"
                   className="about-btn about-btn-primary"
                 >
-                  Discuss your project <b>↗</b>
+                  Discuss your project
                 </Link>
 
                 <a
                   href="#our-approach"
                   className="about-btn about-btn-outline"
                 >
-                  Our approach <b>↓</b>
+                  Our approach
                 </a>
               </div>
-
-              <p className="about-hero-note">
-                <span />
-                A practical, collaborative approach to building digital
-                solutions.
-              </p>
             </div>
 
             <div className="about-hero-visual about-reveal about-reveal-right">
@@ -151,23 +138,6 @@ export default function About() {
                   alt="Colleagues collaborating around a table"
                   fetchPriority="high"
                 />
-              </div>
-
-              <div className="about-photo-label">
-                <strong>
-                  OCAS<span>®</span>
-                </strong>
-
-                <div>
-                  <b>People first. Technology with purpose.</b>
-                  <small>
-                    COLLABORATION · ENGINEERING · IMPACT
-                  </small>
-                </div>
-              </div>
-
-              <div className="about-photo-corner">
-                01 <span>/</span> 04
               </div>
             </div>
           </div>
@@ -286,7 +256,7 @@ export default function About() {
                   to="/services"
                   aria-label={`Explore ${service.title}`}
                 >
-                  ↗
+                  View
                 </Link>
               </article>
             ))}
@@ -296,7 +266,7 @@ export default function About() {
             <span>ONE PARTNER. CONNECTED CAPABILITIES.</span>
 
             <Link to="/services">
-              Explore all services <b>→</b>
+              Explore all services
             </Link>
           </div>
         </div>
@@ -420,11 +390,11 @@ export default function About() {
               to="/contact"
               className="about-btn about-btn-primary"
             >
-              Start a conversation <b>↗</b>
+              Start a conversation
             </Link>
 
             <Link to="/services" className="about-cta-link">
-              Discover our services <b>→</b>
+              Discover our services
             </Link>
           </div>
         </div>
