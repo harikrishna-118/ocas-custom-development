@@ -13,7 +13,7 @@ const services = [
       ["Scalable foundations", "Systems built to handle growth without a rewrite six months in."]
     ],
     tags: ["TypeScript", "React", "Node.js", "PostgreSQL", "GraphQL"],
-    image: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=85",
+    image: "/images/Custom-software-development.webp",
     alt: "Developer working at a desk on a keyboard in a bright office",
     theme: "violet"
   },
@@ -28,7 +28,7 @@ const services = [
       ["Observability built in", "Logging, metrics, and alerting from day one, not bolted on later."]
     ],
     tags: ["AWS", "Docker", "Kubernetes", "Terraform", "GitHub Actions"],
-    image: "https://images.unsplash.com/photo-1584169417032-d34e8d805e8b?auto=format&fit=crop&w=1200&q=85",
+    image: "/images/Cloud & DevOps Engineering.webp",
     alt: "Aisle of server racks inside a data centre",
     theme: "teal"
   },
@@ -43,7 +43,7 @@ const services = [
       ["Analytics you can trust", "Clean semantic layers so every team reports from the same numbers."]
     ],
     tags: ["Python", "PostgreSQL", "Airflow", "dbt", "PyTorch"],
-    image: "https://images.unsplash.com/photo-1763038311036-6d18805537e5?auto=format&fit=crop&w=1200&q=85",
+    image: "/images/ai-data%20engineer.jpg",
     alt: "Person reviewing charts and graphs on a laptop",
     theme: "blue"
   },
@@ -58,7 +58,7 @@ const services = [
       ["App store readiness", "Submission, review, and release handled end to end."]
     ],
     tags: ["React Native", "Swift", "Kotlin", "Firebase"],
-    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=85",
+    image: "/images/mobile-app-developement.png",
     alt: "Smartphone showing an app interface next to a laptop keyboard",
     theme: "gold"
   },
@@ -73,7 +73,7 @@ const services = [
       ["Workflow automation", "Removing manual handoffs between systems that should talk to each other."]
     ],
     tags: ["REST/SOAP APIs", "Salesforce", "SAP", "MuleSoft"],
-    image: "https://images.unsplash.com/photo-1758873268998-2f77c2d38862?auto=format&fit=crop&w=1200&q=85",
+    image: "/images/enterprise%20system%20integration.jpg",
     alt: "Team collaborating around a whiteboard during a planning meeting",
     theme: "pink"
   },
@@ -88,7 +88,7 @@ const services = [
       ["Design systems", "Reusable components and accessibility-minded patterns for consistent experiences."]
     ],
     tags: ["Figma", "Design Systems", "Prototyping", "Accessibility"],
-    image: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1200&q=85",
+    image: "/images/UI-VS-UX-banner.webp",
     alt: "Monitor showing a design system interface on a desk with plants",
     theme: "lime"
   }

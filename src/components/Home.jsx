@@ -1,38 +1,30 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import { Link } from "react-router-dom";
-
 import "./Home.css";
-
 const P = (file, id, w = 1400) => [
   `/images/${file}`,
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`,
-
 ];
-
 // Topic-matched photographs. If a remote image fails, Photo tries the project's
-
 // existing local JPG and then the bundled lightweight SVG fallback.
-
 const U = (file, photoId, w = 1400) => [
   `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=${w}&q=84`,
   `/images/${file}`,
   `/images/${file.replace(/\.[^/.]+$/, ".svg")}`,
-
 ];
-
+// Industry photos (free Unsplash License). First is the main photo, the rest are
+// backups: Photo automatically tries the next one if an image fails to load.
+const IND = (...ids) =>
+  ids.map((id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=86`);
 const IMG = {
   hero: U("hero-professional.jpg", "photo-1522071820081-009f0129c71c", 1800),
   about1: P("about-1.jpg", "3183150", 1000),
   about2: P("about-2.jpg", "1181244", 800),
   cta: P("cta.jpg", "3184436", 2200),
-
 };
-
 /* =========================================================
    DATA
    ========================================================= */
-
 const STACK = [
   // Frontend
   { name: "HTML5", slug: "html5", color: "E34F26" },
@@ -82,85 +74,72 @@ const STACK = [
   { name: "GitHub", slug: "github", color: "181717" },
   { name: "GitLab", slug: "gitlab", color: "FC6D26" },
   { name: "Linux", slug: "linux", color: "FCC624" },
-
 ];
-
 // Reliable logo sources. Simple Icons uses the official brand symbol and brand colour.
-
 // A few technologies are concepts or have alternate slugs, so they use a sensible
-
 // branded fallback rather than leaving an empty space in the marquee.
-
 const TECH_LOGO_ALIASES = {
   "REST APIs": ["swagger", "postman"],
   "React Native": ["reactnative", "react"],
   "Java": ["openjdk", "java"],
   "Microsoft Azure": ["microsoftazure", "azure"]
-
 };
-
 const getTechLogoSources = (tech) => {
   const slugs = [...new Set([...(TECH_LOGO_ALIASES[tech.name] || []), tech.slug])];
   return slugs.flatMap((slug) => [
     `https://cdn.simpleicons.org/${slug}?viewbox=auto`,
     `https://cdn.jsdelivr.net/npm/simple-icons@v16/icons/${slug}.svg`
   ]);
-
 };
-
 const PRINCIPLES = [
   { title: "Custom-Built", text: "Software modeled around how your team actually works, not a template." },
   { title: "Cloud-Native", text: "Infrastructure and pipelines built to scale without duct tape." },
   { title: "Secure by Design", text: "Security and compliance considered from architecture, not bolted on later." },
-
 ];
-
 const SERVICES = [
   {
     title: "Custom Software Development",
     text: "Tailored web and enterprise applications built around how your business actually runs.",
     tags: ["TypeScript", "React", "Node.js"],
-    img: U("service-software.jpg", "photo-1498050108023-c5249f4df085", 1400),
+    img: "/images/Custom-software-development.webp",
     alt: "Software development workspace with computer screens and code",
   },
   {
     title: "Cloud & DevOps Engineering",
     text: "Resilient cloud infrastructure and automated delivery pipelines that scale with you.",
     tags: ["AWS", "Docker", "Kubernetes"],
-    img: U("service-cloud-devops.jpg", "photo-1558494949-ef010cbdcc31", 1400),
+    img: "/images/Cloud & DevOps Engineering.webp",
     alt: "Professional server infrastructure and cloud computing equipment",
   },
   {
     title: "AI & Data Engineering",
     text: "Data pipelines and applied AI that turn information into better decisions.",
     tags: ["Python", "PostgreSQL", "Airflow"],
-    img: U("service-ai-data.jpg", "photo-1551288049-bebda4e38f71", 1400),
+    img: "/images/ai-data%20engineer.jpg",
     alt: "Data analytics and technology dashboards on computer displays",
   },
   {
     title: "Mobile App Development",
     text: "Native-feeling apps for iOS and Android from a single codebase.",
     tags: ["React Native", "Swift", "Kotlin"],
-    img: U("service-mobile.jpg", "photo-1512941937669-90a1b58e7e9c", 1400),
+    img: "/images/mobile-app-developement.png",
     alt: "Smartphone displaying a mobile application",
   },
   {
     title: "Enterprise Systems Integration",
     text: "Connect and modernize the systems your business already depends on.",
     tags: ["REST/SOAP APIs", "Salesforce", "SAP"],
-    img: U("service-integration.jpg", "photo-1451187580459-43490279c0fa", 1400),
+    img: "/images/enterprise%20system%20integration.jpg",
     alt: "Digital network connections and global technology infrastructure",
   },
   {
     title: "UI/UX & Product Design",
     text: "Research-led interface design that makes complex products simple to use and adopt.",
     tags: ["Figma", "Design Systems", "Prototyping"],
-    img: U("service-ui-ux.jpg", "photo-1586717791821-3f44a563fa4c", 1400),
+    img: "/images/UI-VS-UX-banner.webp",
     alt: "Professional interface design and creative digital product workspace",
   },
-
 ];
-
 const INDUSTRIES = [
   {
     label: "Banking",
@@ -172,8 +151,8 @@ const INDUSTRIES = [
       "Risk & fraud tooling",
     ],
     tags: ["PCI-DSS", "SOC 2", "Plaid", "Core Banking APIs"],
-    img: U("industry-banking.jpg", "photo-1563013544-824ae1b704d3", 1400),
-    alt: "Modern financial services and digital banking",
+    img: IND("photo-1683313107043-283d0319a11e", "photo-1726065235158-d9c3f817f331"),
+    alt: "A person holding a bank card and phone for a digital payment, representing banking and financial services",
   },
   {
     label: "Insurance",
@@ -185,8 +164,8 @@ const INDUSTRIES = [
       "Customer & broker portals",
     ],
     tags: ["Guidewire", "Duck Creek", "OCR / IDP", "Power BI"],
-    img: U("industry-insurance.jpg", "photo-1450101499163-c8848c66ca85", 1400),
-    alt: "Insurance professional reviewing documents and business information",
+    img: IND("photo-1763729805496-b5dbf7f00c79", "photo-1450101499163-c8848c66ca85"),
+    alt: "A man signing a policy document, representing insurance and policy management",
   },
   {
     label: "Healthcare",
@@ -198,8 +177,8 @@ const INDUSTRIES = [
       "Clinical workflow tools",
     ],
     tags: ["HL7/FHIR", "HIPAA", "Epic", "Twilio"],
-    img: U("industry-healthcare.jpg", "photo-1576091160399-112ba8d25d1d", 1400),
-    alt: "Healthcare technology and digital medical equipment",
+    img: IND("photo-1758691463569-66de91d76452", "photo-1666886573301-b5d526cfd518"),
+    alt: "Two doctors reviewing a medical scan on a tablet, representing healthcare technology",
   },
   {
     label: "E-Commerce",
@@ -211,8 +190,8 @@ const INDUSTRIES = [
       "Post-purchase experience",
     ],
     tags: ["Shopify", "Stripe", "Next.js", "Algolia"],
-    img: U("industry-ecommerce.jpg", "photo-1556742049-0cfed4f6a45d", 1400),
-    alt: "Customer using a payment card for a digital retail purchase",
+    img: IND("photo-1566576721346-d4a3b4eaeb55", "photo-1580674285054-bed31e145f59"),
+    alt: "A person handing over a brown delivery box, representing e-commerce and online orders",
   },
   {
     label: "Logistics",
@@ -224,8 +203,8 @@ const INDUSTRIES = [
       "Warehouse management",
     ],
     tags: ["GPS / Telematics", "WMS", "EDI", "Mapbox"],
-    img: U("industry-logistics.jpg", "photo-1494412651409-8963a9c86f9a", 1400),
-    alt: "Cargo shipping containers and international logistics operations",
+    img: IND("photo-1587293852726-70cdb56c2866", "photo-1494412519320-aa613dfb7738"),
+    alt: "Cardboard boxes stacked on warehouse racks, representing logistics and transportation",
   },
   {
     label: "Manufacturing",
@@ -237,8 +216,8 @@ const INDUSTRIES = [
       "Predictive maintenance",
     ],
     tags: ["IIoT", "MES", "SCADA", "Power BI"],
-    img: U("industry-manufacturing.jpg", "photo-1581091226825-a6a2a5aee158", 1400),
-    alt: "Industrial manufacturing equipment and production technology",
+    img: IND("photo-1567789884554-0b844b597180", "photo-1581091212991-8891c7d4bd9b"),
+    alt: "Robots working on a vehicle inside a factory, representing manufacturing operations",
   },
   {
     label: "Education",
@@ -250,8 +229,8 @@ const INDUSTRIES = [
       "Analytics & outcomes",
     ],
     tags: ["LMS", "SIS", "SCORM/xAPI", "Canvas API"],
-    img: U("industry-education.jpg", "photo-1523050854058-8df90110c9f1", 1400),
-    alt: "University campus and modern education environment",
+    img: IND("photo-1569653402334-2e98fbaa80ee", "photo-1723987135977-ae935608939e"),
+    alt: "People working at computers in a bright university workspace, representing education and learning platforms",
   },
   {
     label: "AI Automation",
@@ -263,8 +242,8 @@ const INDUSTRIES = [
       "Human-in-the-loop design",
     ],
     tags: ["OpenAI", "LangChain", "Vector DBs", "Python"],
-    img: U("industry-ai.jpg", "photo-1677442136019-21780ecad995", 1400),
-    alt: "Artificial intelligence technology and neural network visualization",
+    img: IND("photo-1643359905563-f747213c9703", "photo-1716191299980-a6e8827ba10b"),
+    alt: "A man and a woman standing in front of a robot, representing AI and intelligent automation working alongside people",
   },
   {
     label: "Government & Public Sector",
@@ -281,40 +260,30 @@ const INDUSTRIES = [
       "Cloud Security",
       "Data Analytics",
     ],
-    img: U("industry-government.jpg", "photo-1486406146926-c627a92ad1ab", 1400),
-    alt: "Modern city infrastructure representing public-sector digital transformation",
+    img: IND("photo-1554904798-ec4adfa717fe", "photo-1486406146926-c627a92ad1ab"),
+    alt: "A government building in an urban setting, representing government and public sector services",
   },
-
 ];
-
 const PROCESS = [
   { title: "Discovery & Strategy", text: "We start by understanding your goals, constraints, and existing systems before writing a single line of code." },
   { title: "Design & Architecture", text: "Technical architecture and interface design happen together, so the product is both usable and built to last." },
   { title: "Agile Development & QA", text: "Iterative sprints with continuous testing keep the project visible and on track from the first milestone." },
   { title: "Launch & Ongoing Support", text: "We handle deployment and stay on for monitoring, iteration, and support after launch." },
-
 ];
-
 const CLIENTS = [
   { name: "Infynixtek", url: "https://infynixtek.com/", video: "/videos/infynixtek.mp4", category: "Talent placement & staffing solutions", text: "Website design and a candidate portal for talent placement." },
   { name: "CodeBridge Technologies", url: "https://codebridgetec.com/", video: "/videos/CodeBridge%20Technologies.mp4", category: "Talent placement & staffing solutions", text: "Website design and internal staffing management tools." },
-
 ];
-
 const NEXT_STEPS = [
   "We review your details, usually within a few hours.",
   "A short 15–20 minute discovery call.",
   "A scoped proposal with a clear plan and estimate.",
-
 ];
-
 /* =========================================================
    HELPERS
    ========================================================= */
-
 /* Tries each source in order; renders nothing if all fail so the
    gradient behind it stays visible. */
-
 const Photo = ({ src, alt, className, eager = false }) => {
   const list = (Array.isArray(src) ? src : [src]).filter(Boolean);
   const sig = list.join("|");
@@ -332,15 +301,11 @@ const Photo = ({ src, alt, className, eager = false }) => {
       onError={() => setStage((s) => s + 1)}
     />
   );
-
 };
-
 const Arrow = () => null;
-
 /* =========================================================
    COMPONENT
    ========================================================= */
-
 export default function Home() {
   const rootRef = useRef(null);
   const [ind, setInd] = useState(0);
@@ -464,19 +429,16 @@ export default function Home() {
     };
   }, []);
   const active = INDUSTRIES[ind];
-  
 useEffect(() => {
   if ("scrollRestoration" in window.history) {
     window.history.scrollRestoration = "manual";
   }
-
   window.scrollTo({
     top: 0,
     left: 0,
     behavior: "instant"
   });
 }, []);
-
   return (
     <main className="oc-home" ref={rootRef}>
       {/* ================= HERO ================= */}
@@ -820,5 +782,4 @@ useEffect(() => {
       </section>
     </main>
   );
-
 }

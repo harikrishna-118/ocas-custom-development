@@ -118,6 +118,7 @@ const industries = [
     technologies: ["LMS", "SCORM / xAPI", "Learning APIs"],
     category: "public",
     theme: "education",
+    image: "/images/education.jpg", // Uses your own local photo if present
   },
   {
     number: "08",
@@ -308,6 +309,22 @@ function IndustryCard({ industry, hidden, index }) {
       onMouseLeave={onLeave}
       data-reveal
     >
+      {industry.theme === "education" && (
+        <img
+          className="ind-education-photo"
+          src={industry.image}
+          alt=""
+          loading="lazy"
+          onError={(event) => {
+            // Fallback to a real classroom photo when the local filename/path is missing.
+            const fallback =
+              "https://images.pexels.com/photos/8199143/pexels-photo-8199143.jpeg?auto=compress&cs=tinysrgb&w=1400";
+            if (event.currentTarget.src !== fallback) {
+              event.currentTarget.src = fallback;
+            }
+          }}
+        />
+      )}
       <div className="ind-card-glow" aria-hidden="true" />
       <div className="ind-card-top">
         <span className="ind-card-icon">
@@ -351,6 +368,40 @@ export default function Industries() {
 
   return (
     <main className="ind-page" ref={pageRef}>
+      {/* Education card: image restricted to the same top banner area as other cards. */}
+      <style>{`
+        .ind-card--education {
+          position: relative;
+          isolation: isolate;
+          overflow: hidden;
+          background: #fff;
+        }
+        .ind-card--education .ind-education-photo {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 205px;
+          object-fit: cover;
+          object-position: center 45%;
+          opacity: 1;
+          filter: none;
+          -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 56%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 56%, transparent 100%);
+          z-index: 2;
+          pointer-events: none;
+        }
+        .ind-card--education > .ind-card-top,
+        .ind-card--education > .ind-card-eyebrow,
+        .ind-card--education > h3,
+        .ind-card--education > .ind-card-sub,
+        .ind-card--education > .ind-card-desc,
+        .ind-card--education > .ind-card-list,
+        .ind-card--education > .ind-card-tags {
+          position: relative;
+          z-index: 3;
+        }
+      `}</style>
       <div className="ind-progress" aria-hidden="true">
         <span ref={barRef} />
       </div>
