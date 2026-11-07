@@ -8,47 +8,47 @@
 
 .careers-page {
 
-  --c-ink: #0a1020;
+  --c-ink: #0c120d;
 
-  --c-ink-2: #111a30;
+  --c-ink-2: #12411a;
 
   --c-bg: #ffffff;
 
-  --c-surface: #f6f8fc;
+  --c-surface: #f7fbf7;
 
-  --c-surface-2: #eef2f8;
+  --c-surface-2: #effaeb;
 
-  --c-border: #e3e8f0;
+  --c-border: #ccefb9;
 
-  --c-border-strong: #cdd5e1;
+  --c-border-strong: #b7dea4;
 
-  --c-text: #0f172a;
+  --c-text: #0c120d;
 
-  --c-text-2: #475569;
+  --c-text-2: #0c120d;
 
-  --c-text-3: #6b7a90;
+  --c-text-3: #277c27;
 
-  --c-accent: #2563eb;
+  --c-accent: #65d900;
 
-  --c-accent-dark: #1d4ed8;
+  --c-accent-dark: #277c27;
 
-  --c-accent-soft: #eaf1ff;
+  --c-accent-soft: #effaeb;
 
-  --c-violet: #7c3aed;
+  --c-violet: #277c27;
 
-  --c-cyan: #06b6d4;
+  --c-cyan: #65d900;
 
-  --c-green: #22c55e;
+  --c-green: #65d900;
 
   --radius: 18px;
 
   --radius-sm: 12px;
 
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 1px 2px rgba(12, 18, 13, 0.05);
 
-  --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 10px 30px rgba(12, 18, 13, 0.08);
 
-  --shadow-lg: 0 24px 60px rgba(15, 23, 42, 0.14);
+  --shadow-lg: 0 24px 60px rgba(12, 18, 13, 0.14);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -124,7 +124,7 @@
 
 .careers-page :focus-visible {
 
-  outline: 3px solid rgba(37, 99, 235, 0.5);
+  outline: 3px solid rgba(101, 217, 0, 0.5);
 
   outline-offset: 3px;
 
@@ -162,7 +162,7 @@
 
   height: 100%;
 
-  background: linear-gradient(90deg, #2563eb, #7c3aed, #06b6d4);
+  background: linear-gradient(90deg, #65d900, #65d900, #12411a);
 
   transform: scaleX(0);
 
@@ -310,11 +310,11 @@
 
 .careers-btn-primary {
 
-  color: #fff;
+  color: #ffffff;
 
-  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  background: linear-gradient(135deg, #65d900, #65d900);
 
-  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 10px 24px rgba(101, 217, 0, 0.35);
 
 }
 
@@ -322,7 +322,7 @@
 
   transform: translateY(-2px);
 
-  box-shadow: 0 16px 34px rgba(37, 99, 235, 0.45);
+  box-shadow: 0 16px 34px rgba(101, 217, 0, 0.45);
 
 }
 
@@ -334,7 +334,7 @@
 
 .careers-btn-ghost {
 
-  color: #fff;
+  color: #ffffff;
 
   background: rgba(255, 255, 255, 0.06);
 
@@ -358,9 +358,9 @@
 
   color: var(--c-ink);
 
-  background: #fff;
+  background: #ffffff;
 
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 12px 28px rgba(12, 18, 13, 0.25);
 
 }
 
@@ -368,7 +368,7 @@
 
   transform: translateY(-2px);
 
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.32);
+  box-shadow: 0 18px 36px rgba(12, 18, 13, 0.32);
 
 }
 
@@ -388,7 +388,7 @@
 
   padding: 128px 0 120px;
 
-  color: #fff;
+  color: #ffffff;
 
   background: var(--c-ink);
 
@@ -430,7 +430,7 @@
 
   height: 560px;
 
-  background: #2563eb;
+  background: #65d900;
 
 }
 
@@ -444,7 +444,7 @@
 
   height: 500px;
 
-  background: #7c3aed;
+  background: #65d900;
 
   animation-delay: -6s;
 
@@ -460,7 +460,7 @@
 
   height: 420px;
 
-  background: #06b6d4;
+  background: #12411a;
 
   opacity: 0.32;
 
@@ -508,13 +508,13 @@
 
     ellipse 75% 65% at 50% 35%,
 
-    #000 25%,
+    #0c120d 25%,
 
     transparent 80%
 
   );
 
-  mask-image: radial-gradient(ellipse 75% 65% at 50% 35%, #000 25%, transparent 80%);
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 35%, #0c120d 25%, transparent 80%);
 
   animation: careers-grid-move 24s linear infinite;
 
@@ -554,7 +554,7 @@
 
   height: 120px;
 
-  background: linear-gradient(to bottom, transparent, rgba(10, 16, 32, 0.9));
+  background: linear-gradient(to bottom, transparent, rgba(12, 18, 13, 0.9));
 
   pointer-events: none;
 
@@ -618,19 +618,19 @@
 
   0% {
 
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55);
+    box-shadow: 0 0 0 0 rgba(39, 124, 39, 0.55);
 
   }
 
   70% {
 
-    box-shadow: 0 0 0 9px rgba(34, 197, 94, 0);
+    box-shadow: 0 0 0 9px rgba(39, 124, 39, 0);
 
   }
 
   100% {
 
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    box-shadow: 0 0 0 0 rgba(39, 124, 39, 0);
 
   }
 
@@ -652,7 +652,7 @@
 
 .careers-gradient-text {
 
-  background: linear-gradient(100deg, #60a5fa, #a78bfa, #22d3ee, #60a5fa);
+  background: linear-gradient(100deg, #65d900, #12411a, #65d900, #65d900);
 
   background-size: 250% 100%;
 
@@ -686,7 +686,7 @@
 
   font-size: clamp(1.02rem, 1.5vw, 1.2rem);
 
-  color: rgba(226, 232, 240, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 
 }
 
@@ -742,7 +742,7 @@
 
   font-weight: 500;
 
-  color: rgba(203, 213, 225, 0.75);
+  color: rgba(247, 251, 247, 0.75);
 
 }
 
@@ -778,7 +778,7 @@
 
   backdrop-filter: blur(18px);
 
-  box-shadow: 0 30px 80px rgba(2, 6, 23, 0.55),
+  box-shadow: 0 30px 80px rgba(12, 18, 13, 0.55),
 
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
 
@@ -842,7 +842,7 @@
 
   font-weight: 600;
 
-  color: #86efac;
+  color: #12411a;
 
 }
 
@@ -912,9 +912,9 @@
 
   font-weight: 600;
 
-  color: #bfdbfe;
+  color: #ffffff;
 
-  background: rgba(59, 130, 246, 0.2);
+  background: rgba(101, 217, 0, 0.2);
 
   border-radius: 999px;
 
@@ -922,9 +922,9 @@
 
 .careers-preview-tag.is-intern {
 
-  color: #99f6e4;
+  color: #12411a;
 
-  background: rgba(20, 184, 166, 0.2);
+  background: rgba(39, 124, 39, 0.2);
 
 }
 
@@ -944,11 +944,11 @@
 
   font-weight: 600;
 
-  color: #fff;
+  color: #ffffff;
 
   white-space: nowrap;
 
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(12, 18, 13, 0.75);
 
   border: 1px solid rgba(255, 255, 255, 0.16);
 
@@ -956,7 +956,7 @@
 
   backdrop-filter: blur(12px);
 
-  box-shadow: 0 14px 30px rgba(2, 6, 23, 0.4);
+  box-shadow: 0 14px 30px rgba(12, 18, 13, 0.4);
 
 }
 
@@ -966,7 +966,7 @@
 
   height: 8px;
 
-  background: #60a5fa;
+  background: #65d900;
 
   border-radius: 50%;
 
@@ -974,7 +974,7 @@
 
 .chip-dot-purple {
 
-  background: #a78bfa;
+  background: #12411a;
 
 }
 
@@ -1034,9 +1034,9 @@
 
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #0c120d 10%, #0c120d 90%, transparent);
 
-  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #0c120d 10%, #0c120d 90%, transparent);
 
 }
 
@@ -1070,7 +1070,7 @@
 
   font-weight: 600;
 
-  color: rgba(203, 213, 225, 0.7);
+  color: rgba(247, 251, 247, 0.7);
 
   white-space: nowrap;
 
@@ -1080,7 +1080,7 @@
 
 .careers-marquee-item:hover {
 
-  color: #fff;
+  color: #ffffff;
 
 }
 
@@ -1090,7 +1090,7 @@
 
   height: 6px;
 
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, #65d900, #65d900);
 
   border-radius: 50%;
 
@@ -1194,9 +1194,9 @@
 
     380px circle at var(--mx, 50%) var(--my, 50%),
 
-    rgba(37, 99, 235, 0.1),
+    rgba(101, 217, 0, 0.1),
 
-    rgba(124, 58, 237, 0.05) 40%,
+    rgba(101, 217, 0, 0.05) 40%,
 
     transparent 70%
 
@@ -1272,7 +1272,7 @@
 
   transform: translateY(-6px);
 
-  border-color: rgba(37, 99, 235, 0.35);
+  border-color: rgba(101, 217, 0, 0.35);
 
   box-shadow: var(--shadow-lg);
 
@@ -1310,9 +1310,9 @@
 
 .careers-value-card:hover .careers-value-icon {
 
-  color: #fff;
+  color: #ffffff;
 
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  background: linear-gradient(135deg, #65d900, #65d900);
 
   transform: rotate(-6deg) scale(1.08);
 
@@ -1372,13 +1372,13 @@
 
       600px 300px at 90% 0%,
 
-      rgba(37, 99, 235, 0.07),
+      rgba(101, 217, 0, 0.07),
 
       transparent 70%
 
     ),
 
-    radial-gradient(500px 300px at 0% 100%, rgba(124, 58, 237, 0.06), transparent 70%);
+    radial-gradient(500px 300px at 0% 100%, rgba(101, 217, 0, 0.06), transparent 70%);
 
   pointer-events: none;
 
@@ -1450,11 +1450,11 @@
 
 .careers-filter.is-active {
 
-  color: #fff;
+  color: #ffffff;
 
-  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  background: linear-gradient(135deg, #65d900, #65d900);
 
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 6px 16px rgba(101, 217, 0, 0.3);
 
 }
 
@@ -1500,7 +1500,7 @@
 
   width: 4px;
 
-  background: linear-gradient(180deg, #2563eb, #7c3aed);
+  background: linear-gradient(180deg, #65d900, #65d900);
 
   transform: scaleY(0);
 
@@ -1514,7 +1514,7 @@
 
 .careers-job-card.is-open {
 
-  border-color: rgba(37, 99, 235, 0.4);
+  border-color: rgba(101, 217, 0, 0.4);
 
   box-shadow: var(--shadow-lg);
 
@@ -1612,9 +1612,9 @@
 
 .careers-job-tag.is-intern {
 
-  color: #0f766e;
+  color: #0c120d;
 
-  background: #e6faf5;
+  background: #ffffff;
 
 }
 
@@ -1678,7 +1678,7 @@
 
 .careers-job-card.is-open .careers-toggle-button {
 
-  color: #fff;
+  color: #ffffff;
 
   background: var(--c-ink);
 
@@ -1968,7 +1968,7 @@
 
 .careers-field textarea::placeholder {
 
-  color: #9aa7ba;
+  color: #12411a;
 
 }
 
@@ -1976,7 +1976,7 @@
 
 .careers-field textarea:hover {
 
-  border-color: #aab6c8;
+  border-color: #12411a;
 
 }
 
@@ -1988,7 +1988,7 @@
 
   border-color: var(--c-accent);
 
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
+  box-shadow: 0 0 0 4px rgba(101, 217, 0, 0.14);
 
 }
 
@@ -2038,7 +2038,7 @@
 
 .careers-file-input::file-selector-button:hover {
 
-  color: #fff;
+  color: #ffffff;
 
   background: var(--c-accent);
 
@@ -2112,7 +2112,7 @@
 
   height: 2px;
 
-  background: linear-gradient(90deg, #2563eb, #7c3aed, #06b6d4);
+  background: linear-gradient(90deg, #65d900, #65d900, #12411a);
 
   border-radius: 2px;
 
@@ -2172,9 +2172,9 @@
 
 .careers-step:hover .careers-step-number {
 
-  color: #fff;
+  color: #ffffff;
 
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  background: linear-gradient(135deg, #65d900, #65d900);
 
   border-color: transparent;
 
@@ -2230,19 +2230,19 @@
 
   text-align: center;
 
-  color: #fff;
+  color: #ffffff;
 
   background: radial-gradient(
 
       600px 300px at 15% 0%,
 
-      rgba(37, 99, 235, 0.55),
+      rgba(101, 217, 0, 0.55),
 
       transparent 70%
 
     ),
 
-    radial-gradient(600px 300px at 90% 100%, rgba(124, 58, 237, 0.5), transparent 70%),
+    radial-gradient(600px 300px at 90% 100%, rgba(101, 217, 0, 0.5), transparent 70%),
 
     var(--c-ink);
 
@@ -2266,7 +2266,7 @@
 
   height: 260px;
 
-  background: rgba(96, 165, 250, 0.35);
+  background: rgba(101, 217, 0, 0.35);
 
   border-radius: 50%;
 
@@ -2300,7 +2300,7 @@
 
   margin: 18px auto 34px;
 
-  color: rgba(226, 232, 240, 0.8);
+  color: rgba(255, 255, 255, 0.8);
 
 }
 
@@ -2582,7 +2582,7 @@
 
     height: auto;
 
-    background: linear-gradient(180deg, #2563eb, #7c3aed, #06b6d4);
+    background: linear-gradient(180deg, #65d900, #65d900, #12411a);
 
     transform: scaleY(0);
 
@@ -2762,7 +2762,7 @@
 
 .careers-filter.is-active .careers-filter-count {
 
-  color: #fff;
+  color: #ffffff;
 
   background: rgba(255, 255, 255, 0.16);
 
@@ -2822,11 +2822,11 @@
 
   background:
 
-    radial-gradient(ellipse at 83% 23%, rgba(36, 99, 235, .25), transparent 35%),
+    radial-gradient(ellipse at 83% 23%, rgba(101, 217, 0, .25), transparent 35%),
 
-    radial-gradient(ellipse at 100% 5%, rgba(124, 58, 237, .25), transparent 32%),
+    radial-gradient(ellipse at 100% 5%, rgba(101, 217, 0, .25), transparent 32%),
 
-    linear-gradient(118deg, #030b1b 0%, #071326 52%, #080d20 100%);
+    linear-gradient(118deg, #0c120d 0%, #0c120d 52%, #0c120d 100%);
 
 }
 
@@ -2840,9 +2840,9 @@
 
   opacity: .7;
 
-  -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.35), #000 60%, rgba(0,0,0,.5));
+  -webkit-mask-image: linear-gradient(90deg, rgba(12, 18, 13, .35), #0c120d 60%, rgba(12, 18, 13, .5));
 
-  mask-image: linear-gradient(90deg, rgba(0,0,0,.35), #000 60%, rgba(0,0,0,.5));
+  mask-image: linear-gradient(90deg, rgba(12, 18, 13, .35), #0c120d 60%, rgba(12, 18, 13, .5));
 
 }
 
@@ -2860,7 +2860,7 @@
 
 .careers-gradient-text {
 
-  background: linear-gradient(100deg, #58a6ff 5%, #22d3ee 52%, #a78bfa 100%);
+  background: linear-gradient(100deg, #65d900 5%, #65d900 52%, #12411a 100%);
 
   background-size: 180% 100%;
 
@@ -2900,7 +2900,7 @@
 
   z-index: -2;
 
-  background: radial-gradient(ellipse, rgba(0, 132, 255, .24), transparent 66%);
+  background: radial-gradient(ellipse, rgba(101, 217, 0, .24), transparent 66%);
 
   filter: blur(25px);
 
@@ -2916,13 +2916,13 @@
 
   overflow: hidden;
 
-  border: 1px solid rgba(139, 174, 225, .27);
+  border: 1px solid rgba(39, 124, 39, .27);
 
   border-radius: 17px;
 
-  background: linear-gradient(145deg, rgba(14, 26, 47, .96), rgba(3, 9, 20, .96));
+  background: linear-gradient(145deg, rgba(12, 18, 13, .96), rgba(12, 18, 13, .96));
 
-  box-shadow: 0 35px 90px rgba(0,0,0,.48), 0 0 0 7px rgba(255,255,255,.018), inset 0 1px rgba(255,255,255,.07);
+  box-shadow: 0 35px 90px rgba(12, 18, 13, .48), 0 0 0 7px rgba(255, 255, 255, .018), inset 0 1px rgba(255, 255, 255, .07);
 
   transform: rotateY(-7deg) rotateX(2deg);
 
@@ -2950,25 +2950,25 @@
 
   padding: 0 15px;
 
-  color: #93a4bd;
+  color: #12411a;
 
   font: 500 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  background: rgba(255,255,255,.035);
+  background: rgba(255, 255, 255, .035);
 
-  border-bottom: 1px solid rgba(148,163,184,.13);
+  border-bottom: 1px solid rgba(39, 124, 39, .13);
 
 }
 
 .careers-window-dots { display:flex; gap:5px; flex-shrink:0; }
 
-.careers-window-dots i { display:block; width:7px; height:7px; border-radius:50%; background:#ff6b6b; }
+.careers-window-dots i { display:block; width:7px; height:7px; border-radius:50%; background:#65d900; }
 
-.careers-window-dots i:nth-child(2) { background:#fbbf24; }
+.careers-window-dots i:nth-child(2) { background:#65d900; }
 
-.careers-window-dots i:nth-child(3) { background:#34d399; }
+.careers-window-dots i:nth-child(3) { background:#12411a; }
 
-.careers-window-status { margin-left:auto; color:#6ee7b7; font-size:10px; }
+.careers-window-status { margin-left:auto; color:#65d900; font-size:10px; }
 
 .careers-editor-body { display:grid; grid-template-columns: 130px minmax(0,1fr); min-height:265px; }
 
@@ -2976,59 +2976,59 @@
 
   display:flex; flex-direction:column; gap:15px; padding:20px 12px;
 
-  border-right:1px solid rgba(148,163,184,.12); color:#7f91ad;
+  border-right:1px solid rgba(39, 124, 39, .12); color:#12411a;
 
   font:10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
 
 }
 
-.careers-editor-sidebar b { margin-bottom:3px; color:#61738e; font-size:9px; letter-spacing:.13em; }
+.careers-editor-sidebar b { margin-bottom:3px; color:#12411a; font-size:9px; letter-spacing:.13em; }
 
-.careers-editor-sidebar .is-file { color:#9ec5ff; }
+.careers-editor-sidebar .is-file { color:#12411a; }
 
-.careers-code { min-width:0; padding:20px 12px 20px 0; color:#d7e4f8; font:clamp(9px, .8vw, 11px)/2.15 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.careers-code { min-width:0; padding:20px 12px 20px 0; color:#ffffff; font:clamp(9px, .8vw, 11px)/2.15 ui-monospace, SFMono-Regular, Menlo, monospace; }
 
 .careers-code > div { display:grid; grid-template-columns:30px minmax(0,1fr); white-space:pre; }
 
-.careers-code em { padding-right:10px; text-align:right; color:#465975; font-style:normal; user-select:none; }
+.careers-code em { padding-right:10px; text-align:right; color:#0c120d; font-style:normal; user-select:none; }
 
-.careers-code i { color:#c792ea; font-style:normal; }
+.careers-code i { color:#12411a; font-style:normal; }
 
-.careers-code b { color:#82aaff; font-weight:600; }
+.careers-code b { color:#12411a; font-weight:600; }
 
-.careers-code strong { color:#c3e88d; font-weight:500; }
+.careers-code strong { color:#12411a; font-weight:500; }
 
-.careers-window-footer { display:flex; align-items:center; gap:18px; min-height:30px; padding:0 14px; color:#8194b1; font:9px ui-monospace, SFMono-Regular, Menlo, monospace; background:rgba(37,99,235,.13); border-top:1px solid rgba(148,163,184,.12); }
+.careers-window-footer { display:flex; align-items:center; gap:18px; min-height:30px; padding:0 14px; color:#12411a; font:9px ui-monospace, SFMono-Regular, Menlo, monospace; background:rgba(101, 217, 0, .13); border-top:1px solid rgba(39, 124, 39, .12); }
 
-.careers-window-footer span:first-child { color:#b5c9e8; }
+.careers-window-footer span:first-child { color:#ffffff; }
 
-.careers-window-footer span:first-child i { display:inline-block; width:5px; height:5px; margin-right:5px; border-radius:50%; background:#4ade80; vertical-align:middle; }
+.careers-window-footer span:first-child i { display:inline-block; width:5px; height:5px; margin-right:5px; border-radius:50%; background:#65d900; vertical-align:middle; }
 
 .careers-window-footer span:last-child { margin-left:auto; }
 
-.careers-workspace-orbit { position:absolute; z-index:-1; border:1px solid rgba(70,156,255,.24); border-radius:50%; transform:rotate(-22deg); pointer-events:none; }
+.careers-workspace-orbit { position:absolute; z-index:-1; border:1px solid rgba(101, 217, 0, .24); border-radius:50%; transform:rotate(-22deg); pointer-events:none; }
 
 .orbit-one { width:115%; height:58%; right:-18%; bottom:1%; }
 
-.orbit-two { width:90%; height:43%; right:-8%; bottom:8%; border-color:rgba(168,85,247,.22); }
+.orbit-two { width:90%; height:43%; right:-8%; bottom:8%; border-color:rgba(101, 217, 0, .22); }
 
 .careers-workspace-caption {
 
   position:absolute; z-index:2; left:0; bottom:0; display:flex; align-items:center; gap:12px;
 
-  padding:13px 16px; border:1px solid rgba(164,190,230,.22); border-radius:13px;
+  padding:13px 16px; border:1px solid rgba(39, 124, 39, .22); border-radius:13px;
 
-  background:rgba(9,20,39,.82); box-shadow:0 14px 38px rgba(0,0,0,.25); backdrop-filter:blur(16px);
+  background:rgba(12, 18, 13, .82); box-shadow:0 14px 38px rgba(12, 18, 13, .25); backdrop-filter:blur(16px);
 
 }
 
-.careers-caption-icon { display:grid; place-items:center; width:36px; height:36px; border-radius:10px; color:#8ec5ff; background:linear-gradient(135deg,rgba(37,99,235,.35),rgba(6,182,212,.17)); font-size:21px; }
+.careers-caption-icon { display:grid; place-items:center; width:36px; height:36px; border-radius:10px; color:#12411a; background:linear-gradient(135deg,rgba(101, 217, 0, .35),rgba(39, 124, 39, .17)); font-size:21px; }
 
-.careers-workspace-caption b { display:block; color:#f2f7ff; font-size:12px; letter-spacing:-.01em; }
+.careers-workspace-caption b { display:block; color:#ffffff; font-size:12px; letter-spacing:-.01em; }
 
-.careers-workspace-caption small { display:block; margin-top:2px; color:#91a5c2; font-size:10px; }
+.careers-workspace-caption small { display:block; margin-top:2px; color:#12411a; font-size:10px; }
 
-.careers-caption-arrow { margin-left:12px; color:#80bdff; font-size:18px; }
+.careers-caption-arrow { margin-left:12px; color:#12411a; font-size:18px; }
 
 @media (max-width: 1024px) {
 
@@ -3138,23 +3138,23 @@
 
   padding: clamp(100px, 11vh, 148px) 0 clamp(76px, 9vh, 112px);
 
-  background-color: #030a18;
+  background-color: #0c120d;
 
   background-image:
 
     linear-gradient(90deg,
 
-      rgba(2, 8, 20, .99) 0%,
+      rgba(12, 18, 13, .99) 0%,
 
-      rgba(2, 8, 20, .96) 27%,
+      rgba(12, 18, 13, .96) 27%,
 
-      rgba(2, 8, 20, .82) 43%,
+      rgba(12, 18, 13, .82) 43%,
 
-      rgba(2, 8, 20, .36) 66%,
+      rgba(12, 18, 13, .36) 66%,
 
-      rgba(2, 8, 20, .12) 100%),
+      rgba(12, 18, 13, .12) 100%),
 
-    linear-gradient(0deg, rgba(2, 8, 20, .48), transparent 34%),
+    linear-gradient(0deg, rgba(12, 18, 13, .48), transparent 34%),
 
     url("./careers-workspace-hero.png");
 
@@ -3178,15 +3178,15 @@
 
   opacity: .12;
 
-  background-image: linear-gradient(rgba(148, 174, 211, .12) 1px, transparent 1px),
+  background-image: linear-gradient(rgba(39, 124, 39, .12) 1px, transparent 1px),
 
-                    linear-gradient(90deg, rgba(148, 174, 211, .12) 1px, transparent 1px);
+                    linear-gradient(90deg, rgba(39, 124, 39, .12) 1px, transparent 1px);
 
   background-size: 58px 58px;
 
-  -webkit-mask-image: linear-gradient(90deg, #000, transparent 88%);
+  -webkit-mask-image: linear-gradient(90deg, #0c120d, transparent 88%);
 
-  mask-image: linear-gradient(90deg, #000, transparent 88%);
+  mask-image: linear-gradient(90deg, #0c120d, transparent 88%);
 
 }
 
@@ -3224,15 +3224,15 @@
 
   padding: 10px 15px;
 
-  border: 1px solid rgba(161, 190, 233, .2);
+  border: 1px solid rgba(39, 124, 39, .2);
 
   border-radius: 999px;
 
-  color: #e7f0ff;
+  color: #ffffff;
 
-  background: rgba(19, 39, 70, .72);
+  background: rgba(12, 18, 13, .72);
 
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
 
   backdrop-filter: blur(14px);
 
@@ -3248,9 +3248,9 @@
 
   border-radius: 50%;
 
-  background: #22d977;
+  background: #65d900;
 
-  box-shadow: 0 0 13px rgba(34, 217, 119, .65);
+  box-shadow: 0 0 13px rgba(101, 217, 0, .65);
 
 }
 
@@ -3268,13 +3268,13 @@
 
   text-wrap: balance;
 
-  color: #f8fbff;
+  color: #ffffff;
 
 }
 
 .careers-gradient-text {
 
-  background: linear-gradient(100deg, #57a5ff 0%, #19c8ef 52%, #60a5fa 100%);
+  background: linear-gradient(100deg, #65d900 0%, #65d900 52%, #65d900 100%);
 
   -webkit-background-clip: text;
 
@@ -3292,7 +3292,7 @@
 
   margin: 0;
 
-  color: rgba(224, 233, 248, .78);
+  color: rgba(247, 251, 247, .78);
 
   font-size: clamp(1.02rem, 1.35vw, 1.2rem);
 
@@ -3328,13 +3328,13 @@
 
 .careers-btn-primary {
 
-  color: #fff;
+  color: #ffffff;
 
-  background: linear-gradient(110deg, #1677ff, #4f46e5);
+  background: linear-gradient(110deg, #65d900, #65d900);
 
-  border: 1px solid rgba(255,255,255,.14);
+  border: 1px solid rgba(255, 255, 255, .14);
 
-  box-shadow: 0 12px 30px rgba(22, 119, 255, .24), inset 0 1px 0 rgba(255,255,255,.22);
+  box-shadow: 0 12px 30px rgba(101, 217, 0, .24), inset 0 1px 0 rgba(255, 255, 255, .22);
 
 }
 
@@ -3342,17 +3342,17 @@
 
   transform: translateY(-2px);
 
-  box-shadow: 0 16px 36px rgba(22, 119, 255, .34), inset 0 1px 0 rgba(255,255,255,.24);
+  box-shadow: 0 16px 36px rgba(101, 217, 0, .34), inset 0 1px 0 rgba(255, 255, 255, .24);
 
 }
 
 .careers-btn-ghost {
 
-  color: #edf4ff;
+  color: #ffffff;
 
-  border: 1px solid rgba(183, 204, 235, .28);
+  border: 1px solid rgba(247, 251, 247, .28);
 
-  background: rgba(13, 25, 45, .54);
+  background: rgba(12, 18, 13, .54);
 
   backdrop-filter: blur(12px);
 
@@ -3360,9 +3360,9 @@
 
 .careers-btn-ghost:hover {
 
-  background: rgba(255,255,255,.09);
+  background: rgba(255, 255, 255, .09);
 
-  border-color: rgba(183, 204, 235, .5);
+  border-color: rgba(247, 251, 247, .5);
 
 }
 
@@ -3380,7 +3380,7 @@
 
   padding-top: 24px;
 
-  border-top: 1px solid rgba(177, 201, 234, .2);
+  border-top: 1px solid rgba(247, 251, 247, .2);
 
 }
 
@@ -3390,7 +3390,7 @@
 
   order: 0;
 
-  color: rgba(206, 219, 239, .7);
+  color: rgba(247, 251, 247, .7);
 
   font-size: .88rem;
 
@@ -3402,7 +3402,7 @@
 
   margin: 4px 0 0;
 
-  color: #fff;
+  color: #ffffff;
 
   font-size: clamp(2rem, 3vw, 2.65rem);
 
@@ -3430,9 +3430,9 @@
 
     background-image:
 
-      linear-gradient(90deg, rgba(2,8,20,.98) 0%, rgba(2,8,20,.92) 48%, rgba(2,8,20,.58) 100%),
+      linear-gradient(90deg, rgba(12, 18, 13, .98) 0%, rgba(12, 18, 13, .92) 48%, rgba(12, 18, 13, .58) 100%),
 
-      linear-gradient(0deg, rgba(2,8,20,.7), transparent 60%),
+      linear-gradient(0deg, rgba(12, 18, 13, .7), transparent 60%),
 
       url("./careers-workspace-hero.png");
 
@@ -3456,9 +3456,9 @@
 
     background-image:
 
-      linear-gradient(90deg, rgba(2,8,20,.94), rgba(2,8,20,.78)),
+      linear-gradient(90deg, rgba(12, 18, 13, .94), rgba(12, 18, 13, .78)),
 
-      linear-gradient(0deg, rgba(2,8,20,.82), rgba(2,8,20,.12)),
+      linear-gradient(0deg, rgba(12, 18, 13, .82), rgba(12, 18, 13, .12)),
 
       url("./careers-workspace-hero.png");
 
@@ -3526,17 +3526,17 @@
 
   padding: 110px 0 90px;
 
-  background-color: #030b19;
+  background-color: #0c120d;
 
   background-image: linear-gradient(90deg,
 
-    rgba(3, 10, 25, .97) 0%,
+    rgba(12, 18, 13, .97) 0%,
 
-    rgba(3, 10, 25, .90) 32%,
+    rgba(12, 18, 13, .90) 32%,
 
-    rgba(3, 10, 25, .56) 52%,
+    rgba(12, 18, 13, .56) 52%,
 
-    rgba(3, 10, 25, .14) 100%),
+    rgba(12, 18, 13, .14) 100%),
 
     url("./careers-workspace-hero.png");
 
@@ -3600,7 +3600,7 @@
 
   height: 90px;
 
-  background: linear-gradient(to bottom, transparent, rgba(3, 10, 25, .8));
+  background: linear-gradient(to bottom, transparent, rgba(12, 18, 13, .8));
 
 }
 
@@ -3632,9 +3632,9 @@
 
     background-image: linear-gradient(90deg,
 
-      rgba(3, 10, 25, .94) 0%, rgba(3, 10, 25, .82) 58%,
+      rgba(12, 18, 13, .94) 0%, rgba(12, 18, 13, .82) 58%,
 
-      rgba(3, 10, 25, .62) 100%),
+      rgba(12, 18, 13, .62) 100%),
 
       url("./careers-workspace-hero.png");
 
@@ -3658,7 +3658,7 @@
 
     background-image: linear-gradient(90deg,
 
-      rgba(3, 10, 25, .94), rgba(3, 10, 25, .82)),
+      rgba(12, 18, 13, .94), rgba(12, 18, 13, .82)),
 
       url("./careers-workspace-hero.png");
 
@@ -3682,7 +3682,6 @@
 
 }
 
-
 /* =========================================================
    Careers hero background image + responsive layout
    Image location: public/images/carrers-home.png
@@ -3692,8 +3691,8 @@
   display: flex;
   align-items: center;
   padding: clamp(100px, 12vw, 150px) 0 clamp(80px, 10vw, 120px);
-  background-color: #06152b;
-  background-image: linear-gradient(90deg, rgba(3, 13, 31, 0.92) 0%, rgba(5, 20, 43, 0.82) 42%, rgba(5, 20, 43, 0.35) 100%),
+  background-color: #0c120d;
+  background-image: linear-gradient(90deg, rgba(12, 18, 13, 0.92) 0%, rgba(12, 18, 13, 0.82) 42%, rgba(12, 18, 13, 0.35) 100%),
     url("/images/carrers-home.png");
   background-size: cover;
   background-position: center right;
@@ -3701,7 +3700,7 @@
 }
 
 .careers-page .careers-hero-bg {
-  background: linear-gradient(180deg, rgba(4, 16, 35, 0.12), rgba(4, 16, 35, 0.2));
+  background: linear-gradient(180deg, rgba(12, 18, 13, 0.12), rgba(12, 18, 13, 0.2));
 }
 
 .careers-page .careers-hero-bg .careers-blob,
@@ -3726,19 +3725,19 @@
 
 .careers-page .careers-hero-lead {
   max-width: 610px;
-  color: rgba(241, 245, 249, 0.88);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .careers-page .careers-hero-fade {
   height: 100px;
-  background: linear-gradient(to bottom, transparent, rgba(5, 15, 32, 0.52));
+  background: linear-gradient(to bottom, transparent, rgba(12, 18, 13, 0.52));
 }
 
 @media (max-width: 1024px) {
   .careers-page .careers-hero {
     min-height: 650px;
     background-position: 58% center;
-    background-image: linear-gradient(90deg, rgba(3, 13, 31, 0.94) 0%, rgba(5, 20, 43, 0.82) 58%, rgba(5, 20, 43, 0.5) 100%),
+    background-image: linear-gradient(90deg, rgba(12, 18, 13, 0.94) 0%, rgba(12, 18, 13, 0.82) 58%, rgba(12, 18, 13, 0.5) 100%),
       url("/images/carrers-home.png");
   }
 }
@@ -3748,7 +3747,7 @@
     min-height: 620px;
     padding: 105px 0 82px;
     background-position: 62% center;
-    background-image: linear-gradient(90deg, rgba(3, 13, 31, 0.94) 0%, rgba(5, 20, 43, 0.86) 70%, rgba(5, 20, 43, 0.68) 100%),
+    background-image: linear-gradient(90deg, rgba(12, 18, 13, 0.94) 0%, rgba(12, 18, 13, 0.86) 70%, rgba(12, 18, 13, 0.68) 100%),
       url("/images/carrers-home.png");
   }
 
@@ -3790,7 +3789,6 @@
   }
 }
 
-
 /* =========================================================
    Final typography, hero entrance and device responsiveness
    ========================================================= */
@@ -3824,10 +3822,10 @@
   align-items: center;
   padding: clamp(100px, 10vw, 142px) 0 clamp(84px, 8vw, 118px);
   overflow: hidden;
-  color: #fff;
-  background-color: #06152b;
+  color: #ffffff;
+  background-color: #0c120d;
   background-image:
-    linear-gradient(90deg, rgba(3, 13, 31, .94) 0%, rgba(5, 20, 43, .86) 38%, rgba(5, 20, 43, .48) 68%, rgba(5, 20, 43, .22) 100%),
+    linear-gradient(90deg, rgba(12, 18, 13, .94) 0%, rgba(12, 18, 13, .86) 38%, rgba(12, 18, 13, .48) 68%, rgba(12, 18, 13, .22) 100%),
     url("/images/carrers-home.png");
   background-size: cover;
   background-position: center right;
@@ -3839,7 +3837,7 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(4, 16, 35, .05), rgba(4, 16, 35, .12));
+  background: linear-gradient(180deg, rgba(12, 18, 13, .05), rgba(12, 18, 13, .12));
 }
 
 .careers-page .careers-hero-bg .careers-blob,
@@ -3878,7 +3876,7 @@
 }
 
 .careers-page .careers-gradient-text {
-  background-image: linear-gradient(100deg, #60a5fa 0%, #a5b4fc 45%, #67e8f9 100%);
+  background-image: linear-gradient(100deg, #65d900 0%, #12411a 45%, #65d900 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -3888,7 +3886,7 @@
 .careers-page .careers-hero-lead {
   max-width: 610px;
   margin-top: 24px;
-  color: rgba(241, 245, 249, .9);
+  color: rgba(255, 255, 255, .9);
   font-size: clamp(1rem, 1.25vw, 1.125rem);
   line-height: 1.8;
 }
@@ -3909,7 +3907,7 @@
 
 .careers-page .careers-hero-fade {
   height: 86px;
-  background: linear-gradient(to bottom, transparent, rgba(5, 15, 32, .42));
+  background: linear-gradient(to bottom, transparent, rgba(12, 18, 13, .42));
 }
 
 /* Consistent modern website type scale across the rest of the page. */
@@ -4027,7 +4025,7 @@
     min-height: 640px;
     background-position: 58% center;
     background-image:
-      linear-gradient(90deg, rgba(3, 13, 31, .95) 0%, rgba(5, 20, 43, .87) 48%, rgba(5, 20, 43, .55) 100%),
+      linear-gradient(90deg, rgba(12, 18, 13, .95) 0%, rgba(12, 18, 13, .87) 48%, rgba(12, 18, 13, .55) 100%),
       url("/images/carrers-home.png");
   }
 }
@@ -4042,7 +4040,7 @@
     padding: 108px 0 82px;
     background-position: 62% center;
     background-image:
-      linear-gradient(90deg, rgba(3, 13, 31, .95) 0%, rgba(5, 20, 43, .9) 58%, rgba(5, 20, 43, .72) 100%),
+      linear-gradient(90deg, rgba(12, 18, 13, .95) 0%, rgba(12, 18, 13, .9) 58%, rgba(12, 18, 13, .72) 100%),
       url("/images/carrers-home.png");
   }
   .careers-page .careers-hero h1 {
@@ -4110,7 +4108,7 @@
     padding: 96px 0 72px;
     background-position: 65% center;
     background-image:
-      linear-gradient(90deg, rgba(3, 13, 31, .96) 0%, rgba(5, 20, 43, .92) 65%, rgba(5, 20, 43, .8) 100%),
+      linear-gradient(90deg, rgba(12, 18, 13, .96) 0%, rgba(12, 18, 13, .92) 65%, rgba(12, 18, 13, .8) 100%),
       url("/images/carrers-home.png");
   }
   .careers-page .careers-hero h1 {
@@ -4187,7 +4185,6 @@
   }
 }
 
-
 /* Mobile button sizing: keep buttons close to their text width */
 @media (max-width: 520px) {
   .careers-page .careers-hero-actions {
@@ -4223,4 +4220,46 @@
     padding: 10px 13px;
     font-size: 0.9rem;
   }
+}
+
+/* Consistent OCAS green/black/white text contrast */
+.careers-page{color:#0c120d;background:#ffffff}
+.careers-page h1,.careers-page h2,.careers-page h3,.careers-page h4{letter-spacing:-.045em}
+.careers-page .careers-hero,.careers-page .careers-marquee,.careers-page .careers-cta-card{color:#ffffff}
+.careers-page .careers-hero h1,.careers-page .careers-cta-card h2,.careers-page .careers-hero .careers-stats dd{color:#ffffff}
+.careers-page .careers-hero p,.careers-page .careers-cta-card p,.careers-page .careers-hero .careers-stats dt{color:#f7fbf7}
+.careers-page .careers-value-card h3,.careers-page .careers-job-title,.careers-page .careers-section-title,.careers-page .careers-step h3,.careers-page .careers-form-title{color:#0c120d}
+.careers-page .careers-value-card p,.careers-page .careers-job-description,.careers-page .careers-section-lead,.careers-page .careers-step p,.careers-page .careers-detail-block p,.careers-page .careers-bullet-list li,.careers-page .careers-form-sub,.careers-page .careers-form-note{color:#0c120d}
+.careers-page .careers-eyebrow,.careers-page .careers-detail-block h4{color:#277c27}
+.careers-page .careers-gradient-text{background:linear-gradient(100deg,#65d900,#ccefb9,#65d900);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.careers-page .careers-btn-primary,.careers-page .careers-filter.is-active{background:#65d900;color:#0c120d}
+.careers-page .careers-btn-arrow{display:none}
+.careers-page .careers-job-card,.careers-page .careers-value-card{background:#ffffff}
+.careers-page .careers-field input,.careers-page .careers-field textarea{color:#0c120d;background:#ffffff}
+.careers-page .careers-field input:focus,.careers-page .careers-field textarea:focus{border-color:#65d900;box-shadow:0 0 0 4px rgba(101,217,0,.14)}
+
+
+/* Hero image: green + black overlay (desktop and mobile) */
+.careers-page .careers-hero {
+  background-color: #0c120d;
+  background-image:
+    linear-gradient(100deg, rgba(12,18,13,.94) 0%, rgba(18,65,26,.85) 38%, rgba(39,124,39,.58) 72%, rgba(12,18,13,.48) 100%),
+    url("/images/carrers-home.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+/* Last CTA: Browse Open Roles button */
+.careers-page .careers-cta-card .careers-btn-light,
+.careers-page .careers-cta-card .careers-btn-primary,
+.careers-page .careers-cta-card .careers-btn {
+  background: #65d900;
+  color: #0c120d !important;
+  border-color: #65d900;
+  box-shadow: 0 10px 25px rgba(101,217,0,.22);
+}
+.careers-page .careers-cta-card .careers-btn:hover {
+  background: #ccefb9;
+  border-color: #ccefb9;
+  color: #0c120d !important;
+  box-shadow: 0 14px 30px rgba(101,217,0,.3);
 }

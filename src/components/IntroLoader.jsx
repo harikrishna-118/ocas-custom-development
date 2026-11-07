@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import "./IntroLoader.css";
-import logo from "../assets/logo-full.png";
+import logo from "../assets/logo-ful.png";
 import softwareBackground from "../assets/ocas-software-bg.png";
 
 export default function IntroLoader() {

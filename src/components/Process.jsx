@@ -147,10 +147,10 @@ export default function Process() {
 
             <div className="process-hero-actions">
               <a href="/contact" className="process-primary-button">
-                Discuss your project <span aria-hidden="true">↗</span>
+                Discuss your project
               </a>
               <a href="#process-steps" className="process-text-link">
-                Explore our process <span aria-hidden="true">↓</span>
+                Explore our process
               </a>
             </div>
 
@@ -251,7 +251,7 @@ export default function Process() {
               shared responsibility.
             </p>
             <a href="/contact" className="process-inline-link">
-              Let's work together <span aria-hidden="true">↗</span>
+              Let's work together
             </a>
           </div>
 
@@ -344,10 +344,10 @@ export default function Process() {
           </p>
           <div className="process-cta-actions">
             <a href="/contact" className="process-primary-button process-primary-button-light">
-              Start a conversation <span aria-hidden="true">↗</span>
+              Start a conversation
             </a>
             <a href="/services" className="process-cta-secondary">
-              Explore our services <span aria-hidden="true">→</span>
+              Explore our services
             </a>
           </div>
           <div className="process-cta-footnote">

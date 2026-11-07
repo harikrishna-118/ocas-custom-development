@@ -146,6 +146,19 @@ const industries = [
   },
 ];
 
+// Real photography for the rotating hero. Replace URLs with your own licensed photos if preferred.
+const heroSlides = [
+  { title: "Banking & Financial Services", image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=2000&q=85" },
+  { title: "Insurance & InsurTech", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2000&q=85" },
+  { title: "Healthcare", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=2000&q=85" },
+  { title: "E-Commerce", image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=2000&q=85" },
+  { title: "Logistics & Transportation", image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=85" },
+  { title: "Manufacturing", image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=2000&q=85" },
+  { title: "Education", image:"https://images.pexels.com/photos/8199143/pexels-photo-8199143.jpeg?auto=compress&cs=tinysrgb&w=1920" },
+  { title: "Government & Public Sector", image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=85" },
+  { title: "Custom AI Automation", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=2000&q=85" },
+];
+
 const filters = [
   { key: "all", label: "All industries" },
   { key: "finance", label: "Finance & Insurance" },
@@ -362,6 +375,11 @@ export default function Industries() {
   const pageRef = useRef(null);
   const barRef = useRef(null);
   const [active, setActive] = useState("all");
+  const [heroIndex, setHeroIndex] = useState(0);
+  useEffect(() => {
+    const timer = window.setInterval(() => setHeroIndex((current) => (current + 1) % heroSlides.length), 4000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   useReveal(pageRef);
   useScrollProgress(barRef);
@@ -406,28 +424,27 @@ export default function Industries() {
         <span ref={barRef} />
       </div>
 
-      {/* HERO — centered text only */}
-      <section className="ind-hero" aria-labelledby="industries-hero-title">
+      {/* HERO — rotating industry names and real photographic backgrounds */}
+      <section className="ind-hero ind-hero-slider" aria-labelledby="industries-hero-title">
+        {heroSlides.map((slide, i) => (
+          <div
+            key={slide.title}
+            className={`ind-hero-slide ${heroIndex === i ? "is-active" : ""}`}
+            style={{ backgroundImage: `url("${slide.image}")` }}
+            aria-hidden="true"
+          />
+        ))}
+        <div className="ind-hero-shade" aria-hidden="true" />
         <div className="ind-hero-inner">
           <div className="ind-hero-copy">
-            <div className="ind-pill" data-reveal>
-              <span className="ind-pill-dot" aria-hidden="true" /> Industries we serve
-            </div>
-            <h1 id="industries-hero-title" data-reveal>
-              Technology built for <span className="ind-hero-highlight">every industry.</span>
+            <div className="ind-pill">Industries we serve</div>
+            <h1 id="industries-hero-title">
+              Digital innovation for <span key={heroIndex} className="ind-hero-changing" aria-live="polite">{heroSlides[heroIndex].title}</span>
             </h1>
-            <p data-reveal>
-              Every industry has its own challenges. We combine thoughtful engineering,
-              practical strategy, and modern technology to solve the problems that matter
-              to your business.
-            </p>
-            <div className="ind-actions" data-reveal>
-              <a href="/contact" className="ind-btn ind-btn-primary">
-                Discuss your project <ArrowIcon />
-              </a>
-              <a href="#industry-expertise" className="ind-btn ind-btn-ghost">
-                Explore expertise <span aria-hidden="true">↓</span>
-              </a>
+            <p>Purpose-built digital solutions for every industry. Combining technology, innovation, and expertise to move your business forward.</p>
+            <div className="ind-actions">
+              <a href="/contact" className="ind-btn ind-btn-primary">Discuss your project</a>
+              <a href="#industry-expertise" className="ind-btn ind-btn-ghost">Explore expertise</a>
             </div>
           </div>
         </div>

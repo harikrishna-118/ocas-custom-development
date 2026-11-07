@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
-import ocasLogo from "../assets/logo-full.png";
+import ocasLogo from "../assets/logo-ful.png";
 
 const navLinks = [
   { name: "About", path: "/about" },
@@ -73,7 +73,7 @@ const Navbar = () => {
           className="ocas-navbar-cta ocas-desktop-cta"
         >
           <span>Start a Project</span>
-          <span className="ocas-cta-arrow">↗</span>
+          <span className="ocas-cta-arrow"></span>
         </Link>
 
         {/* Mobile toggle */}
